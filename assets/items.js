@@ -27,6 +27,15 @@ window.STUDIO_ITEMS = [
     featured: true
   },
   {
+    title: "公文語句工具箱",
+    description: "整理常用公文語句，協助行政公文撰寫時快速找到合適說法。",
+    category: "tool",
+    href: "https://garro-director-phrase-tool.netlify.app/",
+    tag: "公文",
+    icon: "file-text",
+    featured: true
+  },
+  {
     title: "YouTube 影片 1",
     description: "藍老師提供的 YouTube 影片連結。",
     category: "video",

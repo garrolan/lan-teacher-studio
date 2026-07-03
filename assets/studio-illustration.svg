@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" role="img" aria-labelledby="title desc">
+  <title id="title">藍老師工作室工具箱插圖</title>
+  <desc id="desc">清新藍色系的桌面插圖，包含工具卡片、簡報和連結。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#e8f7ff"/>
+      <stop offset="1" stop-color="#c9eff7"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f1fbff"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="22" flood-color="#1f7fc9" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+  <rect width="960" height="640" rx="36" fill="url(#bg)"/>
+  <circle cx="110" cy="96" r="52" fill="#64d2d8" opacity="0.35"/>
+  <circle cx="838" cy="124" r="74" fill="#1f7fc9" opacity="0.12"/>
+  <path d="M78 510c128-46 238-44 330 6 86 47 175 59 268 32 76-22 144-24 204-7v99H78z" fill="#ffffff" opacity="0.58"/>
+  <g filter="url(#shadow)">
+    <rect x="118" y="106" width="724" height="428" rx="28" fill="#ffffff"/>
+    <rect x="150" y="138" width="660" height="76" rx="18" fill="#e9f6ff"/>
+    <rect x="178" y="162" width="172" height="16" rx="8" fill="#1f7fc9"/>
+    <rect x="178" y="188" width="296" height="12" rx="6" fill="#8db9d8"/>
+    <circle cx="748" cy="176" r="24" fill="#64d2d8"/>
+    <path d="M739 176h18M748 167v18" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+    <g>
+      <rect x="152" y="252" width="196" height="178" rx="20" fill="url(#card)" stroke="#d7e8f7" stroke-width="3"/>
+      <rect x="178" y="282" width="66" height="26" rx="13" fill="#dff4ff"/>
+      <rect x="178" y="330" width="128" height="14" rx="7" fill="#1f7fc9"/>
+      <rect x="178" y="358" width="110" height="11" rx="5.5" fill="#9ebfd7"/>
+      <rect x="178" y="382" width="136" height="11" rx="5.5" fill="#b7d3e7"/>
+    </g>
+    <g>
+      <rect x="382" y="252" width="196" height="178" rx="20" fill="url(#card)" stroke="#d7e8f7" stroke-width="3"/>
+      <rect x="408" y="282" width="66" height="26" rx="13" fill="#dff4ff"/>
+      <rect x="408" y="330" width="116" height="14" rx="7" fill="#1f7fc9"/>
+      <rect x="408" y="358" width="126" height="11" rx="5.5" fill="#9ebfd7"/>
+      <rect x="408" y="382" width="104" height="11" rx="5.5" fill="#b7d3e7"/>
+    </g>
+    <g>
+      <rect x="612" y="252" width="196" height="178" rx="20" fill="url(#card)" stroke="#d7e8f7" stroke-width="3"/>
+      <rect x="638" y="282" width="66" height="26" rx="13" fill="#dff4ff"/>
+      <rect x="638" y="330" width="136" height="14" rx="7" fill="#1f7fc9"/>
+      <rect x="638" y="358" width="118" height="11" rx="5.5" fill="#9ebfd7"/>
+      <rect x="638" y="382" width="132" height="11" rx="5.5" fill="#b7d3e7"/>
+    </g>
+    <rect x="312" y="464" width="336" height="34" rx="17" fill="#e9f6ff"/>
+    <rect x="338" y="476" width="108" height="10" rx="5" fill="#64d2d8"/>
+    <rect x="466" y="476" width="156" height="10" rx="5" fill="#8db9d8"/>
+  </g>
+</svg>

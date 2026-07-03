@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>藍老師工作室｜教學・行政・AI 工具箱</title>
+    <meta
+      name="description"
+      content="藍老師工作室是一個整理教學、行政與 AI 工具的小型網站。"
+    >
+    <link rel="stylesheet" href="assets/directory.css">
+  </head>
+  <body data-page="home">
+    <a class="skip-link" href="#main-content">跳到主要內容</a>
+    <header class="site-header">
+      <nav class="nav-wrap" aria-label="主要導覽">
+        <a class="brand" href="index.html" aria-label="回到首頁">
+          <span class="brand-mark" aria-hidden="true">藍</span>
+          <span>
+            <strong>藍老師工作室</strong>
+            <small>教學・行政・AI 工具箱</small>
+          </span>
+        </a>
+        <div class="nav-links">
+          <a class="active" href="index.html">首頁</a>
+          <a href="tools.html">工具</a>
+          <a href="presentations.html">簡報</a>
+          <a href="videos.html">影片</a>
+          <a href="music.html">音樂</a>
+          <a href="websites.html">網站</a>
+          <a href="games.html">教學遊戲</a>
+          <a href="links.html">相關連結</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section class="tool-directory">
+        <div class="directory-head">
+          <p class="kicker">LAN TEACHER STUDIO</p>
+          <h1>藍老師工作室｜教學・行政・AI 工具箱</h1>
+          <div class="search-row">
+            <label class="search-box">
+              <i data-lucide="search" aria-hidden="true"></i>
+              <span class="sr-only">搜尋工具</span>
+              <input data-tool-search-input type="search" placeholder="搜尋工具">
+            </label>
+            <span class="tool-count" data-tool-count></span>
+          </div>
+          <div class="filter-row" aria-label="工具分類">
+            <button class="filter-chip active" type="button" data-filter-button="all">全部</button>
+            <button class="filter-chip" type="button" data-filter-button="tool">工具</button>
+            <button class="filter-chip" type="button" data-filter-button="presentation">簡報</button>
+            <button class="filter-chip" type="button" data-filter-button="video">影片</button>
+            <button class="filter-chip" type="button" data-filter-button="music">音樂</button>
+            <button class="filter-chip" type="button" data-filter-button="website">網站</button>
+            <button class="filter-chip" type="button" data-filter-button="game">教學遊戲</button>
+            <button class="filter-chip" type="button" data-filter-button="link">相關連結</button>
+          </div>
+        </div>
+        <div class="card-grid directory-grid" data-card-list="all" data-searchable-cards></div>
+        <p class="empty-state" data-search-empty hidden>找不到符合的項目。</p>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="assets/items.js"></script>
+    <script src="assets/main.js"></script>
+  </body>
+</html>

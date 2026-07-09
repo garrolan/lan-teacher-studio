@@ -36,6 +36,15 @@ window.STUDIO_ITEMS = [
     featured: true
   },
   {
+    title: "教導主任塔台",
+    description: "整合教導主任常用行政資訊與工具，協助快速掌握校務工作。",
+    category: "tool",
+    href: "https://nanhe-director-tower.netlify.app/",
+    tag: "行政",
+    icon: "radio-tower",
+    featured: true
+  },
+  {
     title: "YouTube 影片 1",
     description: "藍老師提供的 YouTube 影片連結。",
     category: "video",

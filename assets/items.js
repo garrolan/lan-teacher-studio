@@ -83,5 +83,13 @@ window.STUDIO_ITEMS = [
     href: "games/1-1校園生命偵探隊_生物非生物_HTML遊戲.html",
     tag: "三年級自然",
     icon: "search"
+  },
+  {
+    title: "植物身體拼拼樂｜長春花版",
+    description: "三年級自然互動遊戲，將根、莖、葉、花、果實與種子放到長春花的正確位置，認識植物的身體構造。",
+    category: "game",
+    href: "games/1-1植物身體拼拼樂_長春花版.html",
+    tag: "三年級自然",
+    icon: "flower-2"
   }
 ];

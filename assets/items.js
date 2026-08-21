@@ -75,5 +75,13 @@ window.STUDIO_ITEMS = [
     href: "https://nanhe-course-114-butterfly.netlify.app/",
     tag: "成果展示",
     icon: "globe"
+  },
+  {
+    title: "校園生命偵探隊｜生物與非生物",
+    description: "三年級自然互動遊戲，透過拖曳分類、配對、線索題與校園挑戰，練習分辨生物、非生物、動物與植物。",
+    category: "game",
+    href: "games/1-1校園生命偵探隊_生物非生物_HTML遊戲.html",
+    tag: "三年級自然",
+    icon: "search"
   }
 ];

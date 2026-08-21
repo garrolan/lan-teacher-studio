@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<title>校園生命偵探隊｜三年級自然</title>
+<style>
+  :root{
+    --bg:#f6fbf2;
+    --ink:#20312a;
+    --green:#70b77e;
+    --green2:#dff3df;
+    --blue:#79b8d1;
+    --blue2:#e3f3f8;
+    --orange:#f6b85f;
+    --orange2:#fff0d7;
+    --red:#e86f68;
+    --purple:#a987d5;
+    --purple2:#eee5fb;
+    --card:#fff;
+    --shadow:0 10px 24px rgba(34,70,50,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;background:linear-gradient(#eef9e9,#f9fcf7);color:var(--ink);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif}
+  button{font:inherit}
+  .app{min-height:100vh;display:flex;flex-direction:column}
+  header{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;gap:12px;justify-content:space-between;
+    padding:10px 16px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
+    border-bottom:2px solid #dbead7;
+  }
+  .brand{font-weight:900;font-size:clamp(18px,3vw,26px);display:flex;align-items:center;gap:8px}
+  .hud{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+  .pill{background:#fff8d9;border:2px solid #f1d776;border-radius:999px;padding:6px 11px;font-weight:800}
+  .pill.badge{background:#edf6ff;border-color:#a9d2ee}
+  .progress{display:flex;gap:5px;align-items:center}
+  .dot{width:13px;height:13px;border-radius:50%;background:#d7ddd5;border:2px solid white;box-shadow:0 0 0 1px #cdd7c9}
+  .dot.done{background:#77bf7f}.dot.now{background:#f0ad4e;transform:scale(1.15)}
+  main{flex:1;display:grid;place-items:center;padding:18px}
+  .page{display:none;width:min(1100px,100%);animation:fade .25s ease}
+  .page.active{display:block}
+  @keyframes fade{from{opacity:.3;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .panel{
+    background:rgba(255,255,255,.96);border:3px solid #d9ebd3;border-radius:28px;
+    box-shadow:var(--shadow);padding:clamp(18px,3vw,32px)
+  }
+  h1,h2{margin:.2em 0 .45em;line-height:1.25}
+  h1{font-size:clamp(32px,6vw,64px)}
+  h2{font-size:clamp(26px,4.3vw,42px)}
+  p{font-size:clamp(17px,2.2vw,22px);line-height:1.7}
+  .lead{font-size:clamp(20px,2.7vw,28px);font-weight:700}
+  .hero{text-align:center;padding:6vh 2vw}
+  .hero-art{font-size:clamp(72px,16vw,150px);filter:drop-shadow(0 8px 10px rgba(0,0,0,.08))}
+  .row{display:flex;gap:16px;flex-wrap:wrap;align-items:stretch}
+  .col{flex:1 1 270px}
+  .def{
+    border-radius:24px;padding:18px;border:3px solid transparent;background:white;min-height:220px
+  }
+  .def.bio{border-color:#87c88d;background:#effaf0}
+  .def.animal{border-color:#82bfe1;background:#eff8fd}
+  .def.plant{border-color:#78c78c;background:#effaf3}
+  .def.non{border-color:#b7b1aa;background:#f7f5f2}
+  .bigicon{font-size:58px}
+  .def strong{font-size:28px}
+  .mini{font-size:17px;opacity:.88}
+  .concept-tree{
+    margin:18px auto 6px;max-width:700px;text-align:center;font-weight:900;font-size:clamp(18px,2.4vw,24px)
+  }
+  .tree-top{display:inline-block;padding:10px 20px;border-radius:18px;background:#f5efd8;border:3px solid #e6d69d}
+  .tree-branches{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;position:relative}
+  .tree-box{padding:14px;border-radius:18px;border:3px solid}
+  .tree-bio{background:#effaf0;border-color:#83c988}
+  .tree-non{background:#f5f3ef;border-color:#b7b1aa}
+  .tree-sub{display:flex;gap:10px;margin-top:12px}
+  .tree-sub span{flex:1;padding:8px;border-radius:14px;background:white;border:2px dashed #87c88d}
+  .taskbar{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+    margin-bottom:14px;padding:12px 16px;border-radius:20px;background:#f2f8ee;border:2px solid #d8ead3
+  }
+  .taskbar .instruction{font-weight:900;font-size:clamp(18px,2.5vw,24px)}
+  .cards{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;min-height:130px;padding:12px;border-radius:22px;background:#fafcf9;border:2px dashed #cfe0cb}
+  .card{
+    width:126px;min-height:118px;padding:10px;background:white;border:3px solid #d9e6d5;border-radius:20px;
+    box-shadow:0 7px 14px rgba(60,90,65,.10);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:4px;font-weight:900;font-size:19px;cursor:grab;touch-action:none;user-select:none;transition:.15s
+  }
+  .card:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(60,90,65,.16)}
+  .card.selected{outline:5px solid #ffd65d;transform:scale(1.04)}
+  .card .emoji{font-size:46px}
+  .card.correct{border-color:#68b875;background:#effaf1}
+  .card.wrong{animation:shake .35s}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+  .zones{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:16px}
+  .zone{
+    min-height:210px;border:4px dashed #b5cdb0;border-radius:26px;padding:14px;background:#fbfffb;
+    display:flex;flex-direction:column;align-items:center;gap:10px;transition:.15s
+  }
+  .zone.over{transform:scale(1.02);background:#fffbe7}
+  .zone h3{font-size:26px;margin:0}
+  .zone.bioz{border-color:#80c488;background:#f1fbf2}
+  .zone.nonz{border-color:#aaa49c;background:#f7f5f1}
+  .zone.aniz{border-color:#6bb6de;background:#f0f9fd}
+  .zone.plantz{border-color:#7fc88d;background:#f0faf2}
+  .zone .drop-items{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;width:100%}
+  .zone .card{width:105px;min-height:96px;font-size:17px}
+  .zone .card .emoji{font-size:38px}
+  .feedback{
+    min-height:62px;margin-top:14px;padding:12px 16px;border-radius:18px;background:#fffbe9;border:2px solid #f1d98d;
+    font-size:19px;font-weight:800;display:flex;align-items:center;justify-content:center;text-align:center
+  }
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:16px;flex-wrap:wrap}
+  .btn{
+    border:0;border-radius:18px;padding:12px 20px;font-weight:900;font-size:19px;cursor:pointer;
+    box-shadow:0 6px 0 rgba(0,0,0,.10);transition:.12s
+  }
+  .btn:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,.10)}
+  .btn.primary{background:#68b875;color:#fff}
+  .btn.secondary{background:#f5e6a8;color:#4c4329}
+  .btn.blue{background:#6fb9da;color:white}
+  .btn.purple{background:#a17fd0;color:white}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  .match-side{display:flex;flex-direction:column;gap:10px}
+  .match-item{
+    border:3px solid #d9e3d6;background:white;border-radius:18px;padding:12px;text-align:center;
+    font-weight:900;font-size:21px;cursor:pointer;min-height:70px;display:flex;align-items:center;justify-content:center;gap:8px
+  }
+  .match-item.active{outline:5px solid #ffd65d}
+  .match-item.matched{background:#effaf1;border-color:#68b875;opacity:.75}
+  .choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px}
+  .choice{
+    border:3px solid #dce6d8;border-radius:22px;background:white;padding:16px;cursor:pointer;text-align:center;
+    font-size:21px;font-weight:900;min-height:130px
+  }
+  .choice .emoji{font-size:55px;display:block}
+  .choice.correct{background:#effaf1;border-color:#68b875}
+  .choice.wrong{background:#fff0ef;border-color:#df746d}
+  .clue{
+    font-size:clamp(22px,3.2vw,32px);line-height:1.7;font-weight:900;text-align:center;
+    background:#fff8e6;border:3px solid #f0cb73;border-radius:24px;padding:18px
+  }
+  .machine{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .machine-col{border-radius:22px;padding:12px;border:3px solid #ccd9c8;min-height:250px}
+  .machine-col h3{text-align:center;font-size:25px;margin:5px}
+  .wrongplaced{border-color:#f0b0ac;background:#fff4f3}
+  .wrongplaced::after{content:" 點我修正";font-size:13px;color:#ad4842}
+  .campus{
+    position:relative;min-height:440px;border-radius:28px;overflow:hidden;border:4px solid #9acb8e;
+    background:
+      linear-gradient(#bee7ff 0 45%,#dff3c8 45% 100%);
+  }
+  .campus:before{
+    content:"南和國小｜生命偵探校園";position:absolute;left:22px;top:18px;font-weight:900;font-size:20px;
+    background:white;border-radius:14px;padding:8px 12px;border:2px solid #b9d8ae
+  }
+  .campus-object{
+    position:absolute;border:0;background:rgba(255,255,255,.92);border-radius:50%;width:68px;height:68px;
+    display:grid;place-items:center;font-size:40px;cursor:pointer;box-shadow:0 5px 12px rgba(0,0,0,.13);transition:.12s
+  }
+  .campus-object:hover{transform:scale(1.1)}
+  .campus-object.hit{outline:6px solid #66ba73;background:#eefff0}
+  .campus-object.miss{animation:shake .3s;outline:5px solid #ee7771}
+  .final{font-size:clamp(28px,5vw,50px);text-align:center;font-weight:1000}
+  .stars{font-size:58px;text-align:center;letter-spacing:7px}
+  .certificate{max-width:760px;margin:16px auto;padding:28px;border:8px double #e1c36a;border-radius:24px;background:#fffdf3;text-align:center}
+  .smallnote{font-size:15px;opacity:.75;text-align:center;margin-top:8px}
+  @media (max-width:720px){
+    header{align-items:flex-start}.hud{gap:6px}.pill{padding:4px 8px;font-size:14px}
+    main{padding:10px}.panel{padding:16px;border-radius:20px}
+    .card{width:100px;min-height:100px;font-size:17px}.card .emoji{font-size:38px}
+    .machine{grid-template-columns:1fr}
+    .match-grid{grid-template-columns:1fr}
+    .campus{min-height:520px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand">🔍 校園生命偵探隊</div>
+  <div class="hud">
+    <div class="progress" id="progress"></div>
+    <div class="pill">⭐ <span id="score">0</span></div>
+    <div class="pill badge">徽章：<span id="badgeName">見習偵探</span></div>
+  </div>
+</header>
+
+<main>
+  <!-- 首頁 -->
+  <section class="page active" data-page="0">
+    <div class="panel hero">
+      <div class="hero-art">🌳🦋🔍</div>
+      <h1>校園生命偵探隊</h1>
+      <p class="lead">一起找出「有生命」和「沒有生命」的東西吧！</p>
+      <p>完成 7 個任務，成為真正的生命小博士！</p>
+      <button class="btn primary" onclick="goPage(1)">開始任務 🚀</button>
+      <div class="smallnote">三年級自然｜1-1 校園大探索｜離線單檔版</div>
+    </div>
+  </section>
+
+  <!-- 1 定義 -->
+  <section class="page" data-page="1">
+    <div class="panel">
+      <div class="taskbar"><div class="instruction">📖 任務 1｜先認識三個重要名詞</div><div>看懂後再開始闖關！</div></div>
+      <div class="row">
+        <div class="col def bio">
+          <div class="bigicon">🌱🐦</div>
+          <strong>生物</strong>
+          <p>自然環境中<strong>有生命</strong>的東西，叫做「生物」。</p>
+          <p class="mini">生物會出現生命現象，例如：會長大、會繁殖、會死亡，並會對環境產生反應。</p>
+        </div>
+        <div class="col def non">
+          <div class="bigicon">🪨🪑</div>
+          <strong>非生物</strong>
+          <p>自然環境中<strong>沒有生命</strong>的東西，叫做「非生物」。</p>
+          <p class="mini">例如石頭、椅子、球。它們不會自己長大，也不會繁殖下一代。</p>
+        </div>
+      </div>
+      <div class="row" style="margin-top:16px">
+        <div class="col def animal">
+          <div class="bigicon">🐦🦋🐜</div>
+          <strong>動物</strong>
+          <p>動物是<strong>生物</strong>。大多數動物有較明顯的移動行為，也需要從外界獲得食物。</p>
+        </div>
+        <div class="col def plant">
+          <div class="bigicon">🌳🌺🌿</div>
+          <strong>植物</strong>
+          <p>植物也是<strong>生物</strong>。它們大多固定在一個地方，不會像動物到處移動，但仍會慢慢長大。</p>
+        </div>
+      </div>
+      <div class="concept-tree">
+        <div class="tree-top">自然環境中的東西</div>
+        <div class="tree-branches">
+          <div class="tree-box tree-bio">生物
+            <div class="tree-sub"><span>🐾 動物</span><span>🌿 植物</span></div>
+          </div>
+          <div class="tree-box tree-non">🪨 非生物</div>
+        </div>
+      </div>
+      <div class="feedback">💡 重要提醒：<strong>「會移動」不是判斷生物的唯一標準。</strong>汽車會動，但它不是生物；植物不會到處走，卻是生物。</div>
+      <div class="nav"><button class="btn secondary" onclick="goPage(0)">← 返回</button><button class="btn primary" onclick="goPage(2)">我懂了，開始分類！ →</button></div>
+    </div>
+  </section>
+
+  <!-- 2 生物非生物拖曳 -->
+  <section class="page" data-page="2">
+    <div class="panel">
+      <div class="taskbar"><div class="instruction">🌱 任務 2｜生命分一分</div><div>把 10 張卡片拖到正確的家</div></div>
+      <div class="cards" id="cardsBio"></div>
+      <div class="zones">
+        <div class="zone bioz" data-zone="bio"><h3>🌿 生物</h3><div class="drop-items"></div></div>
+        <div class="zone nonz" data-zone="non"><h3>🪨 非生物</h3><div class="drop-items"></div></div>
+      </div>
+      <div class="feedback" id="fbBio">拖曳卡片；平板也可以直接「點卡片 → 點分類區」。</div>
+      <div class="nav"><button class="btn secondary" onclick="goPage(1)">← 上一頁</button><button class="btn primary" id="nextBio" disabled onclick="goPage(3)">下一關 →</button></div>
+    </div>
+  </section>
+
+  <!-- 3 動物植物 -->
+  <section class="page" data-page="3">
+    <div class="panel">
+      <div class="taskbar"><div class="instruction">🐾 任務 3｜生物找家</div><div>這些全部都是生物，再分成動物和植物</div></div>
+      <div class="cards" id="cardsAP"></div>
+      <div class="zones">
+        <div class="zone aniz" data-zone="animal"><h3>🐾 動物之家</h3><div class="drop-items"></div></div>
+        <div class="zone plantz" data-zone="plant"><h3>🌱 植物花園</h3><div class="drop-items"></div></div>
+      </div>
+      <div class="feedback" id="fbAP">提示：植物不會像動物一樣到處跑，但一樣有生命。</div>
+      <div class="nav"><button class="btn secondary" onclick="goPage(2)">← 上一頁</button><button class="btn primary" id="nextAP" disabled onclick="goPage(4)">下一關 →</button></div>
+    </div>
+  </section>
+
+  <!-- 4 配對 -->
+  <section class="page" data-page="4">
+    <div class="panel">
+      <div class="taskbar"><div class="instruction">🔗 任務 4｜誰和誰是一家？</div><div>先點左邊圖片，再點右邊類別</div></div>
+      <div class="match-grid">
+        <div class="match-side" id="matchLeft"></div>
+        <div class="match-side">
+          <div class="match-item type" data-type="animal">🐾 動物</div>
+          <div class="match-item type" data-type="plant">🌿 植物</div>
+          <div class="match-item type" data-type="non">🪨 非生物</div>
+        </div>
+      </div>
+      <div class="feedback" id="fbMatch">每配對成功一張，就會亮綠色。</div>
+      <div class="nav"><button class="btn secondary" onclick="goPage(3)">← 上一頁</button><button class="btn primary" id="nextMatch" disabled onclick="goPage(5)">下一關 →</button></div>
+    </div>
+  </section>
+
+  <!-- 5 線索 -->
+  <section class="page" data-page="5">
+    <div class="panel">
+      <div class="taskbar"><div class="instruction">🕵️ 任務 5｜生命偵探</div><div>讀線索，選出最符合的答案</div></div>
+      <div class="clue" id="clueText"></div>
+      <div class="choice-grid" id="clueChoices"></div>
+      <div class="feedback" id="fbClue">仔細看線索，不要只看「會不會動」喔！</div>
+      <div class="nav"><button class="btn secondary" onclick="goPage(4)">← 上一頁</button><button class="btn primary" id="nextClue" disabled onclick="goPage(6)">下一關 →</button></div>
+    </div>
+  </section>
+
+  <!-- 6 找錯 -->
+  <section class="page" data-page="6">
+    <div class="panel">
+      <div class="taskbar"><div class="instruction">🚨 任務 6｜分類機壞掉了！</div><div>找出放錯的卡片，幫它回正確位置</div></div>
+      <div class="machine">
+        <div class="machine-col aniz"><h3>🐾 動物</h3><div class="cards" id="mAnimal"></div></div>
+        <div class="machine-col plantz"><h3>🌿 植物</h3><div class="cards" id="mPlant"></div></div>
+        <div class="machine-col nonz"><h3>🪨 非生物</h3><div class="cards" id="mNon"></div></div>
+      </div>
+      <div class="feedback" id="fbMachine">有 3 張卡片放錯位置。點出它，再選擇正確類別。</div>
+      <div class="choice-grid" id="machineFix" style="display:none">
+        <button class="choice" data-fix="animal">🐾 動物</button>
+        <button class="choice" data-fix="plant">🌿 植物</button>
+        <button class="choice" data-fix="non">🪨 非生物</button>
+      </div>
+      <div class="nav"><button class="btn secondary" onclick="goPage(5)">← 上一頁</button><button class="btn primary" id="nextMachine" disabled onclick="goPage(7)">最後挑戰 →</button></div>
+    </div>
+  </section>
+
+  <!-- 7 校園大挑戰 -->
+  <section class="page" data-page="7">
+    <div class="panel">
+      <div class="taskbar"><div class="instruction">🏆 任務 7｜校園大挑戰</div><div id="campusTask">請找出 3 個動物</div></div>
+      <div class="campus" id="campus"></div>
+      <div class="feedback" id="fbCampus">點選符合任務的物品。</div>
+      <div class="choice-grid" id="finalReason" style="display:none"></div>
+      <div class="nav"><button class="btn secondary" onclick="goPage(6)">← 上一頁</button><button class="btn primary" id="finishBtn" disabled onclick="finishGame()">完成任務 🎉</button></div>
+    </div>
+  </section>
+
+  <!-- 8 結果 -->
+  <section class="page" data-page="8">
+    <div class="panel">
+      <div class="final">🎉 任務完成！</div>
+      <div class="stars" id="finalStars">⭐⭐⭐</div>
+      <div class="certificate">
+        <div style="font-size:62px">🔍🌱</div>
+        <h2>生命小博士證書</h2>
+        <p>你已經會分辨：</p>
+        <p><strong>自然環境 → 生物／非生物</strong></p>
+        <p><strong>生物 → 動物／植物</strong></p>
+        <p id="finalScoreText"></p>
+      </div>
+      <div class="nav" style="justify-content:center">
+        <button class="btn secondary" onclick="location.reload()">重新挑戰 🔄</button>
+      </div>
+    </div>
+  </section>
+</main>
+</div>
+
+<script>
+const state={
+  page:0, score:0, completed:new Set(), selectedCard:null,
+  bioDone:0, apDone:0, matchDone:0, clueIndex:0, machineDone:0,
+  selectedWrong:null, campusStage:0, campusHits:0
+};
+const TOTAL_CONTENT_PAGES=7;
+
+function addScore(n=1){
+  state.score+=n;
+  document.getElementById('score').textContent=state.score;
+  const b = state.score>=30?'生命小博士':state.score>=20?'資深偵探':state.score>=10?'校園觀察員':'見習偵探';
+  document.getElementById('badgeName').textContent=b;
+}
+function markComplete(n){
+  state.completed.add(n); renderProgress();
+}
+function renderProgress(){
+  const p=document.getElementById('progress'); p.innerHTML='';
+  for(let i=1;i<=TOTAL_CONTENT_PAGES;i++){
+    const d=document.createElement('span'); d.className='dot'+(state.completed.has(i)?' done':state.page===i?' now':''); p.appendChild(d);
+  }
+}
+function goPage(n){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  const el=document.querySelector(`[data-page="${n}"]`);
+  if(el) el.classList.add('active');
+  if(n>state.page && state.page>=1 && state.page<=7) markComplete(state.page);
+  state.page=n; renderProgress(); window.scrollTo({top:0,behavior:'smooth'});
+}
+renderProgress();
+
+function makeCard(item){
+  const c=document.createElement('div');
+  c.className='card'; c.dataset.answer=item.type; c.dataset.id=item.id;
+  c.innerHTML=`<span class="emoji">${item.emoji}</span><span>${item.name}</span>`;
+  c.tabIndex=0;
+  attachPointerDrag(c);
+  c.addEventListener('click',()=>{
+    if(state.selectedCard===c){ c.classList.remove('selected'); state.selectedCard=null; return; }
+    if(state.selectedCard) state.selectedCard.classList.remove('selected');
+    state.selectedCard=c; c.classList.add('selected');
+  });
+  return c;
+}
+function attachPointerDrag(card){
+  let startX=0,startY=0,moved=false;
+  card.addEventListener('pointerdown',e=>{
+    if(card.classList.contains('correct')) return;
+    startX=e.clientX;startY=e.clientY;moved=false;
+    card.setPointerCapture?.(e.pointerId);
+    card.style.zIndex=1000;
+  });
+  card.addEventListener('pointermove',e=>{
+    if(!card.hasPointerCapture?.(e.pointerId)) return;
+    const dx=e.clientX-startX,dy=e.clientY-startY;
+    if(Math.hypot(dx,dy)>6) moved=true;
+    if(moved){card.style.transform=`translate(${dx}px,${dy}px) scale(1.05)`; card.style.opacity='.9';}
+  });
+  card.addEventListener('pointerup',e=>{
+    card.releasePointerCapture?.(e.pointerId);
+    card.style.transform='';card.style.opacity='';card.style.zIndex='';
+    if(!moved) return;
+    const el=document.elementFromPoint(e.clientX,e.clientY);
+    const zone=el?.closest('.zone');
+    if(zone) handleDrop(card,zone);
+  });
+}
+document.addEventListener('click',e=>{
+  const z=e.target.closest('.zone');
+  if(z && state.selectedCard) handleDrop(state.selectedCard,z);
+});
+
+const bioItems=[
+  {id:'snail',emoji:'🐌',name:'蝸牛',type:'bio'},
+  {id:'bird',emoji:'🐦',name:'麻雀',type:'bio'},
+  {id:'butterfly',emoji:'🦋',name:'蝴蝶',type:'bio'},
+  {id:'tree',emoji:'🌳',name:'榕樹',type:'bio'},
+  {id:'flower',emoji:'🌺',name:'朱槿',type:'bio'},
+  {id:'rock',emoji:'🪨',name:'石頭',type:'non'},
+  {id:'chair',emoji:'🪑',name:'椅子',type:'non'},
+  {id:'ball',emoji:'⚽',name:'足球',type:'non'},
+  {id:'bag',emoji:'🎒',name:'書包',type:'non'},
+  {id:'bike',emoji:'🚲',name:'腳踏車',type:'non'}
+];
+bioItems.forEach(x=>document.getElementById('cardsBio').appendChild(makeCard(x)));
+
+const apItems=[
+  {id:'ant',emoji:'🐜',name:'螞蟻',type:'animal'},
+  {id:'frog',emoji:'🐸',name:'青蛙',type:'animal'},
+  {id:'fish',emoji:'🐟',name:'魚',type:'animal'},
+  {id:'lizard',emoji:'🦎',name:'蜥蜴',type:'animal'},
+  {id:'sunflower',emoji:'🌻',name:'向日葵',type:'plant'},
+  {id:'grass',emoji:'🌿',name:'小草',type:'plant'},
+  {id:'ixora',emoji:'🌺',name:'仙丹花',type:'plant'},
+  {id:'palm',emoji:'🌴',name:'椰子樹',type:'plant'}
+];
+apItems.forEach(x=>document.getElementById('cardsAP').appendChild(makeCard(x)));
+
+function handleDrop(card,zone){
+  if(card.classList.contains('correct')) return;
+  const answer=card.dataset.answer, target=zone.dataset.zone;
+  const page=state.page;
+  const fb=page===2?document.getElementById('fbBio'):document.getElementById('fbAP');
+  if(answer===target){
+    card.classList.remove('selected'); card.classList.add('correct'); state.selectedCard=null;
+    zone.querySelector('.drop-items').appendChild(card); addScore();
+    if(page===2){
+      state.bioDone++; fb.textContent=`✅ 答對了！「${card.innerText.trim()}」分類正確。`;
+      if(state.bioDone===bioItems.length){document.getElementById('nextBio').disabled=false; markComplete(2); fb.textContent='🎉 全部分類完成！生物有生命；非生物沒有生命。';}
+    }else if(page===3){
+      state.apDone++; fb.textContent=`✅ 很好！「${card.innerText.trim()}」找到正確的家。`;
+      if(state.apDone===apItems.length){document.getElementById('nextAP').disabled=false; markComplete(3); fb.textContent='🎉 太棒了！動物和植物都是生物。';}
+    }
+  }else{
+    card.classList.add('wrong'); setTimeout(()=>card.classList.remove('wrong'),400);
+    if(page===2) fb.textContent='再想想：它會自己長大嗎？有生命嗎？';
+    else fb.textContent='再想想：它是會明顯移動、要找食物的動物，還是固定生長的植物？';
+  }
+}
+
+// 配對
+const matchItems=[
+  {id:'cat',emoji:'🐈',name:'貓',type:'animal'},
+  {id:'flower2',emoji:'🌼',name:'小花',type:'plant'},
+  {id:'rock2',emoji:'🪨',name:'石頭',type:'non'},
+  {id:'worm',emoji:'🐛',name:'毛毛蟲',type:'animal'},
+  {id:'tree2',emoji:'🌳',name:'樹',type:'plant'},
+  {id:'slide',emoji:'🛝',name:'溜滑梯',type:'non'}
+];
+let matchSelected=null;
+matchItems.forEach(x=>{
+  const d=document.createElement('div'); d.className='match-item'; d.dataset.type=x.type;
+  d.innerHTML=`<span style="font-size:36px">${x.emoji}</span> ${x.name}`;
+  d.onclick=()=>{if(d.classList.contains('matched'))return;document.querySelectorAll('#matchLeft .match-item').forEach(i=>i.classList.remove('active'));d.classList.add('active');matchSelected=d;};
+  document.getElementById('matchLeft').appendChild(d);
+});
+document.querySelectorAll('.match-item.type').forEach(t=>t.onclick=()=>{
+  if(!matchSelected) return document.getElementById('fbMatch').textContent='先點左邊的一張圖片，再選右邊類別。';
+  if(matchSelected.dataset.type===t.dataset.type){
+    matchSelected.classList.remove('active');matchSelected.classList.add('matched');addScore();state.matchDone++;
+    document.getElementById('fbMatch').textContent='✅ 配對成功！';
+    matchSelected=null;
+    if(state.matchDone===matchItems.length){document.getElementById('nextMatch').disabled=false;markComplete(4);document.getElementById('fbMatch').textContent='🎉 全部配對成功！';}
+  }else{
+    document.getElementById('fbMatch').textContent='❌ 還差一點，再想想它屬於哪一類。';
+  }
+});
+
+// 線索題
+const clues=[
+  {text:'「我不會走來走去，可是我會慢慢長大，也需要水和陽光。」我可能是誰？', choices:[
+    {emoji:'🌳',name:'樹',ok:true},{emoji:'🪑',name:'椅子'},{emoji:'🐕',name:'狗'}], explain:'樹是植物。植物大多固定生長，但仍會長大，是有生命的生物。'},
+  {text:'「我會吃東西，也會自己移動，我是有生命的。」我可能是誰？', choices:[
+    {emoji:'🐦',name:'麻雀',ok:true},{emoji:'🌼',name:'花'},{emoji:'🪨',name:'石頭'}], explain:'麻雀是動物，會攝取食物，也有明顯的移動行為。'},
+  {text:'「我會移動，可是我不會自己長大，也沒有生命。」我可能是誰？', choices:[
+    {emoji:'🚗',name:'玩具車',ok:true},{emoji:'🐜',name:'螞蟻'},{emoji:'🌱',name:'小草'}], explain:'玩具車可以被推動或靠電力移動，但它沒有生命，所以不是生物。'}
+];
+function renderClue(){
+  const q=clues[state.clueIndex];
+  document.getElementById('clueText').textContent=q.text;
+  const box=document.getElementById('clueChoices');box.innerHTML='';
+  q.choices.forEach(ch=>{
+    const b=document.createElement('button');b.className='choice';b.innerHTML=`<span class="emoji">${ch.emoji}</span>${ch.name}`;
+    b.onclick=()=>{
+      if(ch.ok){
+        b.classList.add('correct');addScore();document.getElementById('fbClue').textContent='✅ '+q.explain;
+        box.querySelectorAll('button').forEach(x=>x.disabled=true);
+        setTimeout(()=>{
+          if(state.clueIndex<clues.length-1){state.clueIndex++;renderClue();}
+          else{document.getElementById('nextClue').disabled=false;markComplete(5);document.getElementById('fbClue').textContent='🎉 三題全部完成！記住：會移動不等於一定有生命。';}
+        },900);
+      }else{b.classList.add('wrong');setTimeout(()=>b.classList.remove('wrong'),400);document.getElementById('fbClue').textContent='再找找看哪個選項最符合「全部」線索。';}
+    };
+    box.appendChild(b);
+  });
+}
+renderClue();
+
+// 找錯機器
+const machineItems=[
+  {emoji:'🦋',name:'蝴蝶',type:'animal',placed:'animal'},
+  {emoji:'🐦',name:'麻雀',type:'animal',placed:'animal'},
+  {emoji:'🌳',name:'榕樹',type:'plant',placed:'animal'}, // wrong
+  {emoji:'🌺',name:'朱槿',type:'plant',placed:'plant'},
+  {emoji:'🌿',name:'小草',type:'plant',placed:'plant'},
+  {emoji:'🐌',name:'蝸牛',type:'animal',placed:'plant'}, // wrong
+  {emoji:'🪨',name:'石頭',type:'non',placed:'non'},
+  {emoji:'🪑',name:'長椅',type:'non',placed:'non'},
+  {emoji:'🌻',name:'向日葵',type:'plant',placed:'non'} // wrong
+];
+function machineContainer(type){return document.getElementById(type==='animal'?'mAnimal':type==='plant'?'mPlant':'mNon')}
+machineItems.forEach((x,i)=>{
+  const c=document.createElement('div');c.className='card';c.dataset.type=x.type;c.dataset.idx=i;
+  c.innerHTML=`<span class="emoji">${x.emoji}</span><span>${x.name}</span>`;
+  if(x.type!==x.placed)c.classList.add('wrongplaced');
+  c.onclick=()=>{
+    if(c.dataset.type===x.placed || c.classList.contains('correct')){document.getElementById('fbMachine').textContent='這張其實放對了，再找找其他卡片。';return;}
+    state.selectedWrong={el:c,item:x};document.getElementById('machineFix').style.display='grid';
+    document.getElementById('fbMachine').textContent=`你選了「${x.name}」。它應該屬於哪一類？`;
+  };
+  machineContainer(x.placed).appendChild(c);
+});
+document.querySelectorAll('[data-fix]').forEach(b=>b.onclick=()=>{
+  if(!state.selectedWrong)return;
+  const {el,item}=state.selectedWrong;
+  if(b.dataset.fix===item.type){
+    el.classList.remove('wrongplaced');el.classList.add('correct');machineContainer(item.type).appendChild(el);
+    item.placed=item.type;state.machineDone++;addScore();state.selectedWrong=null;
+    document.getElementById('machineFix').style.display='none';
+    document.getElementById('fbMachine').textContent='✅ 修正成功！';
+    if(state.machineDone===3){document.getElementById('nextMachine').disabled=false;markComplete(6);document.getElementById('fbMachine').textContent='🎉 分類機修好了！三個錯誤都修正完成。';}
+  }else document.getElementById('fbMachine').textContent='這個類別還不對，再想一次。';
+});
+
+// 校園挑戰
+const campusObjects=[
+  {emoji:'🐦',name:'麻雀',type:'animal',x:18,y:28},{emoji:'🦋',name:'蝴蝶',type:'animal',x:38,y:55},{emoji:'🐕',name:'狗',type:'animal',x:70,y:67},
+  {emoji:'🌳',name:'榕樹',type:'plant',x:12,y:62},{emoji:'🌺',name:'花',type:'plant',x:55,y:75},{emoji:'🌿',name:'小草',type:'plant',x:82,y:50},
+  {emoji:'🪨',name:'石頭',type:'non',x:28,y:78},{emoji:'🪑',name:'長椅',type:'non',x:62,y:35},{emoji:'⚽',name:'球',type:'non',x:45,y:82},
+  {emoji:'🚲',name:'腳踏車',type:'non',x:84,y:78},{emoji:'🚰',name:'飲水機',type:'non',x:72,y:23},{emoji:'🎒',name:'書包',type:'non',x:34,y:33}
+];
+campusObjects.forEach((o,i)=>{
+  const b=document.createElement('button');b.className='campus-object';b.title=o.name;b.textContent=o.emoji;b.dataset.type=o.type;b.dataset.idx=i;
+  b.style.left=`calc(${o.x}% - 34px)`;b.style.top=`calc(${o.y}% - 34px)`;
+  b.onclick=()=>campusClick(b,o);
+  document.getElementById('campus').appendChild(b);
+});
+const campusStages=[
+  {type:'animal',need:3,text:'請找出 3 個動物 🐾'},
+  {type:'plant',need:3,text:'請找出 3 個植物 🌿'},
+  {type:'non',need:3,text:'請找出 3 個非生物 🪨'}
+];
+function campusClick(btn,obj){
+  if(state.campusStage>=campusStages.length)return;
+  const s=campusStages[state.campusStage];
+  if(btn.classList.contains('hit'))return;
+  if(obj.type===s.type){
+    btn.classList.add('hit');state.campusHits++;addScore();
+    document.getElementById('fbCampus').textContent=`✅ 找到「${obj.name}」！還要找 ${s.need-state.campusHits} 個。`;
+    if(state.campusHits===s.need){
+      state.campusStage++;state.campusHits=0;
+      document.querySelectorAll('.campus-object').forEach(x=>x.classList.remove('hit'));
+      if(state.campusStage<campusStages.length){
+        document.getElementById('campusTask').textContent=campusStages[state.campusStage].text;
+        document.getElementById('fbCampus').textContent='很好！接著完成下一個分類任務。';
+      }else showFinalReason();
+    }
+  }else{
+    btn.classList.add('miss');setTimeout(()=>btn.classList.remove('miss'),400);
+    document.getElementById('fbCampus').textContent='這個不是目前要找的類別，再看看其他地方。';
+  }
+}
+function showFinalReason(){
+  document.getElementById('campusTask').textContent='最後一題：為什麼「樹」是生物？';
+  document.getElementById('fbCampus').textContent='選出最合理的理由。';
+  const box=document.getElementById('finalReason');box.style.display='grid';box.innerHTML='';
+  const opts=[
+    {t:'A. 因為它是綠色的'},
+    {t:'B. 因為它會慢慢長大',ok:true},
+    {t:'C. 因為它不會移動'}
+  ];
+  opts.forEach(o=>{
+    const b=document.createElement('button');b.className='choice';b.textContent=o.t;
+    b.onclick=()=>{
+      if(o.ok){b.classList.add('correct');addScore(2);box.querySelectorAll('button').forEach(x=>x.disabled=true);document.getElementById('finishBtn').disabled=false;markComplete(7);document.getElementById('fbCampus').textContent='✅ 正確！樹雖然不會到處移動，但會長大，是有生命的植物。';}
+      else{b.classList.add('wrong');setTimeout(()=>b.classList.remove('wrong'),400);document.getElementById('fbCampus').textContent='再想想：判斷生物要看「生命現象」，不是只看顏色或會不會移動。';}
+    };
+    box.appendChild(b);
+  });
+}
+document.getElementById('campusTask').textContent=campusStages[0].text;
+
+function finishGame(){
+  markComplete(7);goPage(8);
+  document.getElementById('finalScoreText').innerHTML=`你獲得了 <strong>${state.score} 顆星星 ⭐</strong><br>偵探等級：<strong>${document.getElementById('badgeName').textContent}</strong>`;
+  document.getElementById('finalStars').textContent=state.score>=30?'⭐⭐⭐⭐⭐':state.score>=24?'⭐⭐⭐⭐':state.score>=18?'⭐⭐⭐':'⭐⭐';
+}
+</script>
+</body>
+</html>

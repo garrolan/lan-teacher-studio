@@ -45,6 +45,15 @@ window.STUDIO_ITEMS = [
     featured: true
   },
   {
+    title: "PDF 轉 Word｜本機安全版",
+    description: "在瀏覽器本機將 PDF 轉成 Word，支援可編輯文字或保留原始版面，檔案不需上傳伺服器。",
+    category: "tool",
+    href: "https://garro-pdf-to-word-local.netlify.app/",
+    tag: "文件轉換",
+    icon: "file-text",
+    featured: true
+  },
+  {
     title: "YouTube 影片 1",
     description: "藍老師提供的 YouTube 影片連結。",
     category: "video",

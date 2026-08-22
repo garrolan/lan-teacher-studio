@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>植物小偵探｜這是不是植物？</title>
+<style>
+:root {
+  --pink:#ff7fb0;
+  --pink2:#ffd7e8;
+  --lav:#c8b6ff;
+  --mint:#b8f2d0;
+  --green:#4f9b68;
+  --green2:#dff7e7;
+  --yellow:#ffe59a;
+  --cream:#fffaf4;
+  --ink:#4f4050;
+  --bad:#e46a7b;
+  --good:#44a36f;
+  --card:#ffffffee;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 10% 20%, #ffe6f1 0 90px, transparent 91px),
+    radial-gradient(circle at 90% 12%, #e8e0ff 0 110px, transparent 111px),
+    radial-gradient(circle at 85% 85%, #ddf7e7 0 120px, transparent 121px),
+    linear-gradient(135deg,#fff8fb,#fffdf4 45%,#f3fff8);
+  overflow-x:hidden;
+}
+.wrap{max-width:980px;margin:0 auto;padding:24px 16px 40px}
+.header{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}
+.brand{font-weight:900;font-size:clamp(20px,3vw,34px);color:#6d4b67}
+.pill{background:white;border:3px solid var(--pink2);border-radius:999px;padding:8px 14px;font-weight:800;box-shadow:0 6px 18px #a7687e14}
+.progress-shell{height:18px;background:#fff;border:3px solid #ffe1ed;border-radius:999px;overflow:hidden;box-shadow:inset 0 2px 6px #0000000a}
+.progress{height:100%;width:0;background:linear-gradient(90deg,var(--pink),#ffb46b,var(--mint));transition:.35s}
+.card{background:var(--card);border:4px solid #fff;border-radius:28px;box-shadow:0 18px 50px #83566c24;padding:clamp(20px,4vw,38px);position:relative;overflow:hidden;margin-top:18px}
+.card:before{content:"";position:absolute;inset:0;border:2px dashed #ffd3e5;border-radius:24px;pointer-events:none}
+.kicker{font-weight:900;color:var(--green);background:var(--green2);display:inline-block;padding:8px 14px;border-radius:999px}
+.qemoji{font-size:clamp(54px,9vw,94px);text-align:center;margin:8px 0}
+.question{font-size:clamp(28px,4.5vw,48px);font-weight:1000;text-align:center;line-height:1.35;margin:10px auto 24px;max-width:760px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:700px;margin:0 auto}
+button{font:inherit;cursor:pointer;border:0}
+.answer-btn{padding:18px 12px;border-radius:22px;font-size:clamp(20px,3vw,28px);font-weight:1000;transition:.18s;box-shadow:0 8px 0 #00000010}
+.answer-btn:hover{transform:translateY(-2px)}
+.yes{background:linear-gradient(180deg,#d8f8e5,#b8f2d0);color:#276d45;border:3px solid #72c793}
+.no{background:linear-gradient(180deg,#ffe3ed,#ffc8dc);color:#9a3f66;border:3px solid #ff91b9}
+.answer-btn:disabled{opacity:.58;cursor:default;transform:none}
+.feedback{display:none;margin:24px auto 0;max-width:760px;border-radius:22px;padding:18px 20px;font-size:18px;line-height:1.7;border:3px solid}
+.feedback.good{display:block;background:#edf9f1;border-color:#8bd5a7}
+.feedback.bad{display:block;background:#fff0f3;border-color:#f2a1b0}
+.feedback .big{font-size:26px;font-weight:1000;margin-bottom:4px}
+.next{display:none;margin:20px auto 0;background:linear-gradient(180deg,#bca9ff,#9e86f7);color:white;padding:14px 26px;border-radius:999px;font-weight:1000;font-size:20px;box-shadow:0 8px 0 #7965c7}
+.next.show{display:block}
+.smallnote{text-align:center;margin-top:14px;color:#806b79;font-size:14px}
+.start h1,.result h1{font-size:clamp(36px,6vw,62px);text-align:center;margin:8px 0}
+.start p,.result p{text-align:center;font-size:18px;line-height:1.7}
+.start-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+.tip{background:#fff9fb;border:3px solid #ffe0eb;border-radius:18px;padding:14px;text-align:center;font-weight:800}
+.primary{display:block;margin:20px auto 0;padding:16px 30px;border-radius:999px;background:linear-gradient(180deg,#ff96bc,#ff6ca5);color:#fff;font-weight:1000;font-size:22px;box-shadow:0 9px 0 #cf4f82}
+.scorebig{font-size:72px;font-weight:1000;color:#ff6ca5;text-align:center;margin:4px 0}
+.stars{text-align:center;font-size:42px;letter-spacing:6px}
+.review{margin-top:22px;display:grid;gap:10px}
+.review-item{background:white;border:2px solid #f0e8ee;border-radius:16px;padding:12px 14px;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.review-item .mark{font-size:24px}
+.hidden{display:none!important}
+.spark{position:fixed;pointer-events:none;font-size:24px;animation:fly 1.1s ease-out forwards;z-index:99}
+@keyframes fly{from{transform:translateY(0) scale(.7);opacity:1}to{transform:translateY(-120px) scale(1.4) rotate(25deg);opacity:0}}
+@media(max-width:640px){
+  .btns{grid-template-columns:1fr}
+  .start-grid{grid-template-columns:1fr}
+  .header{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="brand">🌷 植物小偵探</div>
+    <div class="pill" id="scorePill">⭐ 0 分</div>
+  </div>
+  <div class="progress-shell"><div class="progress" id="progress"></div></div>
+
+  <section class="card start" id="startScreen">
+    <div class="qemoji">🌱🔍🍄</div>
+    <h1>這是不是植物？</h1>
+    <p>共有 <b>20 題</b>！有些長得很像植物，其實不是；<br>有些看起來怪怪的，卻真的是植物喔！</p>
+    <div class="start-grid">
+      <div class="tip">🌿 看清楚再答</div>
+      <div class="tip">💡 答完會告訴你理由</div>
+      <div class="tip">🌸 挑戰滿分小偵探</div>
+    </div>
+    <button class="primary" id="startBtn">開始挑戰 ✨</button>
+  </section>
+
+  <section class="card hidden" id="gameScreen">
+    <div class="kicker" id="counter">第 1 題 / 20 題</div>
+    <div class="qemoji" id="emoji">🌱</div>
+    <div class="question" id="question"></div>
+    <div class="btns">
+      <button class="answer-btn yes" id="yesBtn">✅ 是植物</button>
+      <button class="answer-btn no" id="noBtn">❌ 不是植物</button>
+    </div>
+    <div class="feedback" id="feedback">
+      <div class="big" id="feedbackTitle"></div>
+      <div id="feedbackText"></div>
+    </div>
+    <button class="next" id="nextBtn">下一題 ➜</button>
+    <div class="smallnote">小提醒：不能只看「綠不綠、會不會動、長在哪裡」來判斷喔！</div>
+  </section>
+
+  <section class="card result hidden" id="resultScreen">
+    <div class="qemoji">🏆🌸🌿</div>
+    <h1>挑戰完成！</h1>
+    <div class="scorebig" id="finalScore">0 / 20</div>
+    <div class="stars" id="stars">⭐️⭐️⭐️</div>
+    <p id="resultText"></p>
+    <button class="primary" id="restartBtn">再玩一次 🔁</button>
+    <div class="review" id="review"></div>
+  </section>
+</div>
+
+<script>
+const questions = [{"q": "蘑菇是植物嗎？", "answer": false, "reason": "不是喔！蘑菇屬於「真菌」，不會像綠色植物一樣利用葉綠素進行光合作用。", "emoji": "🍄"}, {"q": "木耳是植物嗎？", "answer": false, "reason": "不是。木耳和蘑菇一樣，都屬於「真菌」，不是植物。", "emoji": "🪵"}, {"q": "珊瑚是植物嗎？", "answer": false, "reason": "不是！珊瑚雖然像樹枝，也固定在一個地方，但珊瑚其實是動物。", "emoji": "🪸"}, {"q": "海綿是植物嗎？", "answer": false, "reason": "不是。海綿看起來不太會動，但它其實是動物，而且會從水中取得食物。", "emoji": "🧽"}, {"q": "青苔是植物嗎？", "answer": true, "reason": "是！我們常說的青苔中，苔蘚類屬於植物。它們通常很矮小，也沒有明顯高大的莖。", "emoji": "🌿"}, {"q": "仙人掌是植物嗎？", "answer": true, "reason": "是！仙人掌是植物。它的葉大多退化成刺，綠色肥厚的部分主要是莖。", "emoji": "🌵"}, {"q": "捕蠅草是植物嗎？", "answer": true, "reason": "是！捕蠅草會捕捉昆蟲，但它仍然是植物，也能進行光合作用。", "emoji": "🪰"}, {"q": "含羞草是植物嗎？", "answer": true, "reason": "是！含羞草受到碰觸時葉子會閉合。植物也能對外界刺激產生反應。", "emoji": "🌱"}, {"q": "蕨類是植物嗎？", "answer": true, "reason": "是！蕨類不開花、也不靠種子繁殖，而是利用孢子繁殖，但它仍然屬於植物。", "emoji": "🌿"}, {"q": "黴菌是植物嗎？", "answer": false, "reason": "不是。黴菌屬於真菌，和蘑菇、木耳是親戚，不是植物。", "emoji": "🦠"}, {"q": "竹子是植物嗎？", "answer": true, "reason": "是！竹子當然是植物，而且從植物分類來看，竹子屬於禾本科。", "emoji": "🎋"}, {"q": "浮萍是植物嗎？", "answer": true, "reason": "是！浮萍雖然小小一片漂在水面上，但它是真正的水生開花植物。", "emoji": "💚"}, {"q": "水蘊草是植物嗎？", "answer": true, "reason": "是！水蘊草生活在水裡，但仍然具有植物的構造，是水生植物。", "emoji": "🌊"}, {"q": "大王花是植物嗎？", "answer": true, "reason": "是！大王花是寄生植物。它的外形很特別，但仍然是會開花的植物。", "emoji": "🌺"}, {"q": "酵母菌是植物嗎？", "answer": false, "reason": "不是。酵母菌屬於真菌。雖然小到肉眼看不清楚，但它不是植物。", "emoji": "🥖"}, {"q": "冬蟲夏草是植物嗎？", "answer": false, "reason": "不是。冬蟲夏草主要和寄生在昆蟲身上的真菌有關，並不是一種草或植物。", "emoji": "🍂"}, {"q": "豬籠草是植物嗎？", "answer": true, "reason": "是！豬籠草會捕捉小昆蟲來補充養分，但它本身仍然是植物。", "emoji": "🪴"}, {"q": "藍綠藻是植物嗎？", "answer": false, "reason": "不是。藍綠藻其實是「藍綠菌／藍細菌」，屬於細菌，不是植物。", "emoji": "🔬"}, {"q": "海帶是植物嗎？", "answer": false, "reason": "不是課本裡所說的典型植物。海帶屬於褐藻，沒有真正的根、莖、葉。", "emoji": "🌊"}, {"q": "紫菜是植物嗎？", "answer": false, "reason": "不是課本裡所說的典型植物。紫菜屬於紅藻，和具有真正根、莖、葉的水生植物不同。", "emoji": "🍙"}];
+let order = [];
+let current = 0;
+let score = 0;
+let answered = [];
+const $ = id => document.getElementById(id);
+
+function shuffle(arr) {
+  for(let i=arr.length-1;i>0;i--) {
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function startGame() {
+  order = shuffle([...questions.keys()]);
+  current = 0; score = 0; answered = [];
+  $("startScreen").classList.add("hidden");
+  $("resultScreen").classList.add("hidden");
+  $("gameScreen").classList.remove("hidden");
+  $("scorePill").textContent = "⭐ 0 分";
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[order[current]];
+  $("counter").textContent = `第 ${current+1} 題 / ${questions.length} 題`;
+  $("emoji").textContent = q.emoji;
+  $("question").textContent = q.q;
+  $("progress").style.width = `${(current/questions.length)*100}%`;
+  $("feedback").className = "feedback";
+  $("feedbackTitle").textContent = "";
+  $("feedbackText").textContent = "";
+  $("nextBtn").classList.remove("show");
+  $("yesBtn").disabled = false;
+  $("noBtn").disabled = false;
+}
+
+function sparkle() {
+  const icons=["✨","🌸","⭐","🌿","💖"];
+  for(let i=0;i<14;i++) {
+    const s=document.createElement("div");
+    s.className="spark";
+    s.textContent=icons[Math.floor(Math.random()*icons.length)];
+    s.style.left=(35+Math.random()*30)+"vw";
+    s.style.top=(55+Math.random()*10)+"vh";
+    s.style.animationDelay=(Math.random()*.2)+"s";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1400);
+  }
+}
+
+function answer(choice) {
+  const q = questions[order[current]];
+  const correct = choice === q.answer;
+  $("yesBtn").disabled = true;
+  $("noBtn").disabled = true;
+  if(correct) {
+    score++;
+    $("feedback").className = "feedback good";
+    $("feedbackTitle").textContent = "答對了！🎉";
+    sparkle();
+  } else {
+    $("feedback").className = "feedback bad";
+    $("feedbackTitle").textContent = "差一點點！🌷";
+  }
+  const ansText = q.answer ? "✅ 正確答案：是植物。" : "❌ 正確答案：不是植物。";
+  $("feedbackText").innerHTML = `<b>${ansText}</b><br>${q.reason}`;
+  $("scorePill").textContent = `⭐ ${score} 分`;
+  answered.push({idx:order[current], correct, choice});
+  $("nextBtn").textContent = current === questions.length-1 ? "看成績 🏆" : "下一題 ➜";
+  $("nextBtn").classList.add("show");
+}
+
+function nextQuestion() {
+  current++;
+  if(current >= questions.length) {
+    showResult();
+  } else {
+    showQuestion();
+  }
+}
+
+function showResult() {
+  $("gameScreen").classList.add("hidden");
+  $("resultScreen").classList.remove("hidden");
+  $("progress").style.width = "100%";
+  $("finalScore").textContent = `${score} / ${questions.length}`;
+  let text="", stars="";
+  if(score===20) { text="太厲害了！你是超級植物小博士！🌟"; stars="⭐️⭐️⭐️⭐️⭐️"; sparkle(); }
+  else if(score>=17) { text="很棒！已經是植物偵探高手了！🌷"; stars="⭐️⭐️⭐️⭐️"; }
+  else if(score>=13) { text="表現不錯！再複習幾題，就能升級成高手！🌿"; stars="⭐️⭐️⭐️"; }
+  else { text="沒關係，每一題的理由都能幫你變更厲害！再挑戰一次吧！💖"; stars="⭐️⭐️"; }
+  $("resultText").textContent=text;
+  $("stars").textContent=stars;
+
+  const review = $("review");
+  review.innerHTML = "<h2 style='text-align:center'>📚 答案小筆記</h2>";
+  answered.forEach((a,i)=>{
+    const q=questions[a.idx];
+    const div=document.createElement("div");
+    div.className="review-item";
+    div.innerHTML=`<div class="mark">${a.correct?"✅":"🌷"}</div>
+      <div><b>${i+1}. ${q.q}</b><br>
+      <span>${q.answer?"答案：是植物":"答案：不是植物"}</span><br>
+      <small>${q.reason}</small></div>`;
+    review.appendChild(div);
+  });
+}
+
+$("startBtn").addEventListener("click", startGame);
+$("restartBtn").addEventListener("click", startGame);
+$("yesBtn").addEventListener("click", ()=>answer(true));
+$("noBtn").addEventListener("click", ()=>answer(false));
+$("nextBtn").addEventListener("click", nextQuestion);
+</script>
+</body>
+</html>

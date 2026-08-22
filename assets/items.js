@@ -100,5 +100,13 @@ window.STUDIO_ITEMS = [
     href: "games/1-1植物身體拼拼樂_長春花版.html",
     tag: "三年級自然",
     icon: "flower-2"
+  },
+  {
+    title: "植物小偵探｜這是不是植物？",
+    description: "三年級自然 20 題是非題遊戲，從真菌、藻類與各種特殊植物中，練習判斷哪些是真正的植物。",
+    category: "game",
+    href: "games/1-1這是不是植物_20題是非題遊戲.html",
+    tag: "三年級自然",
+    icon: "circle-help"
   }
 ];

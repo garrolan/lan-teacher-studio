@@ -108,5 +108,13 @@ window.STUDIO_ITEMS = [
     href: "games/1-1這是不是植物_20題是非題遊戲.html",
     tag: "三年級自然",
     icon: "circle-help"
+  },
+  {
+    title: "魔法學院：命運試煉",
+    description: "可載入題庫、在同一裝置多人輪流，以擲骰、知識題與命運事件進行的魔法學院闖關遊戲。",
+    category: "game",
+    href: "https://garro-magic-academy.netlify.app/",
+    tag: "多人答題",
+    icon: "sparkles"
   }
 ];

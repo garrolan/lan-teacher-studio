@@ -116,5 +116,13 @@ window.STUDIO_ITEMS = [
     href: "https://garro-magic-academy.netlify.app/",
     tag: "多人答題",
     icon: "sparkles"
+  },
+  {
+    title: "南和聖誕禮物神秘交換所",
+    description: "在同一裝置登記參加者與禮物，依序抽出神秘交換結果，並自動避免抽到自己提供的禮物。",
+    category: "game",
+    href: "games/南和聖誕禮物神秘交換所_ReGift.html",
+    tag: "交換禮物",
+    icon: "gift"
   }
 ];

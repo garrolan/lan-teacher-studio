@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>南和聖誕禮物神秘交換所 · Christmas Re:Gift</title>
+<style>
+:root{
+  --bg:#120f14;
+  --panel:#211a22;
+  --panel2:#2b2128;
+  --text:#fff8e8;
+  --muted:#cfc3bf;
+  --red:#d83b4f;
+  --green:#1e7b58;
+  --gold:#f2c15b;
+  --cream:#fff0c9;
+  --line:#4a3942;
+  --ok:#43b581;
+  --danger:#ff6b6b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:
+radial-gradient(circle at 15% 10%, rgba(216,59,79,.16), transparent 26%),
+radial-gradient(circle at 80% 20%, rgba(30,123,88,.18), transparent 28%),
+linear-gradient(180deg,#120f14,#0d0b0e);
+color:var(--text);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;min-height:100%}
+body{min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1180px;margin:0 auto;padding:24px 18px 60px}
+.hero{
+  position:relative;overflow:hidden;border:1px solid #513943;border-radius:28px;
+  background:linear-gradient(135deg,rgba(216,59,79,.16),rgba(30,123,88,.12)),var(--panel);
+  padding:30px 28px;box-shadow:0 18px 60px rgba(0,0,0,.28)
+}
+.hero:before,.hero:after{content:"✦";position:absolute;color:rgba(242,193,91,.28);font-size:68px}
+.hero:before{right:28px;top:-5px;transform:rotate(18deg)}
+.hero:after{right:96px;bottom:-22px;font-size:100px}
+.kicker{font-size:14px;letter-spacing:.18em;color:var(--gold);font-weight:800}
+h1{font-size:clamp(32px,5vw,58px);line-height:1.04;margin:10px 0 8px}
+.sub{font-size:18px;color:#ffe9b4;margin:0 0 10px}
+.tag{font-size:16px;color:var(--muted);margin:0}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.badge{border:1px solid #62444c;background:#171216;padding:8px 12px;border-radius:999px;color:#fbe6d0;font-size:14px}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}
+.tab{background:#21191f;color:var(--text);border:1px solid var(--line);padding:11px 16px;border-radius:14px;font-weight:800}
+.tab.active{background:linear-gradient(135deg,var(--red),#a8283e);border-color:#ff7d8c}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:850px){.grid{grid-template-columns:1fr}}
+.card{background:rgba(33,26,34,.92);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 12px 34px rgba(0,0,0,.2)}
+.card h2{margin:0 0 6px;font-size:22px}
+.small{color:var(--muted);font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.row > *{flex:1}
+input,select{
+  width:100%;background:#120f14;color:var(--text);border:1px solid #5a4650;border-radius:12px;padding:11px 12px;outline:none
+}
+input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(242,193,91,.11)}
+.btn{
+  border:0;border-radius:14px;padding:11px 15px;font-weight:900;color:white;background:#3a2c34;
+  box-shadow:0 8px 22px rgba(0,0,0,.18)
+}
+.btn.red{background:linear-gradient(135deg,#e24b5f,#ad243c)}
+.btn.green{background:linear-gradient(135deg,#27986d,#17664c)}
+.btn.gold{background:linear-gradient(135deg,#f4c861,#cf9b2f);color:#24170a}
+.btn.ghost{background:#171216;border:1px solid var(--line)}
+.btn.danger{background:#702a34}
+.btn.big{font-size:20px;padding:15px 22px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.list{display:flex;flex-direction:column;gap:8px;margin-top:14px;max-height:360px;overflow:auto;padding-right:2px}
+.item{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#171216;border:1px solid #3b2e35;border-radius:13px;padding:10px 12px}
+.item .meta{color:var(--muted);font-size:13px}
+.item .actions{display:flex;gap:6px;flex:0 0 auto}
+.iconbtn{border:1px solid #4a3942;background:#21191f;color:#fff;border-radius:9px;padding:6px 9px}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:650px){.statgrid{grid-template-columns:repeat(2,1fr)}}
+.stat{background:#171216;border:1px solid #3d3036;border-radius:16px;padding:14px}
+.stat b{font-size:26px;display:block;color:var(--gold)}
+.game{
+  text-align:center;min-height:460px;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  position:relative;overflow:hidden;background:
+  radial-gradient(circle at center,rgba(242,193,91,.08),transparent 42%),
+  linear-gradient(180deg,#20171f,#171217)
+}
+.round{font-weight:900;color:var(--gold);letter-spacing:.12em;margin-bottom:14px}
+.slot{
+  width:min(760px,96%);min-height:170px;border:2px solid #70515b;border-radius:24px;background:#100d10;
+  display:flex;align-items:center;justify-content:center;padding:22px;box-shadow:inset 0 0 38px rgba(0,0,0,.6),0 12px 45px rgba(0,0,0,.25)
+}
+.slot .main{font-size:clamp(34px,7vw,72px);font-weight:1000;line-height:1.05;text-wrap:balance}
+.slot .hint{font-size:18px;color:#dfcec5;margin-top:12px}
+.stagebuttons{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.message{min-height:28px;color:#ffe6b0;font-weight:800;margin-top:13px}
+.spark{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.spark span{position:absolute;top:-30px;animation:fall 1.8s linear forwards;font-size:22px}
+@keyframes fall{to{transform:translateY(520px) rotate(420deg);opacity:.1}}
+.rules{display:grid;gap:10px}
+.rule{background:#171216;border:1px solid #3e3037;border-radius:14px;padding:12px 14px}
+.rule b{color:#ffe09a}
+.history{width:100%;border-collapse:collapse;margin-top:12px}
+.history th,.history td{padding:10px 8px;border-bottom:1px solid #3d3036;text-align:left;font-size:14px}
+.history th{color:#f2c15b}
+.notice{padding:13px 14px;border-radius:14px;background:#2b2018;border:1px solid #705322;color:#ffe6ab}
+.hidden{display:none!important}
+.footer{margin-top:24px;color:#9e9197;font-size:13px;text-align:center}
+hr{border:0;border-top:1px solid #3e3037;margin:18px 0}
+.switchline{display:flex;gap:10px;align-items:center;justify-content:space-between;background:#171216;border:1px solid #3d3036;border-radius:14px;padding:12px}
+.switchline input{width:auto}
+.fileinput{display:none}
+</style>
+</head>
+<body>
+<div class="shell">
+  <section class="hero">
+    <div class="kicker">CHRISTMAS RE:GIFT</div>
+    <h1 id="heroTitle">南和聖誕禮物神秘交換所</h1>
+    <p class="sub" id="heroSubtitle">聖誕廢物再生計畫 😈🎁</p>
+    <p class="tag">不要買新的。帶你家那個「其實還不錯，但我真的用不到」的東西來。</p>
+    <div class="badges">
+      <span class="badge">🚫 嚴禁額外購買</span>
+      <span class="badge">♻️ 二手可以，垃圾不行</span>
+      <span class="badge">🎯 不會抽回自己的</span>
+      <span class="badge">😈 抽到什麼，看命</span>
+    </div>
+  </section>
+
+  <div class="tabs">
+    <button class="tab active" data-view="gameView">🎰 開始搞事</button>
+    <button class="tab" data-view="setupView">🧰 主持人控制台</button>
+    <button class="tab" data-view="historyView">📜 黑歷史紀錄</button>
+  </div>
+
+  <section id="gameView">
+    <div class="card game">
+      <div class="spark" id="spark"></div>
+      <div class="round" id="roundLabel">ROUND 1 · 人人先有一份</div>
+      <div class="slot">
+        <div>
+          <div class="main" id="slotMain">準備好了嗎？</div>
+          <div class="hint" id="slotHint">反正要開始了。</div>
+        </div>
+      </div>
+      <div class="stagebuttons">
+        <button class="btn red big" id="drawPersonBtn">😈 誰要倒楣了？</button>
+        <button class="btn gold big hidden" id="drawGiftBtn">🎁 看看拿到什麼</button>
+        <button class="btn green big hidden" id="nextDrawBtn">🎰 下一位！</button>
+      </div>
+      <div class="message" id="gameMessage"></div>
+      <div style="margin-top:16px;width:min(760px,96%)">
+        <div class="statgrid">
+          <div class="stat"><span>玩家</span><b id="statPlayers">0</b></div>
+          <div class="stat"><span>剩餘禮物</span><b id="statGifts">0</b></div>
+          <div class="stat"><span>本輪未抽</span><b id="statEligible">0</b></div>
+          <div class="stat"><span>目前輪次</span><b id="statRound">1</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="setupView" class="hidden">
+    <div class="grid">
+      <div class="card">
+        <h2>👥 今晚的玩家</h2>
+        <div class="small">有人臨時說「欸我也要玩」？直接加。歡迎入坑。</div>
+        <div class="row" style="margin-top:14px">
+          <input id="participantName" placeholder="輸入姓名，例如：玥妤老師" />
+          <button class="btn green" id="addParticipantBtn">＋ 加入今晚</button>
+        </div>
+        <div class="list" id="participantList"></div>
+      </div>
+
+      <div class="card">
+        <h2>🎁 神秘物體倉庫</h2>
+        <div class="small">提供者一定要填，系統才能阻止「自己抽回自己的」。</div>
+        <div class="row" style="margin-top:14px">
+          <input id="giftNumber" placeholder="禮物編號，例如：23" />
+          <select id="giftOwner"></select>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <input id="giftHint" placeholder="神秘提示（選填）：前主人堅稱這不是垃圾" />
+          <button class="btn red" id="addGiftBtn">＋ 禮物入庫</button>
+        </div>
+        <div class="list" id="giftList"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>⚙️ 活動設定</h2>
+      <div class="row" style="margin-top:12px">
+        <div>
+          <div class="small">活動名稱</div>
+          <input id="eventTitle" value="南和聖誕禮物神秘交換所" />
+        </div>
+        <div>
+          <div class="small">副標</div>
+          <input id="eventSubtitle" value="聖誕廢物再生計畫 😈🎁" />
+        </div>
+      </div>
+      <div class="switchline" style="margin-top:12px">
+        <div>
+          <b>公平分輪模式</b>
+          <div class="small">每一輪每位玩家最多抽一次；新一輪再全部重新進池。</div>
+        </div>
+        <input type="checkbox" id="fairMode" checked disabled />
+      </div>
+      <div class="notice" style="margin-top:12px">
+        <b>核心規則：</b>禁止抽到自己提供的禮物。若最後形成「交換死角」，系統會嘗試重新安排本輪尚未完成的配對。
+      </div>
+      <hr />
+      <div class="row">
+        <button class="btn ghost" id="exportBtn">💾 匯出活動資料</button>
+        <label class="btn ghost" for="importFile" style="text-align:center">📂 匯入活動資料</label>
+        <input class="fileinput" id="importFile" type="file" accept=".json,application/json" />
+        <button class="btn danger" id="resetBtn">🧨 全部重來</button>
+      </div>
+      <div class="small" style="margin-top:10px">資料會自動存在這台電腦的瀏覽器中。換電腦時，請先匯出 JSON 再匯入。</div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h2>📢 先講好喔</h2>
+      <div class="rules">
+        <div class="rule"><b>① 嚴禁為了這活動花錢買新東西。</b> 真的，不要。</div>
+        <div class="rule"><b>② 二手可以，但不要拿垃圾來。</b> 我們是交換禮物，不是垃圾清運。</div>
+        <div class="rule"><b>③ 新的、沒用過的、買了後悔的、收到不知道幹嘛的，都歡迎。</b></div>
+        <div class="rule"><b>④ 想玩就玩，不想玩也沒人逼你。</b></div>
+        <div class="rule"><b>⑤ 不會抽到自己帶來的東西。</b> 這點系統比人可靠。</div>
+        <div class="rule"><b>⑥ 抽到什麼，先笑再說。</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="historyView" class="hidden">
+    <div class="card">
+      <h2>📜 黑歷史紀錄</h2>
+      <div class="small">誰拿了什麼，系統記得比大家清楚。</div>
+      <table class="history">
+        <thead><tr><th>輪次</th><th>玩家</th><th>禮物</th><th>提供者</th><th>提示</th></tr></thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+      <div id="emptyHistory" class="small" style="margin-top:14px">目前風平浪靜。還沒有人中獎。</div>
+    </div>
+  </section>
+
+  <div class="footer">Nan-He Christmas Re:Gift · 單機離線版 · 自動儲存中</div>
+</div>
+
+<script>
+const STORAGE_KEY = "nanhe_regift_v1";
+
+const defaultState = {
+  title: "南和聖誕禮物神秘交換所",
+  subtitle: "聖誕廢物再生計畫 😈🎁",
+  participants: [],
+  gifts: [],
+  round: 1,
+  roundEligible: [],
+  currentPersonId: null,
+  history: [],
+  lastMessage: ""
+};
+
+let state = loadState();
+
+function uid(prefix="id"){
+  return prefix + "_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2,8);
+}
+function saveState(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  renderAll();
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return structuredClone(defaultState);
+    const parsed = JSON.parse(raw);
+    return {...structuredClone(defaultState), ...parsed};
+  }catch(e){
+    return structuredClone(defaultState);
+  }
+}
+function activeGifts(){ return state.gifts.filter(g=>!g.drawn); }
+function participantById(id){ return state.participants.find(p=>p.id===id); }
+function giftById(id){ return state.gifts.find(g=>g.id===id); }
+function normalizeRoundEligible(){
+  const ids = new Set(state.participants.map(p=>p.id));
+  state.roundEligible = state.roundEligible.filter(id=>ids.has(id));
+  if(state.roundEligible.length===0 && state.participants.length && activeGifts().length){
+    state.roundEligible = state.participants.map(p=>p.id);
+  }
+}
+function refreshRoundIfNeeded(){
+  normalizeRoundEligible();
+  if(state.roundEligible.length===0 && activeGifts().length>0 && state.currentPersonId===null){
+    state.round++;
+    state.roundEligible = state.participants.map(p=>p.id);
+  }
+}
+function validGiftsForPerson(personId){
+  return activeGifts().filter(g=>g.ownerId !== personId);
+}
+function personHasValidGift(personId){
+  return validGiftsForPerson(personId).length>0;
+}
+function getDrawablePeople(){
+  return state.roundEligible.filter(id=>personHasValidGift(id));
+}
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function choose(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+function canCompleteMatching(personIds, gifts){
+  // Bipartite matching feasibility: people -> gifts, each gift at most once.
+  const matchGiftToPerson = new Map();
+  function dfs(pid, seen){
+    for(const g of gifts){
+      if(g.ownerId===pid || seen.has(g.id)) continue;
+      seen.add(g.id);
+      if(!matchGiftToPerson.has(g.id) || dfs(matchGiftToPerson.get(g.id), seen)){
+        matchGiftToPerson.set(g.id,pid);
+        return true;
+      }
+    }
+    return false;
+  }
+  const ids = [...personIds];
+  for(const pid of ids){
+    if(!dfs(pid,new Set())) return false;
+  }
+  return true;
+}
+
+function safeGiftChoiceForCurrent(personId){
+  const candidates = shuffle(validGiftsForPerson(personId));
+  const remainingPeople = state.roundEligible.filter(id=>id!==personId);
+  for(const g of candidates){
+    const remainingGifts = activeGifts().filter(x=>x.id!==g.id);
+    const needCount = Math.min(remainingPeople.length, remainingGifts.length);
+    if(needCount===0) return g;
+    // If fewer gifts than people, only require that at least some feasible assignments remain.
+    // Try all eligible people that still have possible gifts; matching size target is min(people,gifts).
+    const possiblePeople = remainingPeople.filter(pid=>remainingGifts.some(x=>x.ownerId!==pid));
+    if(possiblePeople.length===0 && remainingGifts.length>0) continue;
+    if(remainingGifts.length >= remainingPeople.length){
+      if(canCompleteMatching(remainingPeople, remainingGifts)) return g;
+    }else{
+      // Greedy feasibility check for partial remainder.
+      const shuffledPeople = shuffle(possiblePeople);
+      let ok = true, tempGifts=[...remainingGifts];
+      for(let i=0;i<needCount;i++){
+        const pid = shuffledPeople[i];
+        const v = tempGifts.find(x=>x.ownerId!==pid);
+        if(!v){ok=false;break;}
+        tempGifts=tempGifts.filter(x=>x.id!==v.id);
+      }
+      if(ok) return g;
+    }
+  }
+  return candidates[0] || null;
+}
+
+function addParticipant(){
+  const input=document.getElementById("participantName");
+  const name=input.value.trim();
+  if(!name) return;
+  if(state.participants.some(p=>p.name===name)){
+    flash("這位已經在坑裡了。😈");
+    return;
+  }
+  const p={id:uid("p"),name};
+  state.participants.push(p);
+  if(state.currentPersonId===null) state.roundEligible.push(p.id);
+  input.value="";
+  saveState();
+  flash("很好，又一個。🎄");
+}
+function deleteParticipant(id){
+  const hasOwnedGifts = state.gifts.some(g=>g.ownerId===id);
+  if(hasOwnedGifts){
+    alert("這位玩家名下還有禮物。請先刪除或重新建立那些禮物。");
+    return;
+  }
+  if(state.history.some(h=>h.personId===id)){
+    if(!confirm("這位玩家已經有抽獎紀錄。確定還要刪除？")) return;
+  }
+  state.participants=state.participants.filter(p=>p.id!==id);
+  state.roundEligible=state.roundEligible.filter(x=>x!==id);
+  if(state.currentPersonId===id) state.currentPersonId=null;
+  saveState();
+}
+function addGift(){
+  const num=document.getElementById("giftNumber").value.trim();
+  const ownerId=document.getElementById("giftOwner").value;
+  const hint=document.getElementById("giftHint").value.trim();
+  if(!num){flash("禮物至少要有編號。");return;}
+  if(!ownerId){flash("這份是誰帶來的？先選提供者。");return;}
+  if(state.gifts.some(g=>g.number===num)){flash("這個禮物編號已經存在。");return;}
+  state.gifts.push({id:uid("g"),number:num,ownerId,hint,drawn:false});
+  document.getElementById("giftNumber").value="";
+  document.getElementById("giftHint").value="";
+  saveState();
+  flash("神秘物體＋1。它是什麼？不重要。🎁");
+}
+function deleteGift(id){
+  const g=giftById(id);
+  if(g?.drawn){alert("這份禮物已經被抽走，不能直接刪除。");return;}
+  state.gifts=state.gifts.filter(x=>x.id!==id);
+  saveState();
+}
+
+function animateSlot(values, finalText, finalHint, callback){
+  const main=document.getElementById("slotMain");
+  const hint=document.getElementById("slotHint");
+  let i=0;
+  const seq=[...values];
+  const total=28;
+  let delay=45;
+  function tick(){
+    main.textContent=seq[i%seq.length] || "……";
+    hint.textContent="";
+    i++;
+    if(i<total){
+      delay = i>20 ? delay+18 : delay+3;
+      setTimeout(tick,delay);
+    }else{
+      main.textContent=finalText;
+      hint.textContent=finalHint||"";
+      burst();
+      callback&&callback();
+    }
+  }
+  tick();
+}
+
+function drawPerson(){
+  if(state.currentPersonId!==null){flash("先把這位的禮物抽完啦。");return;}
+  refreshRoundIfNeeded();
+  if(activeGifts().length===0){showEnd();return;}
+  const drawable=getDrawablePeople();
+  if(drawable.length===0){
+    document.getElementById("slotMain").textContent="聖誕宇宙發生錯亂";
+    document.getElementById("slotHint").textContent="剩下的人跟禮物互相看不順眼。請新增禮物，或到控制台調整資料。";
+    return;
+  }
+  const chosenId=choose(drawable);
+  const chosen=participantById(chosenId);
+  const names=shuffle(drawable.map(id=>participantById(id).name));
+  document.getElementById("drawPersonBtn").disabled=true;
+  animateSlot(names, chosen.name, "就是你。😈", ()=>{
+    state.currentPersonId=chosenId;
+    saveState();
+    document.getElementById("drawGiftBtn").classList.remove("hidden");
+    document.getElementById("drawPersonBtn").classList.add("hidden");
+    document.getElementById("drawPersonBtn").disabled=false;
+  });
+}
+
+function drawGift(){
+  const pid=state.currentPersonId;
+  if(!pid)return;
+  const person=participantById(pid);
+  const gift=safeGiftChoiceForCurrent(pid);
+  if(!gift){
+    document.getElementById("slotMain").textContent="想拿回自己的？沒門。";
+    document.getElementById("slotHint").textContent="目前沒有可配對的禮物，請新增禮物或調整資料。";
+    return;
+  }
+  const candidates=shuffle(validGiftsForPerson(pid).map(g=>"No. "+g.number));
+  document.getElementById("drawGiftBtn").disabled=true;
+  animateSlot(candidates, "🎁 No. "+gift.number, gift.hint || "祝你好運。", ()=>{
+    gift.drawn=true;
+    state.history.push({
+      id:uid("h"),
+      round:state.round,
+      personId:pid,
+      giftId:gift.id,
+      ownerId:gift.ownerId,
+      hint:gift.hint||""
+    });
+    state.roundEligible=state.roundEligible.filter(id=>id!==pid);
+    state.currentPersonId=null;
+    refreshRoundIfNeeded();
+    saveState();
+    document.getElementById("drawGiftBtn").classList.add("hidden");
+    document.getElementById("nextDrawBtn").classList.remove("hidden");
+    document.getElementById("drawGiftBtn").disabled=false;
+    if(activeGifts().length===0){
+      document.getElementById("gameMessage").textContent="禮物倉庫清空。今天有人滿載而歸，有人只能接受命運。";
+    }else if(state.roundEligible.length===state.participants.length){
+      document.getElementById("gameMessage").textContent=`ROUND ${state.round-1} CLEAR。還有 ${activeGifts().length} 份。😈 要不要再來？`;
+    }else{
+      document.getElementById("gameMessage").textContent="很好。下一位。";
+    }
+  });
+}
+
+function nextDraw(){
+  if(activeGifts().length===0){showEnd();return;}
+  document.getElementById("nextDrawBtn").classList.add("hidden");
+  document.getElementById("drawPersonBtn").classList.remove("hidden");
+  document.getElementById("slotMain").textContent="下一位？";
+  document.getElementById("slotHint").textContent="逃跑還來得及。大概。";
+  drawPerson();
+}
+
+function showEnd(){
+  document.getElementById("slotMain").textContent="🎄 禮物倉庫清空";
+  document.getElementById("slotHint").textContent="抽完了。大家可以開始互相炫耀或嫌棄。";
+  document.getElementById("drawPersonBtn").classList.add("hidden");
+  document.getElementById("drawGiftBtn").classList.add("hidden");
+  document.getElementById("nextDrawBtn").classList.add("hidden");
+  burst(40);
+}
+
+function burst(n=24){
+  const box=document.getElementById("spark");
+  const icons=["✦","❄","★","🎁","✨"];
+  for(let i=0;i<n;i++){
+    const s=document.createElement("span");
+    s.textContent=choose(icons);
+    s.style.left=Math.random()*100+"%";
+    s.style.animationDelay=(Math.random()*.2)+"s";
+    s.style.fontSize=(14+Math.random()*20)+"px";
+    box.appendChild(s);
+    setTimeout(()=>s.remove(),2300);
+  }
+}
+
+function flash(msg){
+  document.getElementById("gameMessage").textContent=msg;
+  setTimeout(()=>{ if(document.getElementById("gameMessage").textContent===msg) document.getElementById("gameMessage").textContent=""; },2600);
+}
+
+function renderAll(){
+  document.getElementById("heroTitle").textContent=state.title;
+  document.getElementById("heroSubtitle").textContent=state.subtitle;
+  document.getElementById("eventTitle").value=state.title;
+  document.getElementById("eventSubtitle").value=state.subtitle;
+
+  const pList=document.getElementById("participantList");
+  pList.innerHTML="";
+  state.participants.forEach(p=>{
+    const count=state.history.filter(h=>h.personId===p.id).length;
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div><b>${escapeHtml(p.name)}</b><div class="meta">已抽 ${count} 份</div></div>
+      <div class="actions"><button class="iconbtn" data-del-p="${p.id}">刪除</button></div>`;
+    pList.appendChild(div);
+  });
+  if(!state.participants.length) pList.innerHTML=`<div class="small">目前沒人。主持人自己先不要慌。</div>`;
+
+  const ownerSel=document.getElementById("giftOwner");
+  const currentOwner=ownerSel.value;
+  ownerSel.innerHTML=`<option value="">選擇提供者</option>`+state.participants.map(p=>`<option value="${p.id}">${escapeHtml(p.name)}</option>`).join("");
+  if(state.participants.some(p=>p.id===currentOwner)) ownerSel.value=currentOwner;
+
+  const gList=document.getElementById("giftList");
+  gList.innerHTML="";
+  state.gifts.forEach(g=>{
+    const owner=participantById(g.ownerId);
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`<div><b>No. ${escapeHtml(g.number)}</b> ${g.drawn?'✅':''}
+      <div class="meta">提供者：${escapeHtml(owner?.name||"未知")} ${g.hint?`｜${escapeHtml(g.hint)}`:""}</div></div>
+      <div class="actions">${g.drawn?'':`<button class="iconbtn" data-del-g="${g.id}">刪除</button>`}</div>`;
+    gList.appendChild(div);
+  });
+  if(!state.gifts.length) gList.innerHTML=`<div class="small">目前空空的。快把神秘物體搬進來。</div>`;
+
+  document.getElementById("statPlayers").textContent=state.participants.length;
+  document.getElementById("statGifts").textContent=activeGifts().length;
+  document.getElementById("statEligible").textContent=state.roundEligible.length;
+  document.getElementById("statRound").textContent=state.round;
+  document.getElementById("roundLabel").textContent=`ROUND ${state.round} · ${state.round===1?"人人先有一份":"BONUS ROUND"}`;
+
+  const body=document.getElementById("historyBody");
+  body.innerHTML="";
+  state.history.slice().reverse().forEach(h=>{
+    const p=participantById(h.personId);
+    const g=giftById(h.giftId);
+    const o=participantById(h.ownerId);
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${h.round}</td><td>${escapeHtml(p?.name||"未知")}</td><td>No. ${escapeHtml(g?.number||"?")}</td><td>${escapeHtml(o?.name||"未知")}</td><td>${escapeHtml(h.hint||"—")}</td>`;
+    body.appendChild(tr);
+  });
+  document.getElementById("emptyHistory").classList.toggle("hidden",state.history.length>0);
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+
+function exportData(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="南和聖誕禮物神秘交換所_活動資料.json";
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),500);
+}
+function importData(file){
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const parsed=JSON.parse(reader.result);
+      if(!parsed || !Array.isArray(parsed.participants) || !Array.isArray(parsed.gifts)) throw new Error();
+      state={...structuredClone(defaultState),...parsed,currentPersonId:null};
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+      renderAll();
+      alert("匯入完成。聖誕宇宙已恢復。");
+    }catch(e){ alert("這個檔案看起來不是本活動的資料。"); }
+  };
+  reader.readAsText(file);
+}
+
+document.querySelectorAll(".tab").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    ["gameView","setupView","historyView"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+    document.getElementById(btn.dataset.view).classList.remove("hidden");
+  });
+});
+document.getElementById("addParticipantBtn").onclick=addParticipant;
+document.getElementById("participantName").addEventListener("keydown",e=>{if(e.key==="Enter")addParticipant()});
+document.getElementById("addGiftBtn").onclick=addGift;
+document.getElementById("giftHint").addEventListener("keydown",e=>{if(e.key==="Enter")addGift()});
+document.getElementById("participantList").onclick=e=>{const id=e.target.dataset.delP;if(id)deleteParticipant(id)};
+document.getElementById("giftList").onclick=e=>{const id=e.target.dataset.delG;if(id)deleteGift(id)};
+document.getElementById("drawPersonBtn").onclick=drawPerson;
+document.getElementById("drawGiftBtn").onclick=drawGift;
+document.getElementById("nextDrawBtn").onclick=nextDraw;
+document.getElementById("eventTitle").addEventListener("change",e=>{state.title=e.target.value.trim()||defaultState.title;saveState()});
+document.getElementById("eventSubtitle").addEventListener("change",e=>{state.subtitle=e.target.value.trim()||defaultState.subtitle;saveState()});
+document.getElementById("exportBtn").onclick=exportData;
+document.getElementById("importFile").addEventListener("change",e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value=""});
+document.getElementById("resetBtn").onclick=()=>{
+  if(confirm("確定全部重來？玩家、禮物、抽獎紀錄都會清空。")){
+    state=structuredClone(defaultState);
+    localStorage.removeItem(STORAGE_KEY);
+    saveState();
+    document.getElementById("slotMain").textContent="準備好了嗎？";
+    document.getElementById("slotHint").textContent="反正要開始了。";
+    document.getElementById("drawPersonBtn").classList.remove("hidden");
+    document.getElementById("drawGiftBtn").classList.add("hidden");
+    document.getElementById("nextDrawBtn").classList.add("hidden");
+  }
+};
+
+normalizeRoundEligible();
+saveState();
+</script>
+</body>
+</html>

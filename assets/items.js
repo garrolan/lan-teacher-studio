@@ -124,5 +124,13 @@ window.STUDIO_ITEMS = [
     href: "games/南和聖誕禮物神秘交換所_ReGift.html",
     tag: "交換禮物",
     icon: "gift"
+  },
+  {
+    title: "瓦斯危機！家庭安全大冒險",
+    description: "透過四關情境選擇，學習瓦斯外洩時的安全口訣：禁、關、推、離。",
+    category: "game",
+    href: "games/gas-safety-adventure.html",
+    tag: "家庭安全",
+    icon: "shield-check"
   }
 ];

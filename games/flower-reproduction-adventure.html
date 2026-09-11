@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>花朵繁衍大冒險｜一頁一任務版</title>
+<style>
+  :root{
+    --bg1:#fff6fb;
+    --bg2:#fff0f7;
+    --card:#fffdfd;
+    --pink:#ff8fb8;
+    --pink-dark:#d95f8b;
+    --purple:#c9b5ff;
+    --yellow:#ffe79a;
+    --mint:#d9f7ea;
+    --text:#5d4b63;
+    --line:#f6d5e4;
+    --good:#54b97b;
+    --bad:#e36d90;
+    --shadow:0 10px 28px rgba(212, 95, 139, .14);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 12% 10%, #ffffff 0 10px, transparent 11px) 0 0/88px 88px,
+      radial-gradient(circle at 88% 16%, #fff8fc 0 7px, transparent 8px) 0 0/96px 96px,
+      linear-gradient(180deg,var(--bg1),var(--bg2),var(--bg1));
+  }
+  .app{
+    max-width:960px;
+    margin:0 auto;
+    padding:24px 16px 40px;
+  }
+  .shell{
+    background:rgba(255,255,255,.45);
+    border-radius:28px;
+    padding:18px;
+  }
+  .topbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+  }
+  .pill{
+    background:#fff;
+    border:2px solid #ffe0ec;
+    border-radius:999px;
+    padding:10px 14px;
+    box-shadow:var(--shadow);
+    font-weight:700;
+    font-size:15px;
+  }
+  .progress-wrap{
+    width:100%;
+    margin-top:8px;
+    background:#fff;
+    border-radius:999px;
+    padding:6px;
+    box-shadow:var(--shadow);
+  }
+  .progress{
+    height:18px;
+    border-radius:999px;
+    background:linear-gradient(90deg, var(--pink), #ffb7d1);
+    width:0%;
+    transition:.25s;
+  }
+  .screen{
+    display:none;
+    min-height:620px;
+    background:var(--card);
+    border-radius:30px;
+    border:4px solid #fff;
+    box-shadow:var(--shadow);
+    padding:26px 22px 22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .screen.active{display:block}
+  .screen:before,.screen:after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    background:rgba(255,229,241,.55);
+    z-index:0;
+  }
+  .screen:before{width:180px;height:180px;top:-40px;right:-40px}
+  .screen:after{width:120px;height:120px;bottom:-35px;left:-25px}
+  .content{position:relative;z-index:1}
+  h1,h2{
+    margin:0 0 10px;
+    color:var(--pink-dark);
+    line-height:1.2;
+  }
+  h1{font-size:clamp(30px,5vw,42px)}
+  h2{font-size:clamp(24px,4vw,32px)}
+  .subtitle{
+    font-size:18px;
+    line-height:1.8;
+    margin-bottom:16px;
+  }
+  .hint{
+    background:#fff6fa;
+    border-left:5px solid #ffc5dc;
+    border-radius:16px;
+    padding:12px 14px;
+    line-height:1.8;
+    margin:12px 0 18px;
+  }
+  .hero-stickers, .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:12px 0 20px;
+  }
+  .chip{
+    display:inline-block;
+    background:#fff;
+    border:2px solid #ffe1ee;
+    border-radius:999px;
+    padding:8px 14px;
+    font-size:14px;
+    box-shadow:0 4px 10px rgba(214,86,134,.1);
+  }
+  .task-box{
+    background:#fff;
+    border:2px solid #fde0eb;
+    border-radius:22px;
+    padding:16px;
+    margin-top:12px;
+  }
+  .options{
+    display:grid;
+    gap:10px;
+    margin-top:12px;
+  }
+  .option{
+    border:2px solid #f7d5e4;
+    background:#fff;
+    border-radius:18px;
+    padding:14px;
+    cursor:pointer;
+    transition:.18s;
+  }
+  .option:hover{transform:translateY(-1px)}
+  .option.selected{background:#fff4f8}
+  .option.correct{border-color:var(--good);background:#eefaf2}
+  .option.wrong{border-color:var(--bad);background:#fff0f4}
+  button{
+    border:none;
+    border-radius:18px;
+    padding:12px 18px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--pink),#ff76a5);
+    color:white;
+    box-shadow:0 8px 18px rgba(233,111,143,.26);
+  }
+  .btn-secondary{
+    background:linear-gradient(135deg,var(--purple),#b69cff);
+    color:white;
+    box-shadow:0 8px 18px rgba(176,146,255,.2);
+  }
+  .btn-light{
+    background:#fff;
+    color:var(--text);
+    border:2px solid #eddaf7;
+  }
+  .nav{
+    margin-top:24px;
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .nav-right{
+    margin-left:auto;
+  }
+  .feedback{
+    min-height:28px;
+    margin-top:12px;
+    font-weight:700;
+    line-height:1.6;
+  }
+  .good{color:var(--good)}
+  .bad{color:var(--bad)}
+  .neutral{color:#836f8a}
+  .pair-row{
+    display:grid;
+    grid-template-columns:1fr 1.3fr;
+    gap:10px;
+    align-items:center;
+    margin:12px 0;
+  }
+  .pair-left{
+    background:#fff5fa;
+    border-radius:16px;
+    padding:14px;
+    font-weight:700;
+  }
+  select{
+    width:100%;
+    border-radius:16px;
+    border:2px solid #e9d8f8;
+    padding:12px;
+    font-size:15px;
+    color:var(--text);
+    background:#fff;
+  }
+  .dropzone{
+    min-height:90px;
+    border:3px dashed #e6caef;
+    background:#fcf8ff;
+    border-radius:20px;
+    padding:10px;
+    margin-top:8px;
+  }
+  .draggables,.flowbank{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:14px;
+  }
+  .drag-item{
+    background:white;
+    border:2px solid #ffd8e8;
+    border-radius:16px;
+    padding:10px 12px;
+    cursor:grab;
+    user-select:none;
+    box-shadow:0 4px 8px rgba(215,124,160,.08);
+  }
+  .sequence-slots{
+    display:grid;
+    gap:10px;
+    margin-top:14px;
+  }
+  .seq-slot{
+    min-height:60px;
+    border:3px dashed #f5c4d6;
+    background:#fffafd;
+    border-radius:18px;
+    padding:10px;
+  }
+  .slot-label{
+    font-size:13px;
+    color:#a18ba5;
+    margin-bottom:6px;
+  }
+  .mini{
+    font-size:14px;
+    color:#876f8d;
+  }
+  .summary-badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:16px;
+  }
+  .badge{
+    background:#fff;
+    border:2px solid #ffd9e8;
+    border-radius:999px;
+    padding:10px 14px;
+    font-weight:700;
+  }
+  .center{
+    text-align:center;
+  }
+  .big-emoji{
+    font-size:60px;
+    margin:6px 0 10px;
+  }
+  @media (max-width:720px){
+    .pair-row{grid-template-columns:1fr}
+    .screen{min-height:auto}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="shell">
+    <div class="topbar">
+      <div class="pill">🌸 花朵繁衍大冒險｜一頁一任務版</div>
+      <div class="pill">目前分數：<span id="score">0</span> / <span id="total">42</span></div>
+      <div class="progress-wrap">
+        <div class="progress" id="progressBar"></div>
+      </div>
+      <div class="mini">每一頁只做一個任務，做完再去下一頁，不會全部擠在一起。</div>
+    </div>
+
+    <!-- Start -->
+    <section class="screen active" id="screen-0">
+      <div class="content center">
+        <div class="big-emoji">🌷🐝✨</div>
+        <h1>花朵繁衍大冒險</h1>
+        <div class="subtitle">
+          歡迎進入花花世界！今天要一起認識：<strong>花為什麼在不同季節開花、花的構造有什麼功能、花怎麼吸引動物、果實和種子怎麼幫助繁衍</strong>。
+        </div>
+        <div class="hero-stickers">
+          <div class="chip">粉嫩 Q 版風</div>
+          <div class="chip">一頁一任務</div>
+          <div class="chip">選擇・拖曳・配對</div>
+          <div class="chip">適合三年級自然</div>
+        </div>
+        <div class="hint">
+          遊戲方式很簡單：<br>
+          ① 每一頁只有一個任務。<br>
+          ② 做完可以按「下一頁」。<br>
+          ③ 最後會出現總整理與得分。
+        </div>
+        <button class="btn-primary" onclick="goTo(1)">開始闖關</button>
+      </div>
+    </section>
+
+    <!-- 1 -->
+    <section class="screen" id="screen-1">
+      <div class="content">
+        <h2>任務 1｜開花季節小測驗</h2>
+        <div class="hint">不同植物會在不同季節開花，因為開花會受到<strong>溫度、日照、授粉動物活動</strong>等因素影響。植物會把花開在比較有利繁殖的時間。</div>
+        <div class="task-box">
+          <strong>請選出最適合的答案：</strong>
+          <div class="options" id="mcq1"></div>
+          <div class="feedback" id="fb-mcq1"></div>
+        </div>
+        <div class="nav">
+          <button class="btn-light" onclick="goTo(0)">上一頁</button>
+          <button class="btn-secondary nav-right" onclick="goTo(2)">下一頁</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="screen" id="screen-2">
+      <div class="content">
+        <h2>任務 2｜花朵部位配對</h2>
+        <div class="hint">把花朵的構造和用途配對起來吧！</div>
+        <div class="task-box">
+          <div class="pair-row">
+            <div class="pair-left">花萼</div>
+            <select id="sel1">
+              <option value="">請選擇用途</option>
+              <option value="protect">保護花苞，也有支撐作用</option>
+              <option value="attract">用顏色、香味吸引動物</option>
+              <option value="pollen">產生花粉</option>
+              <option value="receive">接收花粉，裡面有子房和胚珠</option>
+            </select>
+          </div>
+          <div class="pair-row">
+            <div class="pair-left">花瓣</div>
+            <select id="sel2">
+              <option value="">請選擇用途</option>
+              <option value="protect">保護花苞，也有支撐作用</option>
+              <option value="attract">用顏色、香味吸引動物</option>
+              <option value="pollen">產生花粉</option>
+              <option value="receive">接收花粉，裡面有子房和胚珠</option>
+            </select>
+          </div>
+          <div class="pair-row">
+            <div class="pair-left">雄蕊</div>
+            <select id="sel3">
+              <option value="">請選擇用途</option>
+              <option value="protect">保護花苞，也有支撐作用</option>
+              <option value="attract">用顏色、香味吸引動物</option>
+              <option value="pollen">產生花粉</option>
+              <option value="receive">接收花粉，裡面有子房和胚珠</option>
+            </select>
+          </div>
+          <div class="pair-row">
+            <div class="pair-left">雌蕊</div>
+            <select id="sel4">
+              <option value="">請選擇用途</option>
+              <option value="protect">保護花苞，也有支撐作用</option>
+              <option value="attract">用顏色、香味吸引動物</option>
+              <option value="pollen">產生花粉</option>
+              <option value="receive">接收花粉，裡面有子房和胚珠</option>
+            </select>
+          </div>
+          <button class="btn-primary" onclick="checkPairs()">檢查配對</button>
+          <div class="feedback" id="fb-pairs"></div>
+        </div>
+        <div class="nav">
+          <button class="btn-light" onclick="goTo(1)">上一頁</button>
+          <button class="btn-secondary nav-right" onclick="goTo(3)">下一頁</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="screen" id="screen-3">
+      <div class="content">
+        <h2>任務 3｜拖曳分類：哪些是在吸引動物？</h2>
+        <div class="hint">把下面的卡片拖到正確的框框中。</div>
+        <div class="task-box">
+          <div><strong>會吸引動物採食／幫忙授粉</strong></div>
+          <div class="dropzone" id="zone-attract" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+          <div style="margin-top:12px;"><strong>不是主要用來吸引動物的</strong></div>
+          <div class="dropzone" id="zone-notattract" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+
+          <div class="draggables" id="drag-bank">
+            <div class="drag-item" draggable="true" id="d1" data-type="attract" ondragstart="drag(event)">鮮豔花瓣</div>
+            <div class="drag-item" draggable="true" id="d2" data-type="attract" ondragstart="drag(event)">特殊香味</div>
+            <div class="drag-item" draggable="true" id="d3" data-type="attract" ondragstart="drag(event)">花蜜</div>
+            <div class="drag-item" draggable="true" id="d4" data-type="not" ondragstart="drag(event)">保護花苞的花萼</div>
+            <div class="drag-item" draggable="true" id="d5" data-type="not" ondragstart="drag(event)">產生花粉的雄蕊</div>
+            <div class="drag-item" draggable="true" id="d6" data-type="not" ondragstart="drag(event)">固定植物的根</div>
+          </div>
+          <button class="btn-primary" onclick="checkDragSort()">檢查分類</button>
+          <div class="feedback" id="fb-drag"></div>
+        </div>
+        <div class="nav">
+          <button class="btn-light" onclick="goTo(2)">上一頁</button>
+          <button class="btn-secondary nav-right" onclick="goTo(4)">下一頁</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="screen" id="screen-4">
+      <div class="content">
+        <h2>任務 4｜誰在幫花朵送花粉？</h2>
+        <div class="hint">點選所有「可能幫忙傳粉」的角色。</div>
+        <div class="task-box">
+          <div class="options" id="mcq2"></div>
+          <div class="feedback" id="fb-mcq2"></div>
+        </div>
+        <div class="nav">
+          <button class="btn-light" onclick="goTo(3)">上一頁</button>
+          <button class="btn-secondary nav-right" onclick="goTo(5)">下一頁</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="screen" id="screen-5">
+      <div class="content">
+        <h2>任務 5｜花朵的生命任務流程</h2>
+        <div class="hint">把下列流程拖進正確順序：<br>開花 → 傳粉／授粉 → 受精 → 果實形成 → 種子成熟 → 傳播 → 萌芽</div>
+        <div class="task-box">
+          <div class="sequence-slots">
+            <div class="seq-slot" id="slot1" ondragover="allowDrop(event)" ondrop="drop(event)"><div class="slot-label">第 1 步</div></div>
+            <div class="seq-slot" id="slot2" ondragover="allowDrop(event)" ondrop="drop(event)"><div class="slot-label">第 2 步</div></div>
+            <div class="seq-slot" id="slot3" ondragover="allowDrop(event)" ondrop="drop(event)"><div class="slot-label">第 3 步</div></div>
+            <div class="seq-slot" id="slot4" ondragover="allowDrop(event)" ondrop="drop(event)"><div class="slot-label">第 4 步</div></div>
+            <div class="seq-slot" id="slot5" ondragover="allowDrop(event)" ondrop="drop(event)"><div class="slot-label">第 5 步</div></div>
+            <div class="seq-slot" id="slot6" ondragover="allowDrop(event)" ondrop="drop(event)"><div class="slot-label">第 6 步</div></div>
+            <div class="seq-slot" id="slot7" ondragover="allowDrop(event)" ondrop="drop(event)"><div class="slot-label">第 7 步</div></div>
+          </div>
+          <div class="flowbank">
+            <div class="drag-item" draggable="true" id="f1" data-order="2" ondragstart="drag(event)">傳粉／授粉</div>
+            <div class="drag-item" draggable="true" id="f2" data-order="5" ondragstart="drag(event)">種子成熟</div>
+            <div class="drag-item" draggable="true" id="f3" data-order="1" ondragstart="drag(event)">開花</div>
+            <div class="drag-item" draggable="true" id="f4" data-order="7" ondragstart="drag(event)">萌芽</div>
+            <div class="drag-item" draggable="true" id="f5" data-order="4" ondragstart="drag(event)">果實形成</div>
+            <div class="drag-item" draggable="true" id="f6" data-order="3" ondragstart="drag(event)">受精</div>
+            <div class="drag-item" draggable="true" id="f7" data-order="6" ondragstart="drag(event)">傳播</div>
+          </div>
+          <button class="btn-primary" onclick="checkFlow()">檢查流程</button>
+          <div class="feedback" id="fb-flow"></div>
+        </div>
+        <div class="nav">
+          <button class="btn-light" onclick="goTo(4)">上一頁</button>
+          <button class="btn-secondary nav-right" onclick="goTo(6)">下一頁</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="screen" id="screen-6">
+      <div class="content">
+        <h2>任務 6｜快問快答：花果實種子</h2>
+        <div class="hint">選出正確的說法。</div>
+        <div class="task-box">
+          <div class="options" id="mcq3"></div>
+          <div class="feedback" id="fb-mcq3"></div>
+        </div>
+        <div class="nav">
+          <button class="btn-light" onclick="goTo(5)">上一頁</button>
+          <button class="btn-secondary nav-right" onclick="goTo(7)">下一頁</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="screen" id="screen-7">
+      <div class="content">
+        <h2>任務 7｜果實與種子的任務</h2>
+        <div class="hint">把任務拖到正確角色下方。</div>
+        <div class="task-box">
+          <div><strong>果實的任務</strong></div>
+          <div class="dropzone" id="zone-fruit" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+          <div style="margin-top:12px;"><strong>種子的任務</strong></div>
+          <div class="dropzone" id="zone-seed" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+          <div class="draggables">
+            <div class="drag-item" draggable="true" id="g1" data-group="fruit" ondragstart="drag(event)">保護裡面的種子</div>
+            <div class="drag-item" draggable="true" id="g2" data-group="fruit" ondragstart="drag(event)">幫助傳播下一代</div>
+            <div class="drag-item" draggable="true" id="g3" data-group="seed" ondragstart="drag(event)">長成新的植物</div>
+            <div class="drag-item" draggable="true" id="g4" data-group="seed" ondragstart="drag(event)">萌芽後成為幼苗</div>
+          </div>
+          <button class="btn-primary" onclick="checkFruitSeed()">檢查任務</button>
+          <div class="feedback" id="fb-fruitseed"></div>
+        </div>
+        <div class="nav">
+          <button class="btn-light" onclick="goTo(6)">上一頁</button>
+          <button class="btn-secondary nav-right" onclick="goTo(8)">下一頁</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="screen" id="screen-8">
+      <div class="content">
+        <h2>任務 8｜小老師挑錯題</h2>
+        <div class="hint">下面哪一句話是錯的？請點選它。</div>
+        <div class="task-box">
+          <div class="options" id="mcq4"></div>
+          <div class="feedback" id="fb-mcq4"></div>
+        </div>
+        <div class="nav">
+          <button class="btn-light" onclick="goTo(7)">上一頁</button>
+          <button class="btn-secondary nav-right" onclick="goTo(9)">看結果</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- End -->
+    <section class="screen" id="screen-9">
+      <div class="content center">
+        <div class="big-emoji">🎉🌸🎉</div>
+        <h2>闖關完成！</h2>
+        <div class="subtitle" id="finalText">你完成了所有任務！</div>
+        <div class="summary-badges">
+          <div class="badge">花萼：保護花苞</div>
+          <div class="badge">花瓣：吸引動物</div>
+          <div class="badge">雄蕊：產生花粉</div>
+          <div class="badge">雌蕊：接收花粉、孕育種子</div>
+          <div class="badge">不同季節開花：配合環境與授粉條件</div>
+          <div class="badge">果實：保護種子、幫助傳播</div>
+          <div class="badge">種子：長成新植物</div>
+        </div>
+        <div class="hint" style="text-align:left;margin-top:20px;">
+          <strong>老師可這樣使用：</strong><br>
+          先讓可妮玩 1～2 個任務，再停下來討論實物花朵；或一頁一頁搭配口頭問答進行。這樣比較像闖關，不像一次塞滿的學習單。
+        </div>
+        <div class="nav" style="justify-content:center;">
+          <button class="btn-light" onclick="goTo(8)">回上一頁</button>
+          <button class="btn-primary" onclick="resetGame()">重新開始</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  let score = 0;
+  const total = 42;
+  let currentScreen = 0;
+  document.getElementById('total').textContent = total;
+
+  function updateProgress(){
+    const percent = (currentScreen / 9) * 100;
+    document.getElementById('progressBar').style.width = percent + '%';
+  }
+
+  function goTo(n){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById('screen-'+n).classList.add('active');
+    currentScreen = n;
+    updateProgress();
+    if(n===9){ showFinal(); }
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function addScore(n){
+    score += n;
+    document.getElementById('score').textContent = score;
+  }
+
+  function alreadyDone(id){
+    return document.getElementById(id).dataset.done === "1";
+  }
+  function markDone(id){
+    document.getElementById(id).dataset.done = "1";
+  }
+
+  function buildSingleChoice(containerId, options, correctIndex, feedbackId, multi=false, correctSet=[]){
+    const container = document.getElementById(containerId);
+    options.forEach((text, i)=>{
+      const div = document.createElement('div');
+      div.className = 'option';
+      div.textContent = text;
+      div.dataset.index = i;
+      div.addEventListener('click', ()=>{
+        if(multi){
+          if(alreadyDone(feedbackId)) return;
+          div.classList.toggle('selected');
+          return;
+        }
+        if(alreadyDone(feedbackId)) return;
+        if(i === correctIndex){
+          div.classList.add('correct');
+          document.getElementById(feedbackId).innerHTML = '<span class="good">答對了！</span>';
+          addScore(4);
+        }else{
+          div.classList.add('wrong');
+          container.children[correctIndex].classList.add('correct');
+          document.getElementById(feedbackId).innerHTML = '<span class="bad">再想想看～正確答案已標出。</span>';
+        }
+        markDone(feedbackId);
+      });
+      container.appendChild(div);
+    });
+
+    if(multi){
+      const btn = document.createElement('button');
+      btn.className = 'btn-primary';
+      btn.textContent = '檢查答案';
+      btn.style.marginTop = '12px';
+      btn.onclick = ()=>{
+        if(alreadyDone(feedbackId)) return;
+        let local = 0;
+        let selectedCount = 0;
+        [...container.querySelectorAll('.option')].forEach((el, idx)=>{
+          const selected = el.classList.contains('selected');
+          const isCorrect = correctSet.includes(idx);
+          if(isCorrect) el.classList.add('correct');
+          if(selected) selectedCount++;
+          if(selected && !isCorrect) el.classList.add('wrong');
+          if(selected && isCorrect) local++;
+        });
+        if(local === correctSet.length && selectedCount === correctSet.length){
+          document.getElementById(feedbackId).innerHTML = '<span class="good">太棒了！全都選對了。</span>';
+          addScore(6);
+        }else{
+          document.getElementById(feedbackId).innerHTML = '<span class="bad">有些還不對喔，綠色是正確答案。</span>';
+        }
+        markDone(feedbackId);
+      };
+      container.parentNode.appendChild(btn);
+    }
+  }
+
+  buildSingleChoice(
+    'mcq1',
+    [
+      '因為每一種植物需要的溫度、日照和授粉條件不同，所以開花季節可能不同。',
+      '因為花朵想要每天換一種心情，所以隨便決定什麼時候開。',
+      '因為所有植物都一定在春天開花。'
+    ],
+    0,
+    'fb-mcq1'
+  );
+
+  buildSingleChoice(
+    'mcq2',
+    ['蜜蜂', '蝴蝶', '鳥', '桌子', '大風（某些植物）'],
+    null,
+    'fb-mcq2',
+    true,
+    [0,1,2,4]
+  );
+
+  buildSingleChoice(
+    'mcq3',
+    [
+      '胚珠受精後通常會發育成種子，子房通常會發育成果實。',
+      '果實的功能只有讓人類吃，不是為了植物自己。',
+      '種子不能長成新的植物。'
+    ],
+    0,
+    'fb-mcq3'
+  );
+
+  buildSingleChoice(
+    'mcq4',
+    [
+      '花瓣常能用顏色、香味吸引動物。',
+      '雄蕊的工作和花粉有關。',
+      '雌蕊的工作是把植物固定在土裡。'
+    ],
+    2,
+    'fb-mcq4'
+  );
+
+  function checkPairs(){
+    if(alreadyDone('fb-pairs')) return;
+    const ans = ['protect','attract','pollen','receive'];
+    let chosen = [
+      document.getElementById('sel1').value,
+      document.getElementById('sel2').value,
+      document.getElementById('sel3').value,
+      document.getElementById('sel4').value
+    ];
+    let correct = 0;
+    chosen.forEach((v,i)=>{ if(v===ans[i]) correct++; });
+    if(correct===4){
+      document.getElementById('fb-pairs').innerHTML = '<span class="good">全部配對正確！</span>';
+      addScore(8);
+    }else{
+      document.getElementById('fb-pairs').innerHTML = '<span class="bad">答對 '+correct+' / 4。再看看花朵各部位的工作吧！</span>';
+    }
+    markDone('fb-pairs');
+  }
+
+  function allowDrop(ev){ ev.preventDefault(); }
+  function drag(ev){ ev.dataTransfer.setData("text", ev.target.id); }
+  function drop(ev){
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData("text");
+    const node = document.getElementById(data);
+    if(ev.target.classList.contains('dropzone') || ev.target.classList.contains('seq-slot')){
+      ev.target.appendChild(node);
+    } else if(ev.target.classList.contains('slot-label')){
+      ev.target.parentNode.appendChild(node);
+    } else {
+      let parent = ev.target.closest('.dropzone, .seq-slot');
+      if(parent) parent.appendChild(node);
+    }
+  }
+
+  function checkDragSort(){
+    if(alreadyDone('fb-drag')) return;
+    let ok = 0;
+    document.querySelectorAll('#zone-attract .drag-item').forEach(i=>{ if(i.dataset.type === 'attract') ok++; });
+    document.querySelectorAll('#zone-notattract .drag-item').forEach(i=>{ if(i.dataset.type === 'not') ok++; });
+    if(ok===6){
+      document.getElementById('fb-drag').innerHTML = '<span class="good">分類完成，全對！</span>';
+      addScore(6);
+    }else{
+      document.getElementById('fb-drag').innerHTML = '<span class="bad">目前正確 '+ok+' / 6，還可以再觀察一下。</span>';
+    }
+    markDone('fb-drag');
+  }
+
+  function checkFlow(){
+    if(alreadyDone('fb-flow')) return;
+    let ok = 0;
+    for(let n=1; n<=7; n++){
+      const slot = document.getElementById('slot'+n);
+      const item = slot.querySelector('.drag-item');
+      if(item && Number(item.dataset.order) === n) ok++;
+    }
+    if(ok===7){
+      document.getElementById('fb-flow').innerHTML = '<span class="good">流程順序完全正確！</span>';
+      addScore(10);
+    }else{
+      document.getElementById('fb-flow').innerHTML = '<span class="bad">你排對了 '+ok+' / 7 步，再想想花粉、果實、種子的先後順序。</span>';
+    }
+    markDone('fb-flow');
+  }
+
+  function checkFruitSeed(){
+    if(alreadyDone('fb-fruitseed')) return;
+    let ok = 0;
+    document.querySelectorAll('#zone-fruit .drag-item').forEach(i=>{ if(i.dataset.group === 'fruit') ok++; });
+    document.querySelectorAll('#zone-seed .drag-item').forEach(i=>{ if(i.dataset.group === 'seed') ok++; });
+    if(ok===4){
+      document.getElementById('fb-fruitseed').innerHTML = '<span class="good">果實與種子的任務都分清楚了！</span>';
+      addScore(4);
+    }else{
+      document.getElementById('fb-fruitseed').innerHTML = '<span class="bad">目前正確 '+ok+' / 4，再試一次也可以喔。</span>';
+    }
+    markDone('fb-fruitseed');
+  }
+
+  function showFinal(){
+    let text = '';
+    if(score >= 38){
+      text = '🌟 太厲害了！你是花朵小博士！目前得分：'+score+' / '+total+'。';
+    }else if(score >= 28){
+      text = '💮 很棒！你已經掌握大部分重點。再複習一下流程就更完整了！目前得分：'+score+' / '+total+'。';
+    }else{
+      text = '🌱 你完成挑戰了！再回去看看每一頁的小提示，就會更熟悉花朵的秘密。目前得分：'+score+' / '+total+'。';
+    }
+    document.getElementById('finalText').textContent = text;
+  }
+
+  function resetGame(){
+    location.reload();
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>

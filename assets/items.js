@@ -140,5 +140,13 @@ window.STUDIO_ITEMS = [
     href: "games/digital-safety-ai-literacy-quiz.html",
     tag: "教師數位素養",
     icon: "shield-question"
+  },
+  {
+    title: "花朵繁衍大冒險",
+    description: "三年級自然互動闖關，透過 8 個任務認識開花季節、花朵構造、傳粉，以及果實和種子的繁衍功能。",
+    category: "game",
+    href: "games/flower-reproduction-adventure.html",
+    tag: "三年級自然",
+    icon: "flower-2"
   }
 ];

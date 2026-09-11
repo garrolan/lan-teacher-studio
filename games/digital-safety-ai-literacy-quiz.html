@@ -1,0 +1,56 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>教師數位安全 × AI素養大挑戰</title>
+<style>
+:root{--cream:#fff5df;--paper:#fffaf0;--orange:#c95b35;--blue:#1769c2;--yellow:#ffe96a;--ink:#5d5145;--ok:#2e9e67;--bad:#d94f4f}
+*{box-sizing:border-box}body{margin:0;font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:linear-gradient(#fff4d8 0 46%,#dff1ff 46% 100%);color:var(--ink);min-height:100vh}
+.wrap{max-width:980px;margin:auto;padding:22px 14px 48px}.panel{background:#fffaf0;border:4px solid #6b5b4f;border-radius:28px;box-shadow:0 8px 22px #0002;padding:24px}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fff8d8,#dff2ff);margin-bottom:16px}.hero:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:#ffe96a55;right:-25px;top:-35px}
+.tag{display:inline-block;background:var(--orange);color:white;border-radius:999px;padding:7px 14px;font-weight:900}.hero h1{font-size:clamp(32px,5vw,54px);color:var(--blue);margin:12px 0 8px;text-shadow:3px 3px white}.hero p{font-size:17px;line-height:1.7;max-width:760px}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.rule{background:white;border:3px solid #6b5b4f;border-radius:18px;padding:14px;text-align:center;font-weight:800}.rule b{display:block;color:var(--blue);margin-bottom:4px}
+.center{text-align:center}.start,.next,.restart{background:var(--blue);color:white;border:3px solid #6b5b4f;border-radius:999px;padding:12px 22px;font-weight:900;font-size:17px;cursor:pointer;box-shadow:3px 4px #6b5b4f}.next{background:var(--orange)}
+.status{background:#ffffffcc;border:3px solid #6b5b4f;border-radius:20px;padding:12px 14px;margin-bottom:14px}.bar{height:14px;background:#e8ddce;border:2px solid #6b5b4f;border-radius:999px;overflow:hidden}.bar div{height:100%;background:linear-gradient(90deg,#ef8a52,#ffe96a,#6ec4e8);transition:.3s}.row{display:flex;justify-content:space-between;font-weight:900;margin-top:8px}
+.qhead{display:flex;gap:8px;align-items:center}.qnum{background:var(--blue);color:white;border:3px solid #6b5b4f;border-radius:999px;padding:8px 14px;font-weight:900}.domain{background:#ffe08a;border:2px solid #6b5b4f;border-radius:999px;padding:5px 10px;font-weight:900;font-size:13px}
+.scenario{font-size:21px;font-weight:900;line-height:1.6;margin:18px 0}.choices{display:grid;gap:12px}.choice{background:white;border:3px solid #6b5b4f;border-radius:18px;padding:14px 16px;text-align:left;font-size:16px;font-weight:800;line-height:1.5;cursor:pointer;box-shadow:3px 4px #0002}.choice:hover{background:#fff7ce}.choice.correct{background:#ddf5e7;border-color:var(--ok)}.choice.wrong{background:#ffe1e1;border-color:var(--bad)}.choice:disabled{cursor:default}
+.feedback{display:none;margin-top:16px;padding:14px 16px;border:3px dashed #6b5b4f;border-radius:16px;background:#fff4cf;line-height:1.7;font-weight:800}.feedback.show{display:block}.nextrow{display:flex;justify-content:flex-end;margin-top:16px}.next{display:none}.next.show{display:inline-block}.hidden{display:none!important}
+.scorebig{font-size:64px;color:var(--orange);font-weight:1000}.badge{display:inline-block;background:var(--yellow);border:3px solid #6b5b4f;border-radius:999px;padding:8px 14px;font-weight:900;margin:10px}.tips{max-width:760px;margin:18px auto 0;background:white;border:3px solid #6b5b4f;border-radius:18px;padding:16px 18px;text-align:left;line-height:1.8;font-weight:700}
+.small{font-size:13px;color:#877d73;margin-top:14px}
+@media(max-width:700px){.rules{grid-template-columns:1fr}.scenario{font-size:19px}.panel{padding:18px}}
+</style></head><body>
+<div class="wrap">
+<section class="panel hero"><span class="tag">教師數位安全 × AI素養</span><h1>數位安全神助攻！</h1><p>10 個校園情境選擇題，看看你能不能同時避開「資安陷阱」與「AI過度依賴」。題目依照宣導海報重點改寫成老師日常會遇到的情境。</p></section>
+
+<section id="start" class="panel center">
+<h2>準備好了嗎？</h2>
+<div class="rules"><div class="rule"><b>資安風險</b>陌生 App、權限、個資與詐騙</div><div class="rule"><b>AI素養</b>查證、隱私、著作權與判斷力</div><div class="rule"><b>教師情境</b>把宣導內容變成校園案例</div></div>
+<p style="margin-top:20px"><button class="start" onclick="startGame()">開始挑戰</button></p>
+<div class="small">全程不蒐集任何資料，可直接投影操作。</div>
+</section>
+
+<div id="game" class="hidden">
+<section class="status"><div class="bar"><div id="progress"></div></div><div class="row"><span id="counter"></span><span id="score"></span></div></section>
+<section class="panel"><div class="qhead"><span class="qnum" id="qnum"></span><span class="domain" id="domain"></span></div><div class="scenario" id="scenario"></div><div id="choices" class="choices"></div><div id="feedback" class="feedback"></div><div class="nextrow"><button id="next" class="next" onclick="nextQ()">下一題 ➜</button></div></section>
+</div>
+
+<section id="result" class="panel center hidden"><h2>挑戰完成！</h2><div id="final" class="scorebig"></div><div id="badge" class="badge"></div><p id="resultText"></p><div class="tips"><b>老師版快速記憶：</b><br>① 不亂裝陌生 App　② 權限能關就關　③ 不把敏感個資丟進 AI<br>④ AI 內容要交叉查證　⑤ 注意著作權與影像真偽　⑥ AI 是工具，不是唯一答案。</div><p style="margin-top:20px"><button class="restart" onclick="restart()">再玩一次</button></p></section>
+</div>
+<script>
+const qs=[
+{d:"資安風險",q:"你收到一個「免費教學工具 App」連結，安裝後立刻要求讀取通訊錄、相簿、麥克風與定位。最適合怎麼做？",c:["先全部允許，之後有空再研究","先確認來源與必要性，不必要的權限不開；來源不明乾脆不安裝","只要很多人下載就一定安全"],a:1,e:"宣導海報提醒：未知或不必要的 App 可能帶來資安風險，權限能不開就不要開。"},
+{d:"資安風險",q:"某 App 長期記錄你的位置與使用習慣，號稱能提供「更個人化服務」。你最應該先做什麼？",c:["檢查隱私與定位權限，關閉非必要追蹤","沒關係，個人化越多越方便","改用更複雜的密碼就能解決所有追蹤"],a:0,e:"海報把「持續追蹤風險」列為陷阱之一。核心是減少不必要的追蹤權限。"},
+{d:"資安風險",q:"一個線上服務要求上傳大量個資，而且資料可能傳到海外伺服器。較安全的做法是？",c:["能填多少就填多少","只提供完成任務必要的資料，並先確認服務來源與隱私政策","上傳後再刪帳號就一定完全沒事"],a:1,e:"海報提醒「過度蒐集個資」與「數據回傳海外」都可能有風險。"},
+{d:"資安風險",q:"你看到「老師限定投資優惠」，保證高報酬、限時匯款，還附上很專業的群組截圖。你會？",c:["先匯小額試試看","轉傳給同事一起投資","視為高風險訊息，不匯款，並從官方或可信管道查證"],a:2,e:"海報把可疑訊息、太好康優惠與誘導投資列為詐騙風險。"},
+{d:"資安風險",q:"一個以前用過的 App 現在已經不需要了，但仍保有相簿、定位與麥克風權限。最佳處理方式？",c:["留著沒關係，只要不開就沒風險","關閉不必要權限；若確定不用，可解除安裝並刪除相關資料","把 App 移到資料夾裡就好"],a:1,e:"海報建議：不下載不明 App、關閉權限、徹底刪除。"},
+{d:"AI素養",q:"你用生成式 AI 幫忙寫一份給家長的通知。AI 寫得很順，你接下來最應該做什麼？",c:["直接貼出去","交叉檢查日期、規定、內容與語氣，再由自己確認後使用","只要重新排版漂亮就可以"],a:1,e:"AI 海報強調「交叉驗證」與「判斷能力」。老師仍需保留最後判斷。"},
+{d:"AI素養",q:"你想請 AI 幫忙分析一名學生的學習狀況。哪個做法比較安全？",c:["直接貼上學生全名、電話與完整家庭資料","先去識別化，只提供完成分析所必要的資訊","只要用私人帳號就可以上傳任何資料"],a:1,e:"海報提醒「避免輸入個資和隱私內容」。即使工作用途，也應先去識別化。"},
+{d:"AI素養",q:"AI 產生了一張很漂亮的教學圖片。老師準備直接放進公開簡報，最需要多想一步的是？",c:["確認影像來源、使用情境與可能的著作權／侵權風險","AI 生的圖一定沒有著作權問題","把浮水印裁掉就沒問題"],a:0,e:"海報明確提醒「侵權風險」。生成內容不代表可以忽略授權與來源。"},
+{d:"AI素養",q:"AI 回答一個你不熟悉的教育法規問題，而且語氣非常肯定。你怎麼處理？",c:["直接當正式依據","再問同一個 AI 三次，一致就算查證","查官方法規、公文或可信來源，和 AI 結果交叉比對"],a:2,e:"海報提醒「不將 AI 當成唯一學習來源」以及「交叉驗證」。"},
+{d:"AI素養",q:"最近工作壓力很大，你開始把所有重要判斷都交給 AI，甚至不再和同事討論。從海報觀點看，哪個提醒最重要？",c:["所有決策都交給 AI","AI 是工具，仍需保有自己的判斷力，也不要過度依賴 AI 的情緒回饋","只要 AI 回覆得夠溫柔就沒問題"],a:1,e:"海報提醒避免過度依賴 AI 的情緒回饋，並保有自己的判斷能力；AI 是程式工具。"}
+];
+let i=0,p=0,lock=false;
+function startGame(){document.getElementById("start").classList.add("hidden");document.getElementById("game").classList.remove("hidden");i=0;p=0;render()}
+function render(){lock=false;let q=qs[i];qnum.textContent="Q"+(i+1);domain.textContent=q.d;scenario.textContent=q.q;counter.textContent=`第 ${i+1} / ${qs.length} 題`;score.textContent=`目前 ${p} 分`;progress.style.width=`${i/qs.length*100}%`;choices.innerHTML="";q.c.forEach((x,n)=>{let b=document.createElement("button");b.className="choice";b.textContent=String.fromCharCode(65+n)+"．"+x;b.onclick=()=>pick(n,b);choices.appendChild(b)});feedback.className="feedback";feedback.innerHTML="";next.classList.remove("show");next.textContent=i===qs.length-1?"看結果 ➜":"下一題 ➜"}
+function pick(n,b){if(lock)return;lock=true;let q=qs[i],bs=[...document.querySelectorAll(".choice")];bs.forEach((x,k)=>{x.disabled=true;if(k===q.a)x.classList.add("correct")});if(n===q.a){p+=10;feedback.innerHTML="<b>✅ 判斷正確！</b><br>"+q.e}else{b.classList.add("wrong");feedback.innerHTML="<b>⚠️ 這個選擇有風險。</b><br>"+q.e}feedback.classList.add("show");score.textContent=`目前 ${p} 分`;next.classList.add("show")}
+function nextQ(){if(i<qs.length-1){i++;render()}else finish()}
+function finish(){game.classList.add("hidden");result.classList.remove("hidden");final.textContent=p+" 分";let b,t;if(p>=90){b="🏆 數位安全守門員";t="非常穩！你不只會用工具，也知道什麼時候該停、該查、該保留判斷。"}else if(p>=70){b="🛡️ 安全意識上線";t="整體判斷不錯，再把權限、個資與 AI 查證習慣守得更穩，就很可靠了。"}else{b="🔎 再檢查一下";t="有些風險很容易藏在「方便」裡。再玩一次會更熟。"}badge.textContent=b;resultText.textContent=t}
+function restart(){result.classList.add("hidden");start.classList.remove("hidden")}
+</script></body></html>

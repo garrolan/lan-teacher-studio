@@ -132,5 +132,13 @@ window.STUDIO_ITEMS = [
     href: "games/gas-safety-adventure.html",
     tag: "家庭安全",
     icon: "shield-check"
+  },
+  {
+    title: "教師數位安全 × AI 素養大挑戰",
+    description: "10 個校園情境選擇題，練習辨識 App 權限、個資、詐騙及 AI 查證、著作權與過度依賴等風險。",
+    category: "game",
+    href: "games/digital-safety-ai-literacy-quiz.html",
+    tag: "教師數位素養",
+    icon: "shield-question"
   }
 ];

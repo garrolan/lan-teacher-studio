@@ -148,5 +148,13 @@ window.STUDIO_ITEMS = [
     href: "games/flower-reproduction-adventure.html",
     tag: "三年級自然",
     icon: "flower-2"
+  },
+  {
+    title: "磁力科學實驗室｜三節課互動教學",
+    description: "三年級自然互動實驗課程，透過預測、實測、測驗與成果整理，探索磁性、磁力強弱及磁極作用。",
+    category: "game",
+    href: "games/2-2磁力科學實驗室.html",
+    tag: "三年級自然",
+    icon: "magnet"
   }
 ];

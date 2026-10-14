@@ -156,5 +156,13 @@ window.STUDIO_ITEMS = [
     href: "games/2-2磁力科學實驗室.html",
     tag: "三年級自然",
     icon: "magnet"
+  },
+  {
+    title: "自然探索大挑戰｜植物與力",
+    description: "三年級自然 25 題互動複習，透過選擇、是非、多選、填充、配對與分類題，複習植物及生活中的力。",
+    category: "game",
+    href: "games/單元一單元二自然複習考題.html",
+    tag: "三年級自然",
+    icon: "leaf"
   }
 ];

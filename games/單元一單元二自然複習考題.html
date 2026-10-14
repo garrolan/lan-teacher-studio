@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自然探索小遊戲：植物與力</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .nature-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 105, 92, 0.15), 
+                        inset 0 0 0 4px #e0f2f1;
+            backdrop-filter: blur(10px);
+        }
+
+        /* 蝴蝶動畫 */
+        @keyframes fly {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, -20px) rotate(10deg); }
+            50% { transform: translate(40px, 0) rotate(-5deg); }
+            75% { transform: translate(20px, 20px) rotate(15deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        .butterfly {
+            position: absolute;
+            font-size: 2rem;
+            animation: fly 8s infinite ease-in-out;
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 答對答錯動畫 */
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+        }
+
+        .animate-pop { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .animate-shake { animation: shake 0.4s ease-in-out; }
+
+        /* 自訂按鈕樣式 */
+        .btn-leaf {
+            background: linear-gradient(to bottom right, #4caf50, #2e7d32);
+            color: white;
+            border-radius: 50px 0 50px 50px; /* 像一片葉子 */
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(46, 125, 50, 0.3);
+        }
+        .btn-leaf:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 12px rgba(46, 125, 50, 0.4);
+            background: linear-gradient(to bottom right, #66bb6a, #388e3c);
+        }
+        .btn-leaf:active {
+            transform: translateY(1px);
+        }
+
+        /* 選項按鈕 */
+        .option-btn {
+            background: white;
+            border: 2px solid #81c784;
+            border-radius: 16px;
+            color: #2e7d32;
+            transition: all 0.2s;
+        }
+        .option-btn:hover {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+        .option-btn.selected {
+            background: #4caf50;
+            color: white;
+            border-color: #2e7d32;
+        }
+        
+        /* 分類題特殊樣式 */
+        .sort-bin {
+            border: 3px dashed #a5d6a7;
+            border-radius: 16px;
+            min-height: 80px;
+            transition: all 0.3s;
+        }
+        .sort-bin.active {
+            background-color: #e8f5e9;
+            border-color: #4caf50;
+            border-style: solid;
+        }
+        .sort-item {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sort-item.selected-item {
+            box-shadow: 0 0 0 3px #ffa000;
+            transform: scale(1.05);
+        }
+
+        /* 進度條 */
+        .progress-bar-fill {
+            transition: width 0.4s ease-out;
+        }
+    </style>
+</head>
+<body class="text-gray-800 relative flex items-center justify-center p-4">
+
+    <!-- 裝飾性蝴蝶 -->
+    <div class="butterfly" style="top: 10%; left: 10%;">🦋</div>
+    <div class="butterfly" style="top: 70%; left: 80%; animation-delay: -2s; font-size: 3rem;">🦋</div>
+    <div class="butterfly" style="top: 40%; left: 85%; animation-delay: -4s;">🦋</div>
+
+    <!-- 歡迎畫面 -->
+    <div id="start-screen" class="nature-card w-full max-w-2xl p-8 text-center relative z-10 animate-pop">
+        <div class="mb-6 flex justify-center">
+            <span class="text-7xl">🌿</span>
+        </div>
+        <h1 class="text-4xl font-black text-green-800 mb-4 tracking-wider">自然探索大挑戰</h1>
+        <p class="text-lg text-green-700 mb-6 font-bold">第三冊 單元一：多采多姿的植物 <br> 單元二：生活中的力</p>
+        <div class="bg-green-50 text-green-900 p-4 rounded-xl text-left mb-8 text-sm md:text-base border border-green-200">
+            <ul class="list-disc pl-5 space-y-2">
+                <li>共有 <b>25</b> 道題目，每題 <b>4</b> 分。</li>
+                <li>包含選擇、是非、多選、填充、配對與分類題。</li>
+                <li>挑戰完成後，將根據你的分數給予神聖的自然稱號！</li>
+                <li>深呼吸，點擊下方葉子按鈕開始探險吧！</li>
+            </ul>
+        </div>
+        <button onclick="startGame()" class="btn-leaf text-2xl font-bold py-4 px-12 focus:outline-none">
+            開始探險 🦋
+        </button>
+    </div>
+
+    <!-- 遊戲畫面 -->
+    <div id="game-screen" class="nature-card w-full max-w-4xl p-6 md:p-8 hidden relative z-10">
+        <!-- 狀態列 -->
+        <div class="flex justify-between items-center mb-4 text-green-800 font-bold">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">🌱</span>
+                <span>題數: <span id="current-q-num" class="text-xl">1</span> / 25</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">⏱️</span>
+                <span id="timer">00:00</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">⭐</span>
+                <span>分數: <span id="current-score" class="text-xl">0</span></span>
+            </div>
+        </div>
+
+        <!-- 進度條 -->
+        <div class="w-full bg-gray-200 rounded-full h-3 mb-8 overflow-hidden">
+            <div id="progress-bar" class="bg-gradient-to-r from-green-400 to-green-600 h-3 progress-bar-fill" style="width: 4%"></div>
+        </div>
+
+        <!-- 題目區域 -->
+        <div id="question-container" class="mb-8 min-h-[250px]">
+            <h2 id="question-text" class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 leading-tight">題目</h2>
+            <p id="question-type-badge" class="inline-block bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full font-bold mb-6 border border-green-300">題型</p>
+            
+            <!-- 動態生成的選項區 -->
+            <div id="options-area" class="w-full"></div>
+        </div>
+
+        <!-- 操作區 -->
+        <div class="flex justify-end border-t border-green-100 pt-6">
+            <button id="submit-btn" onclick="submitAnswer()" class="btn-leaf text-xl font-bold py-3 px-8 hidden focus:outline-none">
+                確定答案
+            </button>
+            <button id="next-btn" onclick="nextQuestion()" class="btn-leaf text-xl font-bold py-3 px-8 hidden focus:outline-none bg-gradient-to-r from-blue-500 to-indigo-600">
+                下一題 ➡️
+            </button>
+        </div>
+
+        <!-- 回饋訊息浮層 -->
+        <div id="feedback-overlay" class="hidden absolute inset-0 bg-white/90 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center p-8 z-20">
+            <div id="feedback-icon" class="text-7xl mb-4"></div>
+            <h3 id="feedback-title" class="text-3xl font-black mb-4"></h3>
+            <p id="feedback-desc" class="text-xl text-center text-gray-700 max-w-2xl leading-relaxed"></p>
+            <button onclick="closeFeedback()" class="mt-8 btn-leaf text-xl font-bold py-3 px-10">繼續</button>
+        </div>
+    </div>
+
+    <!-- 結果畫面 -->
+    <div id="result-screen" class="nature-card w-full max-w-2xl p-8 text-center hidden relative z-10">
+        <h1 class="text-4xl font-black text-green-800 mb-6">探險結束！</h1>
+        
+        <div class="bg-white rounded-3xl p-8 mb-8 shadow-inner border-4 border-green-100 relative">
+            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 text-8xl" id="rank-icon">👑</div>
+            <h2 class="text-2xl font-bold text-gray-600 mt-6 mb-2">你的自然稱號</h2>
+            <div id="rank-title" class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 mb-6 pb-2"></div>
+            
+            <div class="grid grid-cols-2 gap-4 text-left bg-gray-50 p-4 rounded-xl">
+                <div class="p-3 bg-white rounded-lg shadow-sm border border-gray-100 flex flex-col items-center">
+                    <span class="text-gray-500 font-bold mb-1">最終分數</span>
+                    <span id="final-score" class="text-4xl font-black text-green-600">100</span>
+                </div>
+                <div class="p-3 bg-white rounded-lg shadow-sm border border-gray-100 flex flex-col items-center">
+                    <span class="text-gray-500 font-bold mb-1">花費時間</span>
+                    <span id="final-time" class="text-4xl font-black text-blue-600">02:30</span>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="location.reload()" class="btn-leaf text-xl font-bold py-4 px-10">
+            🔄 重新挑戰
+        </button>
+    </div>
+
+    <script>
+        // --- 題目資料庫 (根據單元一、二課本內容精確設計) ---
+        const questions = [
+            // 單元一：多采多姿的植物
+            {
+                type: 'tf',
+                prompt: '榕樹和仙丹花是植物，它們通常生長在固定的位置不會移動，但是會慢慢長大。',
+                options: ['對', '錯'],
+                answer: '對',
+                explanation: '植物和動物都是生物，動物有較明顯的運動行為，植物則幾乎都在固定的位置，不會移動。'
+            },
+            {
+                type: 'mc',
+                prompt: '仔細觀察不同植物的葉子，下列哪一個「不是」我們分辨葉子特徵的主要依據？',
+                options: ['葉形 (葉子的形狀)', '葉緣 (葉子的邊緣)', '葉脈 (葉子上的紋路)', '花萼 (花朵底部的綠色構造)'],
+                answer: '花萼 (花朵底部的綠色構造)',
+                explanation: '葉子的外形特徵主要分為葉形、葉緣和葉脈；花萼是「花」的構造，不是葉子的。'
+            },
+            {
+                type: 'sort',
+                prompt: '植物的莖有不同的形態來幫助獲取陽光。請將下列植物點擊分配到正確的莖種類中。',
+                items: ['牽牛花', '樟樹', '大花咸豐草', '絲瓜'],
+                categories: ['木本莖 (高大粗壯)', '草本莖 (較細、直立或分枝)', '藤本莖 (柔軟需攀爬)'],
+                answer: {
+                    '牽牛花': '藤本莖 (柔軟需攀爬)',
+                    '樟樹': '木本莖 (高大粗壯)',
+                    '大花咸豐草': '草本莖 (較細、直立或分枝)',
+                    '絲瓜': '藤本莖 (柔軟需攀爬)'
+                },
+                explanation: '樟樹是木本莖；大花咸豐草是草本莖；牽牛花和絲瓜是藤本莖，需要依靠其他物體攀爬。'
+            },
+            {
+                type: 'fill',
+                prompt: '葉子在莖上生長的方式稱為[blank]。如果一個節上只長出一片葉子，我們稱之為[blank]生。',
+                options: [['葉脈', '葉緣', '葉序'], ['互', '對', '輪']],
+                answer: ['葉序', '互'],
+                explanation: '葉子生長方式為「葉序」。一節長1片是互生（如榕樹），2片是對生（如桂花），3片以上是輪生（如黑板樹）。'
+            },
+            {
+                type: 'mc',
+                prompt: '比較菠菜和蔥的根，哪一種植物的根是「鬚根」（細細小小像鬍鬚，生長在淺層）？',
+                options: ['菠菜', '蔥', '小白菜', '榕樹'],
+                answer: '蔥',
+                explanation: '蔥、蒜的根是鬚根；菠菜、小白菜、榕樹等有一條比較粗的主根，稱為軸根。'
+            },
+            {
+                type: 'ms',
+                prompt: '一朵「完全花」必須包含以下哪些基本構造？（請選出所有正確選項）',
+                options: ['花萼', '花瓣', '雄蕊', '雌蕊', '果實'],
+                answer: ['花萼', '花瓣', '雄蕊', '雌蕊'],
+                explanation: '一朵花的基本構造有花萼、花瓣、雄蕊和雌蕊，具備這四個構造的稱為「完全花」。果實是開花後才發育而成的。'
+            },
+            {
+                type: 'tf',
+                prompt: '所有的植物開花的時間都一樣，我們只有在春天才能看到植物開花。',
+                options: ['對', '錯'],
+                answer: '錯',
+                explanation: '一年四季都可以看到不同植物在開花，例如梅花在冬季開花，荷花在夏季開花。'
+            },
+            {
+                type: 'mc',
+                prompt: '大部分植物開花後，是由花的哪一個部位發育成果實？',
+                options: ['花瓣', '花萼', '雄蕊', '雌蕊'],
+                answer: '雌蕊',
+                explanation: '當雄蕊的花粉傳到雌蕊上後，雌蕊（子房）就會逐漸發育成果實，裡面包含種子。'
+            },
+            {
+                type: 'match',
+                prompt: '植物與我們的生活息息相關。請將下列物品與其對應的植物來源配對。',
+                pairs: ['衣服', '米飯', '木棧道/家具'],
+                targets: ['棉花/亞麻', '稻子', '樹木的莖(木材)'],
+                answer: {'衣服': '棉花/亞麻', '米飯': '稻子', '木棧道/家具': '樹木的莖(木材)'},
+                explanation: '植物提供我們食(稻子)、衣(棉花)、住/行(木材)等重要資源。'
+            },
+            {
+                type: 'tf',
+                prompt: '將植物裝入裝水的寶特瓶並用膠泥封口，一段時間後水位會下降，這證明了植物生長所需的水是由「根部」吸收的。',
+                options: ['對', '錯'],
+                answer: '對',
+                explanation: '植物的根除了能抓住土壤固定植物外，最主要的功能就是吸收水分。'
+            },
+            {
+                type: 'mc',
+                prompt: '薄荷、九層塔、香茅等植物的葉子會散發特殊的氣味。對植物本身而言，這個氣味主要的功用是什麼？',
+                options: ['幫助植物吸收更多水分', '讓植物長得更高', '保護自己，讓想吃葉子的昆蟲不敢靠近', '吸引人類來摘取'],
+                answer: '保護自己，讓想吃葉子的昆蟲不敢靠近',
+                explanation: '植物遇到危險無法逃跑，散發特殊氣味是植物保護自己的一種方法。'
+            },
+            {
+                type: 'tf',
+                prompt: '「生石花」長得像石頭一樣，那是因為它的莖硬化了，主要是為了好看。',
+                options: ['對', '錯'],
+                answer: '錯',
+                explanation: '生石花像石頭的部分其實是它的「葉子」。長得像石頭可以避免被動物吃掉，厚實的肉質葉也能幫助在乾燥環境保持水分。'
+            },
+            
+            // 單元二：生活中的力
+            {
+                type: 'fill',
+                prompt: '力是看不見的。我們表示力的時候，會包含力的[blank]、力的方向和力的大小，這三個稱為「力的三要素」。',
+                options: [['形狀', '作用點', '顏色', '速度']],
+                answer: ['作用點'],
+                explanation: '對物體施力時，碰觸到物體的位置稱為「力的作用點」。力的大小、方向和作用點合稱力的三要素。'
+            },
+            {
+                type: 'mc',
+                prompt: '進行實驗時，我們用雙手用力壓「膠泥」，會觀察到什麼現象？',
+                options: ['形狀改變了，而且不再受力後無法恢復原狀', '形狀改變了，但放開後會立刻恢復原狀', '形狀不會改變', '運動狀態變快了'],
+                answer: '形狀改變了，而且不再受力後無法恢復原狀',
+                explanation: '膠泥受力會改變形狀，且不具彈性，所以放開後無法恢復原狀。像橡皮筋受力變形後，不再受力就會恢復。'
+            },
+            {
+                type: 'ms',
+                prompt: '踢足球時，足球的運動狀態（變快、變慢、停止或改變方向）會受到哪些因素的影響？（請選出所有正確選項）',
+                options: ['用力的方向', '用力的大小', '天氣的溫度', '踢球的位置(作用點)'],
+                answer: ['用力的方向', '用力的大小', '踢球的位置(作用點)'],
+                explanation: '物體受力的方向、大小與作用點（力的三要素）都會影響物體運動方向與速度。'
+            },
+            {
+                type: 'tf',
+                prompt: '大部分的力都必須接觸物體才能產生作用，但「磁力」具有不須接觸物體就能產生作用的特性。',
+                options: ['對', '錯'],
+                answer: '對',
+                explanation: '磁力是一種超距力，不需要直接碰到鐵製品，隔著一段距離（或隔著塑膠袋）也能吸住鐵製品。'
+            },
+            {
+                type: 'fill',
+                prompt: '磁鐵兩端磁力最強的部位稱為[blank]，分別是[blank]極和 S 極。',
+                options: [['磁極', '頂芽', '磁極點'], ['N', 'M', 'W']],
+                answer: ['磁極', 'N'],
+                explanation: '同一個磁鐵不同部位磁力強弱不同，吸住最多迴紋針的兩端磁力最強，稱為磁極（N極與S極）。'
+            },
+            {
+                type: 'sort',
+                prompt: '小明做實驗測試磁鐵。請幫忙把下列物品分類，哪些能被磁鐵吸住？',
+                items: ['長尾夾', '橡皮擦', '釘書針', '十元硬幣'],
+                categories: ['能被磁鐵吸住', '不能被磁鐵吸住'],
+                answer: {
+                    '長尾夾': '能被磁鐵吸住',
+                    '釘書針': '能被磁鐵吸住',
+                    '橡皮擦': '不能被磁鐵吸住',
+                    '十元硬幣': '不能被磁鐵吸住'
+                },
+                explanation: '磁鐵只能吸住「鐵製」的物品。長尾夾和釘書針含有鐵；橡皮擦和十元硬幣(銅/鎳合金)不含鐵。'
+            },
+            {
+                type: 'mc',
+                prompt: '把兩個磁鐵的「N極」和「N極」互相靠近，會發生什麼現象？',
+                options: ['互相吸引 (異極相吸)', '互相排斥 (同極相斥)', '沒有任何感覺', '磁力會消失'],
+                answer: '互相排斥 (同極相斥)',
+                explanation: '磁鐵具有「同極相斥（NN或SS）」、「異極相吸（NS）」的特性。'
+            },
+            {
+                type: 'mc',
+                prompt: '將物體放入水中，會受到一個向上的力，稱為什麼？',
+                options: ['浮力', '磁力', '彈力', '風力'],
+                answer: '浮力',
+                explanation: '水具有浮力，當物體放進水中時，水會給予物體一個向上的力量。'
+            },
+            {
+                type: 'tf',
+                prompt: '原本會沉在水中的膠泥，如果我們用力改變它的形狀，把它捏成「船的形狀（容器狀）」，它就有可能浮在水面上。',
+                options: ['對', '錯'],
+                answer: '對',
+                explanation: '水的浮力大小與物體形狀有關。將會沉的物體做成中間有空間的容器狀，就比較容易浮在水面。'
+            },
+            {
+                type: 'mc',
+                prompt: '古代人利用河水流動來推動水車轉動，藉此碾米或發電。這代表水具有什麼特性？',
+                options: ['水可以傳送動力', '水具有很大的磁力', '水具有很大的彈力', '水沒有重量'],
+                answer: '水可以傳送動力',
+                explanation: '流動的水接觸扇葉時，能將力量傳送給扇葉，使物體移動、傳送動力。'
+            },
+            {
+                type: 'match',
+                prompt: '生活中有許多力的應用。請將下列現象與應用到的力配對。',
+                pairs: ['綁頭髮的髮圈', '天空飛舞的風箏', '浮在海上的郵輪'],
+                targets: ['彈力', '風力', '浮力'],
+                answer: {'綁頭髮的髮圈': '彈力', '天空飛舞的風箏': '風力', '浮在海上的郵輪': '浮力'},
+                explanation: '髮圈利用形狀恢復的彈力；風箏利用風力上升；船隻利用形狀與水的浮力漂浮。'
+            },
+            {
+                type: 'tf',
+                prompt: '銀行存摺或提款卡背面的黑色磁條，裡面儲存了很多訊息，如果不小心被強力磁鐵破壞了磁性，訊息就會消失。',
+                options: ['對', '錯'],
+                answer: '對',
+                explanation: '存摺或卡片背面的磁條是利用磁性材料儲存資料的，接觸到強力磁鐵會導致消磁、損壞資料。'
+            },
+            {
+                type: 'mc',
+                prompt: '服飾店衣服上的防盜磁扣，店員結帳時是利用什麼原理將它打開的？',
+                options: ['利用強力水柱沖開', '利用強力磁鐵吸起內部的鐵環和鋼珠', '利用大剪刀剪斷', '輸入密碼解開'],
+                answer: '利用強力磁鐵吸起內部的鐵環和鋼珠',
+                explanation: '防盜磁扣內部有鐵環、鋼珠和彈簧，店員使用強力磁鐵的磁力將鋼珠吸開，就能拔出鋼釘。'
+            }
+        ];
+
+        // --- 狀態變數 ---
+        let currentQIndex = 0;
+        let score = 0;
+        let startTime;
+        let timerInterval;
+        let selectedData = null; // 用於儲存使用者的選擇
+        let sortState = {}; // 用於記錄分類題狀態
+        let matchState = {}; // 用於記錄配對題狀態
+
+        // --- 音效系統 (Web Audio API) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playTone(freq, type, duration, vol=0.1) {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            
+            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function playCorrectSound() {
+            playTone(523.25, 'sine', 0.1, 0.2); // C5
+            setTimeout(() => playTone(659.25, 'sine', 0.1, 0.2), 100); // E5
+            setTimeout(() => playTone(783.99, 'sine', 0.2, 0.2), 200); // G5
+        }
+
+        function playWrongSound() {
+            playTone(300, 'triangle', 0.15, 0.2);
+            setTimeout(() => playTone(250, 'triangle', 0.3, 0.2), 150);
+        }
+
+        // --- 遊戲邏輯 ---
+        function startGame() {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            
+            // 打亂題目順序
+            questions.sort(() => Math.random() - 0.5);
+            
+            score = 0;
+            currentQIndex = 0;
+            startTime = Date.now();
+            
+            timerInterval = setInterval(updateTimer, 1000);
+            loadQuestion();
+        }
+
+        function updateTimer() {
+            const now = Date.now();
+            const diff = Math.floor((now - startTime) / 1000);
+            const m = String(Math.floor(diff / 60)).padStart(2, '0');
+            const s = String(diff % 60).padStart(2, '0');
+            document.getElementById('timer').innerText = `${m}:${s}`;
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQIndex];
+            document.getElementById('current-q-num').innerText = currentQIndex + 1;
+            document.getElementById('progress-bar').style.width = `${((currentQIndex) / 25) * 100}%`;
+            document.getElementById('question-text').innerText = q.prompt;
+            
+            const optionsArea = document.getElementById('options-area');
+            optionsArea.innerHTML = '';
+            document.getElementById('submit-btn').classList.remove('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+            selectedData = null;
+
+            // 根據題型渲染標籤與內容
+            let typeLabel = '';
+            if(q.type === 'mc') typeLabel = '單選題';
+            else if(q.type === 'tf') typeLabel = '是非題';
+            else if(q.type === 'ms') typeLabel = '多選題 (請選出所有正確答案)';
+            else if(q.type === 'fill') typeLabel = '下拉填充題';
+            else if(q.type === 'sort') typeLabel = '分類題 (先點擊項目，再點擊分類框)';
+            else if(q.type === 'match') typeLabel = '配對題';
+            
+            document.getElementById('question-type-badge').innerText = typeLabel;
+
+            // 渲染邏輯
+            if (q.type === 'mc' || q.type === 'tf') {
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+                const opts = [...q.options].sort(() => Math.random() - 0.5);
+                opts.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn text-lg p-4 font-bold text-left';
+                    btn.innerText = opt;
+                    btn.onclick = () => {
+                        Array.from(grid.children).forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        selectedData = opt;
+                    };
+                    grid.appendChild(btn);
+                });
+                optionsArea.appendChild(grid);
+            } 
+            else if (q.type === 'ms') {
+                selectedData = new Set();
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+                const opts = [...q.options].sort(() => Math.random() - 0.5);
+                opts.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn text-lg p-4 font-bold text-left';
+                    btn.innerText = opt;
+                    btn.onclick = () => {
+                        if (btn.classList.contains('selected')) {
+                            btn.classList.remove('selected');
+                            selectedData.delete(opt);
+                        } else {
+                            btn.classList.add('selected');
+                            selectedData.add(opt);
+                        }
+                    };
+                    grid.appendChild(btn);
+                });
+                optionsArea.appendChild(grid);
+            }
+            else if (q.type === 'fill') {
+                let html = '<div class="text-xl leading-relaxed bg-white p-6 rounded-2xl border border-green-200">';
+                let parts = q.prompt.split('[blank]');
+                for (let i = 0; i < parts.length; i++) {
+                    html += parts[i];
+                    if (i < q.options.length) {
+                        html += `<select class="fill-select mx-2 p-2 border-2 border-green-400 rounded-lg text-green-800 font-bold bg-green-50 outline-none">
+                                    <option value="" disabled selected>請選擇...</option>`;
+                        q.options[i].forEach(opt => {
+                            html += `<option value="${opt}">${opt}</option>`;
+                        });
+                        html += `</select>`;
+                    }
+                }
+                html += '</div>';
+                // Override prompt hiding for this type
+                document.getElementById('question-text').innerText = '請完成下列句子：';
+                optionsArea.innerHTML = html;
+            }
+            else if (q.type === 'sort') {
+                sortState = { activeItem: null, assignments: {} };
+                const container = document.createElement('div');
+                
+                // Items area
+                const itemsDiv = document.createElement('div');
+                itemsDiv.className = 'flex flex-wrap gap-3 mb-6';
+                q.items.forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.className = 'sort-item bg-white border-2 border-blue-300 text-blue-800 font-bold py-2 px-4 rounded-full';
+                    btn.innerText = item;
+                    btn.id = `sort-item-${item}`;
+                    btn.onclick = () => {
+                        document.querySelectorAll('.sort-item').forEach(el => el.classList.remove('selected-item'));
+                        btn.classList.add('selected-item');
+                        sortState.activeItem = item;
+                    };
+                    itemsDiv.appendChild(btn);
+                });
+
+                // Categories area
+                const catsDiv = document.createElement('div');
+                catsDiv.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+                q.categories.forEach(cat => {
+                    const box = document.createElement('div');
+                    box.className = 'sort-bin bg-white p-4 flex flex-col items-center justify-start relative cursor-pointer';
+                    box.innerHTML = `<span class="font-bold text-green-800 mb-2 border-b-2 border-green-200 pb-1 w-full text-center pointer-events-none">${cat}</span>
+                                     <div id="bin-${cat}" class="w-full flex flex-wrap gap-2 justify-center pointer-events-none"></div>`;
+                    
+                    box.onclick = () => {
+                        if (sortState.activeItem) {
+                            const binDiv = document.getElementById(`bin-${cat}`);
+                            const itemEl = document.getElementById(`sort-item-${sortState.activeItem}`);
+                            
+                            // Visual move
+                            itemEl.className = 'bg-blue-100 text-blue-800 font-bold py-1 px-3 rounded-full text-sm';
+                            binDiv.appendChild(itemEl);
+                            
+                            // Record
+                            sortState.assignments[sortState.activeItem] = cat;
+                            sortState.activeItem = null;
+                        }
+                    };
+                    catsDiv.appendChild(box);
+                });
+
+                container.appendChild(itemsDiv);
+                container.appendChild(catsDiv);
+                optionsArea.appendChild(container);
+            }
+            else if (q.type === 'match') {
+                matchState = {};
+                const container = document.createElement('div');
+                container.className = 'flex flex-col gap-4';
+                
+                const shuffledTargets = [...q.targets].sort(() => Math.random() - 0.5);
+
+                q.pairs.forEach((pair, index) => {
+                    const row = document.createElement('div');
+                    row.className = 'flex items-center justify-between bg-white p-4 rounded-xl border border-green-200';
+                    
+                    const label = document.createElement('span');
+                    label.className = 'font-bold text-lg text-gray-700 w-1/2';
+                    label.innerText = pair;
+
+                    const select = document.createElement('select');
+                    select.className = 'match-select p-2 border-2 border-green-400 rounded-lg text-green-800 font-bold bg-green-50 w-1/2 outline-none';
+                    select.innerHTML = '<option value="" disabled selected>配對...</option>';
+                    shuffledTargets.forEach(t => {
+                        select.innerHTML += `<option value="${t}">${t}</option>`;
+                    });
+                    
+                    select.onchange = (e) => {
+                        matchState[pair] = e.target.value;
+                    };
+
+                    row.appendChild(label);
+                    row.appendChild(select);
+                    container.appendChild(row);
+                });
+                optionsArea.appendChild(container);
+            }
+        }
+
+        function submitAnswer() {
+            const q = questions[currentQIndex];
+            let isCorrect = false;
+
+            if (q.type === 'mc' || q.type === 'tf') {
+                if (!selectedData) return alert('請選擇一個答案！');
+                isCorrect = (selectedData === q.answer);
+            } 
+            else if (q.type === 'ms') {
+                if (!selectedData || selectedData.size === 0) return alert('請至少選擇一個答案！');
+                const userArr = Array.from(selectedData).sort();
+                const ansArr = [...q.answer].sort();
+                isCorrect = (JSON.stringify(userArr) === JSON.stringify(ansArr));
+            }
+            else if (q.type === 'fill') {
+                const selects = document.querySelectorAll('.fill-select');
+                let userAnswers = [];
+                let allFilled = true;
+                selects.forEach(s => {
+                    if(!s.value) allFilled = false;
+                    userAnswers.push(s.value);
+                });
+                if (!allFilled) return alert('請填寫所有空格！');
+                isCorrect = (JSON.stringify(userAnswers) === JSON.stringify(q.answer));
+            }
+            else if (q.type === 'sort') {
+                if (Object.keys(sortState.assignments).length !== q.items.length) {
+                    return alert('請將所有項目分類完成！');
+                }
+                isCorrect = true;
+                for (let item in q.answer) {
+                    if (sortState.assignments[item] !== q.answer[item]) {
+                        isCorrect = false;
+                        break;
+                    }
+                }
+            }
+            else if (q.type === 'match') {
+                if (Object.keys(matchState).length !== q.pairs.length) {
+                    return alert('請完成所有配對！');
+                }
+                isCorrect = true;
+                for (let pair in q.answer) {
+                    if (matchState[pair] !== q.answer[pair]) {
+                        isCorrect = false;
+                        break;
+                    }
+                }
+            }
+
+            document.getElementById('submit-btn').classList.add('hidden');
+            showFeedback(isCorrect, q.explanation);
+        }
+
+        function showFeedback(isCorrect, explanation) {
+            const overlay = document.getElementById('feedback-overlay');
+            const icon = document.getElementById('feedback-icon');
+            const title = document.getElementById('feedback-title');
+            const desc = document.getElementById('feedback-desc');
+            const gameScreen = document.getElementById('game-screen');
+
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            
+            if (isCorrect) {
+                score += 4;
+                document.getElementById('current-score').innerText = score;
+                playCorrectSound();
+                icon.innerText = '🌟';
+                title.innerText = '太棒了，答對了！';
+                title.className = 'text-3xl font-black mb-4 text-green-600 animate-pop';
+                desc.innerText = explanation;
+                // Add tiny visual celebration
+                gameScreen.style.boxShadow = '0 0 30px rgba(76, 175, 80, 0.5)';
+                setTimeout(()=> gameScreen.style.boxShadow = '', 1000);
+            } else {
+                playWrongSound();
+                icon.innerText = '🍂';
+                title.innerText = '哎呀，可惜了！';
+                title.className = 'text-3xl font-black mb-4 text-orange-500';
+                desc.innerHTML = `<span class="font-bold text-red-600">正確解析：</span><br>${explanation}`;
+                gameScreen.classList.add('animate-shake');
+                setTimeout(()=> gameScreen.classList.remove('animate-shake'), 500);
+            }
+        }
+
+        function closeFeedback() {
+            const overlay = document.getElementById('feedback-overlay');
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+            document.getElementById('next-btn').classList.remove('hidden');
+            
+            // 自動點擊下一題 (為了流暢度也可以手動，這裡讓玩家自己點下一題以控制節奏)
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            currentQIndex++;
+            if (currentQIndex < questions.length) {
+                loadQuestion();
+            } else {
+                endGame();
+            }
+        }
+
+        function endGame() {
+            clearInterval(timerInterval);
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            document.getElementById('result-screen').classList.add('animate-pop');
+            
+            document.getElementById('progress-bar').style.width = '100%';
+
+            // 計算時間
+            const diff = Math.floor((Date.now() - startTime) / 1000);
+            const m = String(Math.floor(diff / 60)).padStart(2, '0');
+            const s = String(diff % 60).padStart(2, '0');
+            
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('final-time').innerText = `${m}分${s}秒`;
+
+            // 決定稱號
+            let rank = '';
+            let icon = '';
+            if (score === 100) {
+                rank = '傳奇蝴蝶精靈';
+                icon = '🦋✨';
+            } else if (score >= 80) {
+                rank = '高級森林守護者';
+                icon = '🌳🦉';
+            } else if (score >= 60) {
+                rank = '自然探索者';
+                icon = '🌿🔍';
+            } else {
+                rank = '初級觀察家';
+                icon = '🌱👀';
+            }
+
+            document.getElementById('rank-title').innerText = rank;
+            document.getElementById('rank-icon').innerText = icon;
+            
+            // 結束音效
+            if(score >= 60) {
+                setTimeout(() => playTone(523.25, 'sine', 0.1), 0);
+                setTimeout(() => playTone(659.25, 'sine', 0.1), 150);
+                setTimeout(() => playTone(783.99, 'sine', 0.1), 300);
+                setTimeout(() => playTone(1046.50, 'sine', 0.4), 450);
+            } else {
+                setTimeout(() => playTone(300, 'triangle', 0.5), 0);
+            }
+        }
+    </script>
+</body>
+</html>

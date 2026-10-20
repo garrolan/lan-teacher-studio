@@ -1,5 +1,14 @@
 window.STUDIO_ITEMS = [
   {
+    "title": "南和國小 × 遇見大未來｜廣達游於藝成果展",
+    "description": "從9月3日美術館培訓，到10月20日開幕、孩子導覽與海洋創作，透過六個主題頁與43張活動照片，看見藝術走進南和的學習旅程。",
+    "category": "website",
+    "href": "websites/quanta-2026/",
+    "tag": "藝術教育成果",
+    "icon": "palette",
+    "featured": true
+  },
+  {
     title: "HITEACH記分統計工具",
     description: "整理 HITEACH 課堂記分資料，方便快速統計學生表現與分數。",
     category: "tool",

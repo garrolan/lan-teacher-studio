@@ -103,6 +103,14 @@ window.STUDIO_ITEMS = [
     icon: "sparkles"
   },
   {
+    title: "空氣偵探實驗室",
+    description: "三年級自然互動遊戲，透過實驗推理與生活應用兩個關卡，認識空氣占有空間、沒有固定形狀，以及留住與排出空氣的用途。",
+    category: "game",
+    href: "games/air-detective-lab.html",
+    tag: "三年級自然",
+    icon: "wind"
+  },
+  {
     title: "校園生命偵探隊｜生物與非生物",
     description: "三年級自然互動遊戲，透過拖曳分類、配對、線索題與校園挑戰，練習分辨生物、非生物、動物與植物。",
     category: "game",

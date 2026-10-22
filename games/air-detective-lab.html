@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>空氣偵探實驗室｜自然科學三上</title>
+<style>
+:root{--navy:#15364d;--ink:#203e50;--muted:#63808d;--teal:#078f9f;--sky:#e0f5f7;--pale:#f4fafb;--amber:#edb454;--line:#c6dfe2;--good:#087e6e;--soft:#fff2d8}
+*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans TC','Microsoft JhengHei','PingFang TC',system-ui,sans-serif;background:linear-gradient(145deg,#def5f5,#f7f9ee);color:var(--ink);min-height:100vh}
+button{font:inherit;cursor:pointer}button:focus-visible,.choice:focus-visible,.pick:focus-visible{outline:4px solid #f4ad27;outline-offset:3px}
+.app{max-width:1030px; margin:auto;padding:28px 24px 40px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:23px}.brand{display:flex;align-items:center;gap:10px;color:var(--navy);font-weight:900;font-size:19px}.logo{background:var(--navy);border-radius:15px;padding:12px;font-size:24px}.actions{display:flex;gap:8px}.tiny{padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:white;color:var(--ink);font-size:14px}
+.hero{background:var(--navy);border-radius:24px;padding:30px 36px;color:white;box-shadow:0 17px 36px #123d4926}.eyebrow{color:#9ce0e5;letter-spacing:1px;font-weight:800;font-size:14px}.hero h1{font-size:clamp(29px,5vw,48px);line-height:1.22;margin:9px 0}.hero p{color:#d0edf1;font-size:17px;line-height:1.65;margin:0}
+.tabs{display:flex;gap:12px;margin:24px 0}.tab{flex:1;min-height:74px;border:2px solid var(--line);background:white;border-radius:17px;color:var(--ink);text-align:left;padding:13px 21px;transition:.2s}.tab b{display:block;font-size:21px}.tab span{color:var(--muted);font-size:13px}.tab.active{border-color:var(--teal);background:var(--sky)}
+.panel{background:white;border:1px solid #d7e9eb;box-shadow:0 17px 30px #335d6212;border-radius:24px;padding:29px 35px;min-height:450px}
+.progressline{display:flex;gap:12px;align-items:center;justify-content:space-between;font-size:15px;color:var(--muted);font-weight:800}.bar{height:10px;border-radius:12px;background:#e5f0f1;margin:12px 0 23px;overflow:hidden}.bar>div{height:100%;background:linear-gradient(90deg,#09a6ac,#6ec9a8);transition:width .35s ease}
+.question-tag{font-size:14px;letter-spacing:1px;color:var(--teal);font-weight:900}.question{font-size:clamp(24px,3vw,34px);color:var(--navy);line-height:1.45;font-weight:900;margin:7px 0 10px}.hint{font-size:16px;color:var(--muted);margin:0 0 25px;line-height:1.6}.options{display:grid;grid-template-columns:1fr 1fr;gap:14px}.choice{min-height:85px;border:2px solid var(--line);border-radius:15px;padding:16px 20px;display:flex;align-items:center;text-align:left;font-weight:750;font-size:20px;background:#fbfdfd;color:var(--ink);transition:background .2s,border-color .2s}.choice:hover{border-color:var(--teal);background:#effafa}.choice.selected{border-color:var(--teal);background:var(--sky)}.choice .prefix{font-weight:900;color:var(--teal);min-width:34px}
+.feedback{border-radius:17px;margin-top:20px;padding:18px 22px;font-size:19px;line-height:1.65;border:2px solid #e3e0bf;background:#fff9e7}.feedback.correct{background:#e8f9f2;border-color:#9bd9c4}.feedback strong{display:block;color:var(--navy);font-size:20px}
+.bottom{margin-top:21px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.mainbtn{background:var(--teal);color:white;border:0;border-radius:14px;font-size:18px;font-weight:900;padding:13px 26px}.mainbtn:disabled{opacity:.5;cursor:default}.quiet{color:var(--muted);font-size:15px}.restart{background:white;border:2px solid var(--line);border-radius:14px;padding:12px 18px;color:var(--ink);font-weight:700}
+.sortbox{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:17px 0}.zone{border:3px dashed #a4c5c9;border-radius:18px;min-height:156px;padding:16px;text-align:center;background:#f4fafb;transition:.2s}.zone.hover{border-color:var(--teal);background:var(--sky)}.zone b{font-size:21px;color:var(--navy)}.zone .placed{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}.tag{background:#d9eff1;padding:8px 12px;border-radius:11px;font-weight:700}.pool{display:flex;flex-wrap:wrap;gap:11px;margin:17px 0}.pick{font-weight:800;padding:12px 17px;background:#fff3df;border:2px solid #e9bf7f;border-radius:14px;font-size:17px;color:#6d4f24}.pick.active{outline:3px solid #c48a2e}.sorthelp{font-size:14px;color:var(--muted)}
+.finished{text-align:center;padding:30px 12px}.medal{font-size:65px}.finished h2{font-size:37px;color:var(--navy)}.finished p{font-size:19px;line-height:1.75}.footer{font-size:13px;text-align:center;color:#5c7982;margin-top:24px}
+@media(max-width:650px){.app{padding:13px}.hero{padding:24px}.tabs{gap:7px}.tab{padding:12px}.tab b{font-size:16px}.panel{padding:19px}.options,.sortbox{grid-template-columns:1fr}.brand{font-size:14px}.logo{padding:9px}.tiny{font-size:12px;padding:9px}.choice{min-height:72px;font-size:17px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><span class="logo">🔎</span><div>空氣偵探實驗室<br><small style="font-size:12px;color:#5c808a">三年級自然科學・單元三</small></div></div><div class="actions"><button class="tiny" type="button" id="full">⛶ 全螢幕</button></div></header>
+<div class="hero"><div class="eyebrow">AIR SCIENCE MISSION</div><h1>看不見的空氣，有什麼祕密？</h1><p>兩個小遊戲：先用實驗證據推理，再挑戰生活中的空氣。答錯可以再試，重要的是說出理由！</p></div>
+<div class="tabs" role="tablist" aria-label="遊戲關卡"><button type="button" class="tab active" id="mode0" aria-selected="true"><b>🧪 第一關｜實驗推理</b><span>從打氣與紙團實驗找證據</span></button><button type="button" class="tab" id="mode1" aria-selected="false"><b>🎈 第二關｜生活應用</b><span>留住空氣、利用空氣、排出空氣</span></button></div>
+<main id="stage" class="panel" aria-live="polite"></main>
+<div class="footer">藍老師・115學年度三上自然科｜離線也能使用；按 F11 或右上方可放大。</div>
+</div>
+<script>
+'use strict';
+const sections=[
+ {label:'實驗推理',questions:[
+  {type:'mc',tag:'實驗一｜先看水位',q:'倒扣水杯裡原本裝滿水，打入空氣後，杯內水位通常會怎樣？',choices:['漸漸升高','漸漸降低','完全不變','杯中的水立刻結冰'],correct:1,why:'空氣進入杯中，占據一部分空間，原本的水從杯口排出去，因此杯內水位下降。'},
+  {type:'tf',tag:'實驗觀察｜想一想',q:'空氣雖然看不見，但確實會占有空間。',correct:0,why:'對！看不見不代表不存在。兩個實驗都能提供證據。'},
+  {type:'mc',tag:'實驗二｜紙團溼了嗎',q:'杯底塞著紙團，杯口朝下垂直放進水中，再垂直取出，紙團通常會怎樣？',choices:['保持乾燥','一定完全溼透','變成冰塊','自己掉出杯子'],correct:0,why:'杯內原本有空氣，水無法完全進入，紙團通常能保持乾燥。'},
+  {type:'mc',tag:'尋找理由',q:'紙團沒有溼，最能支持「空氣占有空間」的解釋是哪一個？',choices:['紙團本來就會防水','杯子有魔法','杯中的空氣占據空間，阻擋水完全進入','水看到杯子就會逃跑'],correct:2,why:'科學解釋要能對應觀察到的現象：空氣留在杯內，水不能完全取代它。'},
+  {type:'tf',tag:'延伸實驗｜氣泡',q:'杯子在水中傾斜後冒出的氣泡，可以是原本杯中的空氣跑出來。',correct:0,why:'對！當空氣從杯口冒出，水就有機會進入空氣原本占有的空間。'}
+ ]},
+ {label:'生活應用',questions:[
+  {type:'mc',tag:'結論｜沒有固定形狀',q:'為什麼空氣可以裝進圓形球，也可以裝進長條氣球？',choices:['空氣本來就是圓形','空氣沒有固定形狀，會隨容器變化','空氣只能裝進長條形狀','因為空氣沒有占空間'],correct:1,why:'空氣占有空間，但沒有固定形狀，能填充在不同形狀的容器裡。'},
+  {type:'tf',tag:'生活觀察',q:'把游泳圈裡的空氣放掉後，游泳圈通常更容易折疊收納。',correct:0,why:'對！排掉空氣後，游泳圈不再鼓鼓的，能摺起來節省空間。'},
+  {type:'sort',tag:'分類挑戰｜拖曳或點選',q:'把生活用品分成「留住空氣」與「排掉空氣」兩類。',items:[['氣泡袋',0],['充氣游泳圈',0],['真空衣物收納袋',1],['放氣後的充氣床',1]],why:'保留空氣可以撐起形狀或提供緩衝；排掉部分空氣則有助於縮小物品，方便收納。'},
+  {type:'mc',tag:'生活應用｜防止碰撞',q:'寄送玻璃杯時，為什麼包上氣泡袋能幫忙保護它？',choices:['因為氣泡袋會發光','氣泡裡的氣體能提供緩衝','因為袋子把玻璃變成塑膠','因為裡面沒有任何空氣'],correct:1,why:'氣泡袋的小氣囊充有氣體，可在碰撞時提供緩衝，減少物品受損的機會。'},
+  {type:'tf',tag:'延伸判斷｜收納',q:'使用真空收納袋後，袋子裡一定連一點點空氣都沒有了。',correct:1,why:'不一定！一般真空收納袋是抽走大部分空氣，不代表裡面完全沒有空氣。'}
+ ]}
+];
+const state={mode:0,index:[0,0],solved:[{},{}],pending:null,sortPlaced:{},sortActive:null};
+const stage=document.getElementById('stage');
+function button(label,cls,fn){const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=label;b.addEventListener('click',fn);return b;}
+function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
+function switchMode(m){state.mode=m;state.pending=null;document.querySelectorAll('.tab').forEach((b,i)=>{b.classList.toggle('active',i===m);b.setAttribute('aria-selected',String(i===m));});render();}
+document.getElementById('mode0').addEventListener('click',()=>switchMode(0));document.getElementById('mode1').addEventListener('click',()=>switchMode(1));
+document.getElementById('full').addEventListener('click',()=>{if(!document.fullscreenElement&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen();else if(document.exitFullscreen)document.exitFullscreen();});
+function header(n,total,tag,q,desc){let line=el('div','progressline');line.append(el('span','',`${sections[state.mode].label}　${n} / ${total}`));line.append(el('span','',`${Object.keys(state.solved[state.mode]).length} 題已完成`));stage.append(line);let bar=el('div','bar'),fill=el('div');fill.style.width=`${Math.max(3,100*(n-1)/total)}%`;bar.append(fill);stage.append(bar);stage.append(el('div','question-tag',tag));stage.append(el('h2','question',q));stage.append(el('p','hint',desc||'先想一想，再選擇你的答案。'));}
+function feedback(correct,why){const fb=el('div','feedback '+(correct?'correct':''));fb.append(el('strong','',correct?'✓ 找到證據了！':'再觀察一下這個線索'));fb.append(el('div','',why));stage.append(fb);return fb;}
+function footer(qLen,solved=false){const bot=el('div','bottom');bot.append(el('span','quiet','答錯可以重試，不扣分。'));if(solved){bot.append(button(state.index[state.mode]+1===qLen?'完成這關 →':'下一題 →','mainbtn',()=>{state.index[state.mode]++;state.pending=null;state.sortPlaced={};state.sortActive=null;render();}));}stage.append(bot);}
+function render(){stage.replaceChildren();const section=sections[state.mode],idx=state.index[state.mode],total=section.questions.length;if(idx>=total)return renderDone();const q=section.questions[idx];header(idx+1,total,q.tag,q.q,q.type==='sort'?'拖曳小卡到分類框，或先點卡片，再點分類框。':'不必急著回答，想想剛才的實驗或生活經驗。');if(q.type==='sort')return renderSort(q,total);const area=el('div','options');const labels=q.type==='tf'?['對','錯']:q.choices;let right=false;
+labels.forEach((v,j)=>{let b=button('','choice',()=>{if(right)return;area.querySelectorAll('button').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');const old=stage.querySelector('.feedback');if(old)old.remove();const oldb=stage.querySelector('.bottom');if(oldb)oldb.remove();right=j===q.correct;if(right){state.solved[state.mode][idx]=true;feedback(true,q.why);area.querySelectorAll('button').forEach(x=>x.disabled=true);footer(total,true);}else{feedback(false,'這個答案與實驗證據不太符合。請想一想：杯子裡原本有什麼？它占了哪個空間？');footer(total,false);}});let pre=el('span','prefix',q.type==='tf'?(j===0?'○':'×'):'ABCD'[j]);b.append(pre,el('span','',v));area.append(b);});stage.append(area);if(state.solved[state.mode][idx]){area.querySelectorAll('button').forEach(x=>x.disabled=true);feedback(true,q.why);footer(total,true);}else footer(total,false);}
+function renderSort(q,total){const pool=el('div','pool');const zones=el('div','sortbox');const names=['留住空氣｜撐起、保護','排出空氣｜縮小、收納'];const message=el('p','sorthelp','先選物品，再指定分類。分類錯誤時，卡片會留下供你再試。');const ready=()=>Object.keys(state.sortPlaced).length===q.items.length;
+function place(itemId,zoneId){if(Object.prototype.hasOwnProperty.call(state.sortPlaced,itemId))return;const expected=q.items[itemId][1];if(expected!==zoneId){message.textContent=`「${q.items[itemId][0]}」要再想想：這個例子是要把空氣留在裡面，還是排出去？`;message.style.color='#a26624';return;}state.sortPlaced[itemId]=zoneId;message.textContent='觀察得很好！繼續把剩下的物品分類。';message.style.color='var(--good)';rebuild();}
+function rebuild(){pool.replaceChildren();zones.replaceChildren();q.items.forEach(([name],id)=>{if(state.sortPlaced[id]!==undefined)return;const b=button(name,'pick'+(state.sortActive===id?' active':''),()=>{state.sortActive=id;rebuild();});b.draggable=true;b.addEventListener('dragstart',ev=>{ev.dataTransfer.setData('text/plain',String(id));});pool.append(b);});names.forEach((name,z)=>{const div=el('div','zone');div.tabIndex=0;div.setAttribute('role','button');div.setAttribute('aria-label',name);div.append(el('b','',name));const placed=el('div','placed');q.items.forEach(([label],id)=>{if(state.sortPlaced[id]===z)placed.append(el('span','tag',label));});div.append(placed);div.addEventListener('click',()=>{if(state.sortActive!==null){place(state.sortActive,z);state.sortActive=null;}});div.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&state.sortActive!==null){e.preventDefault();place(state.sortActive,z);state.sortActive=null;}});div.addEventListener('dragover',ev=>{ev.preventDefault();div.classList.add('hover');});div.addEventListener('dragleave',()=>div.classList.remove('hover'));div.addEventListener('drop',ev=>{ev.preventDefault();div.classList.remove('hover');const n=Number(ev.dataTransfer.getData('text/plain'));if(Number.isInteger(n))place(n,z);});zones.append(div);});const old=stage.querySelector('.feedback');if(old)old.remove();const oldb=stage.querySelector('.bottom');if(oldb)oldb.remove();if(ready()){state.solved[state.mode][state.index[state.mode]]=true;feedback(true,q.why);footer(total,true);}else{footer(total,false);}}
+stage.append(pool,message,zones);rebuild();}
+function renderDone(){stage.className='panel';const box=el('div','finished');box.append(el('div','medal','🏅'));box.append(el('h2','',`${sections[state.mode].label} 完成！`));box.append(el('p','',state.mode===0?'你已經利用兩個實驗，找到空氣占有空間的證據。現在還可以挑戰生活應用！':'你已經學會：留住空氣可以撐起或保護物品；排掉空氣有助於節省收納空間。'));box.append(button(state.mode===0?'前往第二關 →':'回到第一關','mainbtn',()=>switchMode(1-state.mode)));box.append(document.createTextNode('　'));box.append(button('重新玩這一關','restart',()=>{state.index[state.mode]=0;state.solved[state.mode]={};state.sortPlaced={};state.sortActive=null;render();}));stage.append(box);}
+render();
+</script>
+</body></html>

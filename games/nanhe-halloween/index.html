@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#11182e"><meta name="description" content="跟著南和小黑貓，唱英語、找朋友、動一動、創作萬聖怪物，找回五顆蝴蝶魔法星星！"><title>南和國小・蝶舞魔法學院｜萬聖雙語冒險</title><link rel="icon" href="images/nanhe-butterfly.svg" type="image/svg+xml"><link rel="stylesheet" href="app.css"><script defer src="content.js"></script><script defer src="app.js"></script></head>
+<body><a class="skip" href="#main">跳到遊戲內容</a>
+<header><button class="brand" data-go="home" aria-label="回到冒險首頁"><img src="images/nanhe-butterfly.svg" alt=""><span>南和國小<small>蝶舞魔法學院</small></span></button><div class="header-center"><div id="stars" aria-label="魔法星星進度"></div><span id="progressLabel">找回五顆魔法星星</span></div><div class="tools"><button id="language" class="quiet" aria-pressed="true">中文提示</button><button id="sound" class="quiet" aria-pressed="true">聲音開啟</button></div></header>
+<nav id="journey" aria-label="冒險任務"></nav>
+<main id="main" tabindex="-1"></main>
+<footer><a href="../../games.html">藍老師工作室・教學遊戲</a><span>新竹縣關西鎮南和國民小學 · 蝶舞南和</span><button id="restart" class="text-button">重新冒險</button></footer>
+<dialog id="celebrate"><form method="dialog"><button class="close" aria-label="關閉">×</button></form><img class="reward-star" src="images/magic-star.svg" alt="找回魔法星星"><p class="kicker">Magic is back!</p><h2 id="awardTitle"></h2><p id="awardText"></p><button class="primary" id="awardNext">繼續冒險 →</button></dialog>
+<dialog id="resetDialog"><h2>要重新開始冒險嗎？</h2><p>這台裝置上的星星與怪物作品會重新開始。</p><div class="button-row"><button class="quiet" id="cancelReset">繼續現在的冒險</button><button class="primary" id="confirmReset">重新開始</button></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body></html>

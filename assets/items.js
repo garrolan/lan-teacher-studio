@@ -95,6 +95,14 @@ window.STUDIO_ITEMS = [
     icon: "globe"
   },
   {
+    title: "南和國小・蝶舞魔法學院｜萬聖雙語冒險",
+    description: "跟著南和小黑貓聽歌、尋寶、做動作與怪物變裝，完成五個英語任務，下載自己的冒險紀念圖。",
+    category: "game",
+    href: "games/nanhe-halloween/",
+    tag: "萬聖雙語",
+    icon: "sparkles"
+  },
+  {
     title: "校園生命偵探隊｜生物與非生物",
     description: "三年級自然互動遊戲，透過拖曳分類、配對、線索題與校園挑戰，練習分辨生物、非生物、動物與植物。",
     category: "game",

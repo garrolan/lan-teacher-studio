@@ -95,6 +95,14 @@ window.STUDIO_ITEMS = [
     icon: "globe"
   },
   {
+    title: "校園尋寶｜拍照探險",
+    description: "教師自訂照片關卡，學生掃碼組隊、拍照闖關；集中收照片、核對並列印探索成果。",
+    category: "game",
+    href: "https://campus-photo-quest.garrolan.chatgpt.site",
+    tag: "校園探索",
+    icon: "compass"
+  },
+  {
     title: "南和國小・蝶舞魔法學院｜萬聖雙語冒險",
     description: "跟著南和小黑貓聽歌、尋寶、做動作與怪物變裝，完成五個英語任務，下載自己的冒險紀念圖。",
     category: "game",

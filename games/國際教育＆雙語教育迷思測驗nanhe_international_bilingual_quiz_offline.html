@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f7f5ee">
+<meta name="description" content="南和國小教師社群｜國際教育與雙語教育的20題互動迷思測驗。單檔離線使用，逐題作答、即時解析、成果回顧。">
+<title>南和國小｜國際教育 × 雙語教育迷思大挑戰</title>
+<style>
+:root {--bg:#f7f5ee;--paper:#fffdfa;--ink:#163647;--muted:#60747d;--line:#dbe5e3;--teal:#087e78;--teal-dark:#006660;--teal-wash:#e5f5f0;--orange:#f47c52;--orange-wash:#fff1e9;--gold:#f0b950;--gold-wash:#fff7de;--wrong:#a94345;--wrong-wash:#fff0f0;--shadow:0 19px 46px rgba(26,57,65,.08);--radius:24px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;font-size:16px;line-height:1.7;min-height:100vh}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 8% 6%,rgba(237,187,89,.18),transparent 30%),radial-gradient(circle at 94% 92%,rgba(7,138,124,.11),transparent 35%);z-index:-1}button{font:inherit;cursor:pointer}button:focus-visible,summary:focus-visible{outline:3px solid #ed8b42;outline-offset:4px}button:disabled{cursor:default}button:focus:not(:focus-visible){outline:none}a{color:var(--teal)}[hidden]{display:none!important}.app{width:min(1180px,calc(100% - 44px));margin:0 auto;padding:20px 0 38px}.topbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:20px}.brand{display:flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none;font-weight:900;line-height:1.22;letter-spacing:.015em}.brand-icon{width:51px;height:51px;flex:none;border-radius:16px;background:#0a7772;color:white;display:grid;place-items:center;box-shadow:0 10px 24px rgba(8,126,120,.18)}.brand-icon svg{width:34px;height:34px}.brand-sub{display:block;font-size:.75rem;color:var(--muted);font-weight:650;margin-top:3px;letter-spacing:.09em}.top-actions{display:flex;gap:8px}.button-quiet{background:rgba(255,255,255,.75);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:9px 14px;font-size:.9rem;font-weight:750}.button-quiet:hover{background:white;border-color:#9dbeb9}.footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin-top:22px;padding:0 4px}.footer span:last-child{display:flex;gap:7px;align-items:center}.footer .dot{width:7px;height:7px;background:#18ad8d;border-radius:99px;display:inline-block}
+/* Start */
+.hero{position:relative;border:1px solid #dce7e3;background:var(--paper);border-radius:31px;box-shadow:var(--shadow);overflow:hidden;padding:clamp(26px,4.7vw,60px)}.hero:before{content:"";position:absolute;width:510px;height:510px;border-radius:50%;background:radial-gradient(circle,#d8f3e8 4%,#e4f5ec 39%,transparent 70%);right:-152px;top:-164px;pointer-events:none}.hero-content{position:relative;display:grid;grid-template-columns:minmax(0,1.14fr) minmax(250px,.86fr);gap:24px;align-items:center}.eyebrow{text-transform:uppercase;font-weight:900;letter-spacing:.15em;color:var(--teal);font-size:.79rem}.hero h1{font-size:clamp(2.25rem,5.7vw,4.6rem);letter-spacing:-.05em;line-height:1.17;margin:20px 0 12px;font-weight:950}.hero h1 .em{color:var(--teal);display:block}.lead{font-size:clamp(1rem,1.5vw,1.19rem);color:#536c77;margin:15px 0 24px;max-width:600px}.hero-art{width:100%;max-width:380px;justify-self:center;filter:drop-shadow(0 24px 22px rgba(8,126,120,.10))}.hero-art svg{width:100%;height:auto}.hero-pills{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:22px}.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:#f1f5f3;border:1px solid #dfebe7;color:#385966;font-size:.87rem;padding:6px 12px;font-weight:800}.primary{border:0;border-radius:14px;background:var(--teal);color:white;box-shadow:0 10px 20px rgba(8,126,120,.18);padding:14px 25px;font-weight:900;line-height:1.4}.primary:hover{background:var(--teal-dark);transform:translateY(-1px)}.primary:disabled{background:#9bb7b2;box-shadow:none;transform:none}.secondary{border:1px solid #c6d9d4;background:white;border-radius:14px;color:var(--ink);padding:13px 20px;font-weight:850}.secondary:hover{border-color:var(--teal);background:#f5fffb}.mode-wrap{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:610px}.mode{position:relative;text-align:left;min-height:95px;border:2px solid #dae7e4;background:#fffefa;border-radius:17px;padding:15px 15px 13px;transition:.15s}.mode:hover{border-color:#a1d3ca}.mode.selected{border-color:var(--teal);background:var(--teal-wash)}.mode-name{display:block;font-weight:900;font-size:1rem;margin-bottom:2px}.mode-desc{display:block;color:var(--muted);font-size:.8rem;line-height:1.5}.mode .mode-check{position:absolute;right:11px;top:11px;color:var(--teal);font-size:1.15rem;display:none}.mode.selected .mode-check{display:block}.start-bottom{display:flex;align-items:center;flex-wrap:wrap;gap:17px;margin-top:21px}.small-note{font-size:.78rem;color:var(--muted);max-width:420px}.intro-below{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}.theme-card{border-radius:17px;background:#fffefa;border:1px solid var(--line);padding:15px 16px}.theme-number{display:block;font-size:.76rem;font-weight:950;color:var(--teal);letter-spacing:.08em}.theme-title{font-size:.98rem;font-weight:900;margin-top:4px;display:block}.theme-sub{color:var(--muted);font-size:.78rem;margin:4px 0 0}
+/* Quiz */
+.quiz-header{background:var(--paper);border-radius:22px;border:1px solid var(--line);box-shadow:0 7px 18px rgba(20,62,57,.04);padding:18px 22px;margin-bottom:14px}.quiz-heading-line{display:flex;justify-content:space-between;align-items:center;gap:12px}.quiz-heading-line .label{color:var(--teal);font-size:.86rem;font-weight:900;letter-spacing:.055em}.quiz-counter{font-size:.92rem;font-weight:900;color:var(--muted);font-variant-numeric:tabular-nums}.quiz-counter strong{color:var(--ink);font-size:1.23rem}.progress{height:10px;background:#e4eae7;border-radius:99px;overflow:hidden;margin:12px 0 13px}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#0c9186,#f0be5e);transition:width .35s ease;border-radius:99px}.step-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.step{border-radius:11px;background:#f2f5f2;padding:8px 8px;text-align:center;color:#71858b;font-size:.76rem;font-weight:820;min-width:0}.step.current{background:#dff2eb;color:#086d67}.step.done{background:#f4ecdb;color:#8f6134}.quiz-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.75fr);gap:15px;align-items:stretch}.question-panel,.insight-panel{background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius)}.question-panel{padding:clamp(21px,3.4vw,38px);min-height:510px;display:flex;flex-direction:column}.q-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.q-num{display:inline-flex;gap:5px;align-items:center;justify-content:center;background:#143e4b;color:white;padding:5px 11px;font-size:.85rem;font-weight:950;letter-spacing:.025em;border-radius:8px}.q-kind{font-size:.82rem;color:var(--teal);font-weight:900;letter-spacing:.08em}.question-panel h2{font-size:clamp(1.36rem,2.4vw,2rem);line-height:1.56;letter-spacing:-.025em;margin:23px 0 26px;font-weight:950;max-width:800px}.options{display:grid;grid-template-columns:1fr;gap:11px}.options.two{grid-template-columns:1fr 1fr}.option{border:2px solid #dbe7e4;border-radius:16px;background:#fff;text-align:left;color:var(--ink);padding:15px 17px;min-height:68px;display:flex;align-items:center;gap:13px;transition:border-color .12s,background-color .12s,transform .12s}.option:hover:not(:disabled){border-color:#0b8c7e;background:#f4fdf8;transform:translateY(-1px)}.option .letter{width:32px;height:32px;display:inline-grid;place-items:center;flex:none;border-radius:10px;background:#eaf2ef;color:#217367;font-weight:950}.option .option-text{font-weight:750;line-height:1.55}.option.correct{border-color:#0e917d;background:#e8f6ef}.option.correct .letter{color:white;background:#0a8877}.option.incorrect{border-color:#d77876;background:#fff1ef}.option.incorrect .letter{background:#b94a4a;color:white}.option.faded{opacity:.62}.question-panel .question-actions{margin-top:auto;padding-top:23px;display:flex;justify-content:space-between;align-items:center;gap:14px}.q-hint{color:#829096;font-size:.8rem;line-height:1.4}.insight-panel{padding:clamp(20px,2.7vw,30px);position:relative;overflow:hidden;display:flex;flex-direction:column}.insight-panel:before{content:"";position:absolute;right:-100px;top:-95px;width:210px;height:210px;background:#eef8f0;border-radius:50%}.aside-eyebrow{font-size:.74rem;color:#8f9f9d;font-weight:900;letter-spacing:.13em;position:relative}.insight-badge{width:70px;height:70px;border-radius:19px;background:#e6f4ec;color:#14867a;display:grid;place-items:center;font-size:2rem;font-weight:950;margin:36px 0 18px;position:relative}.insight-title{font-size:1.25rem;line-height:1.45;font-weight:950;position:relative;margin:0 0 7px}.insight-text{font-size:.94rem;color:var(--muted);position:relative;margin:0}.insight-bottom{margin-top:auto;border-top:1px dashed #d4e3dc;padding-top:15px;color:#71858b;font-size:.81rem;position:relative}.answer-reveal{display:none;position:relative}.insight-panel.revealed .before-answer{display:none}.insight-panel.revealed .answer-reveal{display:block}.reveal-status{display:inline-block;color:#087b6d;background:#e2f5eb;font-size:.84rem;font-weight:950;padding:5px 12px;border-radius:99px;margin:20px 0 10px}.reveal-status.wrong{color:#ac4646;background:#fff0eb}.reveal-status.group{color:#98601b;background:var(--gold-wash)}.reveal-title{font-size:1.44rem;font-weight:950;line-height:1.45;margin:5px 0 13px}.correct-answer{background:#edf8f2;border:1px solid #c4e8dc;border-radius:12px;padding:11px 14px;color:#086c61;font-weight:850;font-size:.92rem;margin-bottom:15px}.explanation{line-height:1.8;color:#3c5661;margin:0 0 17px;font-size:.95rem}.connection{border-left:4px solid #ebbb65;padding:10px 13px;background:#fff9e9;color:#70532d;font-size:.89rem;line-height:1.7;border-radius:0 11px 11px 0}.connection strong{display:block;color:#9b6225;margin-bottom:3px}.next-note{font-size:.81rem;color:var(--muted);margin-top:14px}
+.mobile-next{display:none}
+/* Result */
+.result-head{background:var(--paper);border:1px solid var(--line);border-radius:27px;padding:clamp(23px,4.5vw,49px);box-shadow:var(--shadow);text-align:center;position:relative;overflow:hidden}.result-head:before,.result-head:after{content:"";position:absolute;border-radius:100px;width:180px;height:180px;background:radial-gradient(circle,#dff2ea,transparent 73%);z-index:0}.result-head:before{left:-45px;top:-65px}.result-head:after{right:-60px;bottom:-70px}.result-content{position:relative}.result-icon{width:80px;height:80px;background:#e6f6ee;border-radius:25px;display:grid;place-items:center;margin:0 auto 15px;font-size:2.7rem}.result-head h2{font-size:clamp(1.8rem,3.5vw,2.65rem);margin:5px 0 5px;line-height:1.4;font-weight:950}.result-sub{color:var(--muted);margin:0 auto 19px;max-width:650px}.score-num{color:var(--teal);font-size:clamp(3.2rem,6.5vw,5.6rem);line-height:1.1;font-weight:950;letter-spacing:-.04em}.score-num small{font-size:.37em;color:#718a89;letter-spacing:0}.result-actions{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:23px}.result-bottom{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:15px;margin-top:15px}.result-card{border:1px solid var(--line);border-radius:21px;background:var(--paper);padding:22px;box-shadow:0 10px 26px rgba(20,63,57,.035)}.result-card h3{margin:0 0 15px;font-size:1.13rem;font-weight:950}.section-score{margin:0 0 15px}.section-score:last-child{margin-bottom:0}.score-label{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.9rem;font-weight:800}.score-label span:last-child{color:var(--teal)}.score-track{height:9px;border-radius:99px;background:#e8edeb;margin-top:7px;overflow:hidden}.score-track span{display:block;height:100%;border-radius:99px;background:#13a188}.review-intro{color:var(--muted);font-size:.88rem;line-height:1.7;margin:-5px 0 13px}.review-scroll{max-height:395px;overflow:auto;padding-right:5px}.review{border:1px solid #e1e9e5;border-radius:12px;margin-bottom:8px;background:#fff}.review summary{cursor:pointer;list-style:none;display:flex;gap:11px;align-items:flex-start;padding:11px 13px;font-size:.86rem;line-height:1.6;font-weight:800}.review summary::-webkit-details-marker{display:none}.review .review-icon{font-size:.94rem;flex:none;width:24px;height:24px;border-radius:99px;display:grid;place-items:center;background:#e9f7f0;color:var(--teal)}.review .review-icon.miss{background:#fff0ed;color:var(--wrong)}.review .review-icon.neutral{background:#f0f3f1;color:#5d7375}.review-body{border-top:1px solid #e7eeeb;padding:11px 15px 14px;font-size:.84rem;color:#49636b}.review-body p{margin:3px 0 8px}.review-body strong{color:var(--ink)}.review-details{padding:9px;background:#f5f8f5;border-radius:8px}.review-tip{margin-top:12px;font-size:.81rem;color:#687a80}.section-tiny{font-size:.75rem;color:var(--muted);font-weight:850;letter-spacing:.04em;margin-bottom:2px}
+@media (max-width:950px){.question-actions #nextBtn{display:none}.mobile-next:not([hidden]){display:block;width:100%;margin-top:17px}.quiz-layout{grid-template-columns:1fr}.question-panel{min-height:unset}.insight-panel{min-height:195px}.insight-badge{margin-top:16px}.insight-bottom{margin-top:30px}.hero-content{grid-template-columns:minmax(0,1fr) minmax(180px,.67fr)}.hero-art{align-self:start}.result-bottom{grid-template-columns:1fr}.review-scroll{max-height:480px}}
+@media (max-width:680px){.app{width:min(100% - 22px,560px);padding:11px 0 22px}.topbar{margin-bottom:11px}.brand-icon{width:44px;height:44px;border-radius:13px}.brand-icon svg{width:29px}.top-actions .button-quiet{padding:8px 10px;font-size:.76rem}.brand{font-size:.9rem}.brand-sub{font-size:.68rem}.hero{border-radius:20px;padding:25px 20px}.hero-content{display:flex;flex-direction:column;align-items:stretch;gap:6px}.hero-art{max-width:175px;position:absolute;top:4px;right:-8px;opacity:.25;pointer-events:none}.hero h1{font-size:2.35rem;position:relative;margin-top:14px}.lead{position:relative}.mode-wrap{grid-template-columns:1fr;gap:8px}.mode{min-height:76px}.intro-below{grid-template-columns:1fr 1fr;gap:8px}.theme-card{padding:12px}.theme-title{font-size:.85rem}.theme-sub{font-size:.75rem}.quiz-header{padding:15px;border-radius:17px}.step{font-size:.68rem;padding:8px 4px;line-height:1.4}.question-panel,.insight-panel{border-radius:18px}.question-panel{padding:22px 18px}.question-panel h2{font-size:1.35rem;margin:18px 0 22px}.option{padding:12px;min-height:64px;gap:10px}.options.two{grid-template-columns:1fr 1fr}.options.two .option{min-height:66px}.q-hint{font-size:.7rem}.question-actions{align-items:flex-end}.question-actions .primary{padding:12px 13px}.insight-panel{padding:20px}.footer{font-size:.71rem}.result-head{padding:25px 16px}.result-card{padding:17px}.result-actions button{width:100%}}
+@media (max-width:390px){.options.two{grid-template-columns:1fr}.step{font-size:.6rem}.hero h1{font-size:2.1rem}.brand{font-size:.8rem}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+@media print{body{background:#fff;color:#000;font-size:12px}.app{width:100%;max-width:none;margin:0;padding:0}.topbar,.footer,#screen-start,#screen-quiz,.result-actions,.review-tip{display:none!important}#screen-result{display:block!important}.result-head{box-shadow:none;border:0;border-bottom:2px solid #444;padding:8px 0 20px}.result-head:before,.result-head:after{display:none}.result-icon{display:none}.result-bottom{display:block}.result-card{box-shadow:none;border:0;padding:10px 0}.result-card h3{border-bottom:1px solid #ccc}.review-scroll{overflow:visible;max-height:none}.review{break-inside:avoid}.review-body{display:block!important}.score-track{border:1px solid #aaa}.score-track span{background:#888}.score-num{color:black}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand" aria-label="南和國小教師研習">
+      <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2.7"/><path d="M8 24H40M24 8C16 15 16 33 24 40M24 8C32 15 32 33 24 40" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="M15 15c4 1 7 4 9 9 2-5 5-8 9-9" stroke="#ffc66f" stroke-width="3" stroke-linecap="round"/></svg></span>
+      <span>南和國小<span class="brand-sub">國際教育 × 雙語教育</span></span>
+    </div>
+    <div class="top-actions">
+      <button class="button-quiet" id="fullscreenBtn" type="button" title="投影時可使用全螢幕">⛶ 全螢幕</button>
+      <button class="button-quiet" id="homeBtn" type="button" hidden>⌂ 首頁</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="screen-start" aria-labelledby="heroTitle">
+      <div class="hero">
+        <div class="hero-content">
+          <div>
+            <div class="eyebrow">NANHE · TEACHER LEARNING LAB</div>
+            <h1 id="heroTitle">跨出熟悉的答案<span class="em">看見世界的可能</span></h1>
+            <p class="lead">國際教育一定要說英語？雙語教育只能是中文加英文？20 道有點狡猾的觀念題，邀請南和老師一起破解教學迷思。</p>
+            <div class="hero-pills"><span class="pill">🌏 20 題</span><span class="pill">💡 即時解析</span><span class="pill">🏫 教師社群適用</span><span class="pill">📴 完全離線</span></div>
+            <div class="eyebrow" style="margin-bottom:8px;letter-spacing:.06em">選擇挑戰方式</div>
+            <div class="mode-wrap" role="group" aria-label="選擇挑戰方式">
+              <button class="mode selected" type="button" data-mode="self" aria-pressed="true"><span class="mode-check">✓</span><span class="mode-name">✦ 個人挑戰</span><span class="mode-desc">記錄答對題數，最後查看學習成果</span></button>
+              <button class="mode" type="button" data-mode="group" aria-pressed="false"><span class="mode-check">✓</span><span class="mode-name">✧ 社群共學</span><span class="mode-desc">適合教師研習投影，全班討論、不計分</span></button>
+            </div>
+            <div class="start-bottom">
+              <button id="startBtn" class="primary" type="button">開始觀念大挑戰　→</button>
+              <span class="small-note">每題先選答案，再看解析。答案不用完美，重要的是看見觀念的差別。</span>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <svg viewBox="0 0 400 430" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b4e4d2"/><stop offset="1" stop-color="#ebf5db"/></linearGradient></defs>
+              <circle cx="205" cy="210" r="168" fill="url(#g1)"/><circle cx="205" cy="210" r="142" fill="#f6fbf0" stroke="#0e7e76" stroke-width="4"/>
+              <circle cx="205" cy="210" r="142" fill="none" stroke="#0e7e76" stroke-width="4"/><ellipse cx="205" cy="210" rx="65" ry="142" fill="none" stroke="#73b9a9" stroke-width="3"/><path d="M63 210H347M83 145H327M83 277H327" fill="none" stroke="#73b9a9" stroke-width="3"/>
+              <path d="M132 90l-29 35 25 22-11 37 32 24 28-19 25 17-9 38 20 17 31-17 12-34-19-34 32-16-6-26-36-10-18-27-42 7z" fill="#0e8579" opacity=".91"/>
+              <path d="M251 237l40-3 26 27-17 18-23 4-3 26-22 20-15-22-2-34z" fill="#eab552" opacity=".9"/>
+              <path d="M140 272l-20 20 4 23 18 14 24-8 14-18-10-23z" fill="#eab552"/>
+              <path d="M108 39l12 18 21 3-16 14-3 20-15-11-19 7 6-20-10-17 20-1z" fill="#eeb44d"/>
+              <circle cx="320" cy="64" r="13" fill="#fb815d"/><circle cx="46" cy="258" r="10" fill="#fb815d"/>
+              <g transform="translate(290 297) rotate(-19)"><path d="M0 2C-16-21-52-18-48 11c3 23 32 15 48 5C16 26 44 32 49 7c3-25-32-27-49-5Z" fill="#f38758" stroke="#fbfbef" stroke-width="6"/><path d="M0 14C-13 20-30 37-23 53c8 14 24-2 27-22C9 52 25 64 31 46c7-19-13-31-27-35" fill="#f5bd65" stroke="#fbfbef" stroke-width="5"/><path d="M0-10v47" stroke="#184b57" stroke-width="6" stroke-linecap="round"/><path d="M0-7C-8-19-16-25-25-26M0-7C8-19 16-25 25-26" stroke="#184b57" stroke-width="3" stroke-linecap="round"/></g>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="intro-below" aria-label="四個主題關卡">
+        <div class="theme-card"><span class="theme-number">01 · FOUNDATION</span><span class="theme-title">打破基本迷思</span><p class="theme-sub">重新認識國際教育</p></div>
+        <div class="theme-card"><span class="theme-number">02 · CONNECTION</span><span class="theme-title">從南和連結世界</span><p class="theme-sub">在地文化與全球視野</p></div>
+        <div class="theme-card"><span class="theme-number">03 · BILINGUAL</span><span class="theme-title">雙語不等於全英語</span><p class="theme-sub">釐清概念與政策</p></div>
+        <div class="theme-card"><span class="theme-number">04 · PRACTICE</span><span class="theme-title">讓課程真正發生</span><p class="theme-sub">南和的課堂情境</p></div>
+      </div>
+    </section>
+
+    <section id="screen-quiz" hidden aria-label="逐題互動測驗">
+      <div class="quiz-header">
+        <div class="quiz-heading-line"><span class="label" id="phaseLabel">第一關｜打破基本迷思</span><span class="quiz-counter"><strong id="currentNum">01</strong> / 20</span></div>
+        <div class="progress" role="progressbar" aria-label="測驗進度" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="step-row" id="steps" aria-label="關卡進度"></div>
+      </div>
+      <div class="quiz-layout">
+        <article class="question-panel">
+          <div class="q-meta"><span class="q-num" id="qLabel">QUESTION 01</span><span class="q-kind" id="qType">是非題 · TRUE / FALSE</span></div>
+          <h2 id="questionText" tabindex="-1"></h2>
+          <div class="options" id="options" role="group" aria-label="答案選項"></div>
+          <div class="question-actions"><div class="q-hint" id="keyHint">按 1–4 選答，答案選定後揭曉解析</div><button class="primary" type="button" id="nextBtn" hidden>下一題　→</button></div>
+        </article>
+        <aside class="insight-panel" id="insightPanel" aria-live="polite" aria-atomic="true">
+          <div class="aside-eyebrow">IDEA CHECK · 觀念檢視</div>
+          <div class="before-answer">
+            <div class="insight-badge">?</div>
+            <h3 class="insight-title">先想一想，<br>你的直覺是什麼？</h3>
+            <p class="insight-text">選一個最符合你理解的答案。每一題都有概念解析，沒有扣分陷阱。</p>
+            <div class="insight-bottom">學習關鍵：先釐清概念，再把它帶回教學現場。</div>
+          </div>
+          <div class="answer-reveal" id="answerReveal">
+            <span class="reveal-status" id="revealStatus"></span>
+            <h3 class="reveal-title" id="revealTitle"></h3>
+            <div class="correct-answer" id="correctAnswer"></div>
+            <p class="explanation" id="explanation"></p>
+            <div class="connection"><strong>🏫 南和教學連結</strong><span id="connectionText"></span></div>
+            <p class="next-note">可以稍微討論一下，再前往下一題。</p>
+            <button type="button" class="primary mobile-next" id="nextBtnMobile" hidden>下一題　→</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="screen-result" hidden aria-labelledby="resultTitle">
+      <div class="result-head">
+        <div class="result-content">
+          <div class="result-icon" aria-hidden="true">🌏</div>
+          <div class="eyebrow">MISSION COMPLETED · 觀念探索完成</div>
+          <h2 id="resultTitle">恭喜完成世界觀念大挑戰！</h2>
+          <p class="result-sub" id="resultSub"></p>
+          <div class="score-num" id="scoreNum" aria-live="polite"></div>
+          <div class="result-actions"><button class="primary" type="button" id="retryBtn">↻ 再挑戰一次</button><button class="secondary" type="button" id="downloadBtn">↓ 下載結果文字檔</button><button class="secondary" type="button" id="printBtn">▤ 列印／另存 PDF</button></div>
+        </div>
+      </div>
+      <div class="result-bottom">
+        <section class="result-card" aria-labelledby="sectionScoreTitle"><h3 id="sectionScoreTitle">🧭 四大關卡學習軌跡</h3><div id="sectionScores"></div><p class="review-tip">這是一份觀念辨識練習。特定補助方案的適用資格、雙語教學規範與執行方式，仍應以主管機關最新公告為準。</p></section>
+        <section class="result-card" aria-labelledby="reviewTitle"><h3 id="reviewTitle">📖 20題答案與觀念回顧</h3><p class="review-intro">點開任何一題，就能看到正確答案和教學提醒。適合教師共備後一起討論。</p><div class="review-scroll" id="reviewList"></div></section>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><span>新竹縣關西鎮南和國民小學 · 教師社群共備素材</span><span><i class="dot" aria-hidden="true"></i> 離線單檔運作 · 不上傳作答資料</span></footer>
+</div>
+<script>
+'use strict';
+const stages=[
+ {title:'打破基本迷思',head:'第一關｜打破基本迷思'},
+ {title:'從南和連結世界',head:'第二關｜從南和連結世界'},
+ {title:'雙語不等於全英語',head:'第三關｜雙語不等於全英語'},
+ {title:'讓課程真正發生',head:'第四關｜讓課程真正發生'}
+];
+const TF=['正確','錯誤'];
+const questions=[
+ {q:'國際教育主要是英語老師的工作，其他領域教師只需要配合活動即可。',opts:TF,a:1,ex:'國際教育可以融入各領域。自然課比較各地生態、社會課探討文化、藝術課欣賞不同國家的藝術，都是可能的切入點。',link:'各領域教師可以從自己已經在教的單元尋找國際連結，不必另外開一堂「國際教育課」。'},
+ {q:'國小低年級的國際教育，就是教學生學習簡單的英文字母、英文單字與英文歌曲。',opts:TF,a:1,ex:'低年級可以透過繪本、遊戲、生活情境和文化體驗認識不同的生活方式。英文可作為輔助，但學英語本身不等於完成國際教育。',link:'由「不同地方的小朋友怎麼吃早餐、怎麼上學」開始，低年級也能理解多元生活。'},
+ {q:'學校只要安排學生出國參訪或遊學，就代表學校的國際教育已經做得很完整。',opts:TF,a:1,ex:'出國參訪是國際交流的一種途徑。國際教育還需要在課程中深耕，讓更多學生有學習機會，並包含行前準備、文化理解與交流後反思。',link:'就算沒有海外遊學，南和仍能透過校訂課程和線上交流發展國際教育。'},
+ {q:'即使學校沒有經費帶學生出國，仍然可以透過課程、數位資源與線上交流推動國際教育。',opts:TF,a:0,ex:'國際教育不以出國為必要條件。跨文化閱讀、線上共作、探究世界議題或分享在地文化，都能創造學習經驗。',link:'小校能從最熟悉的在地素材起步，運用網路連結不同地區的學習者。'},
+ {q:'國際教育與雙語教育的關係，下列何者正確？',opts:['國際教育是雙語教育的進階課程。','國際教育著重國際理解與全球素養；雙語教育著重兩種語言在教育中的運用，兩者可以結合。','雙語教育一定包含國際教育。','只有英語能力好的學生才能參加國際教育。'],a:1,ex:'兩者可以互相支持，卻有不同核心目標。英語授課未必培養跨文化理解；國際教育也不必然使用英語。',link:'設計課程時先分清楚：學生要理解什麼議題？需要運用哪些語言？'},
+ {q:'南和國小原有的蝴蝶生態與客家文化，都能成為發展國際教育的起點。',opts:TF,a:0,ex:'從熟悉的本土文化與環境出發，再與其他地方比較，可以讓學生深化在地認同，同時發展國際理解。',link:'蝴蝶館、客庄文化與校園自然環境，正是南和具有辨識度的國際教育素材。'},
+ {q:'南和國小想將蝴蝶課程融入國際教育，以下哪一種設計最符合目標？',opts:['教學生背誦10種蝴蝶的英文名稱。','播放世界各國蝴蝶的美麗照片。','比較臺灣與日本的蝴蝶棲地及保育方式，讓學生提出南和校園的保育建議。','將蝴蝶課程全部改成英文授課。'],a:2,ex:'跨國資料比較、在地觀察與行動提案互相連結，能將單純的知識學習提升為探究與思考。',link:'可以從南和校園常見蝴蝶與蜜源植物出發，蒐集海外保育案例，再回到校園提出改善構想。'},
+ {q:'國際教育可以先讓學生認識自己的文化，再透過跨國比較，逐步形成自己的觀點。',opts:TF,a:0,ex:'這是一種很適切的課程設計路徑。教學順序也可以彈性調整，例如先由國外案例引發興趣，再回頭觀察與比較臺灣文化。',link:'比較客庄節慶與其他地區節慶時，可讓學生說明相同之處、差異及背後可能的原因。'},
+ {q:'學校想把SDGs永續發展目標融入國際教育，以下哪種方式最有學習深度？',opts:['探究南和與其他國家面對的共同環境問題，比較處理方式，再提出適合本地的行動。','在每張學習單上印上SDGs標誌。','要求學生背出全部17項永續發展目標。','舉辦一次環保宣導，學生有參加就算完成。'],a:0,ex:'SDGs可以是國際及全球教育的切入點。若課程能連結在地問題與跨國案例，讓學生比較、思辨並提出行動，學習會更扎實。',link:'例如從校園昆蟲棲地、生物多樣性與食農教育出發，對照其他國家的環境作法。'},
+ {q:'依據臺灣國際教育課綱議題，下列哪一項說法最適切？',opts:['每一堂國際教育課都必須同時教完四個面向。','國際教育只需認識外國文化即可。','國際教育唯一的學習目標是提升英語能力。','課程可依主題選擇適切的國際教育實質內涵，並關注臺灣與世界的連結。'],a:3,ex:'四大面向為課程發展提供方向，各單元可聚焦不同目標。若涉及特定補助計畫，還需要對照該計畫的必要指標與審查要求。',link:'南和的校訂課程可依不同年段對應合適的國際教育學習重點，毋須每堂課塞入所有面向。'},
+ {q:'南和國小使用「國語＋客語」進行課程與生活教學，能不能稱為雙語教育？',opts:['不行，雙語教育只能是國語加英語。','可以。廣義上可屬於雙語教育的形式，但不同於臺灣現行部分以英語為重點的雙語教育政策方案。','不行，客語不能算作語言。','可以，而且完全等同教育部現行的英語導向雙語政策方案。'],a:1,ex:'「雙語教育」作為廣義教育概念，語言組合不必限於國語與英語；但臺灣各類雙語政策、補助計畫的認定有各自目標與規範，不能直接畫上等號。',link:'客語生活化與英語雙語生活化可以相互支持；規劃經費與成果時，需清楚分辨所屬政策方案。'},
+ {q:'雙語自然課中，教師可以使用中文解釋較難的科學概念，再以適合學生程度的英語進行觀察與互動。',opts:TF,a:0,ex:'雙語學科教學仍以學科理解為重要目標。適當的中文說明與英語學習鷹架可以互相支持，無須為了形式上的語言比例犧牲理解。',link:'例如先確保學生理解昆蟲的生命週期，再加入適切的英文觀察詞彙或簡短口語回應。'},
+ {q:'雙語教學必須達到50%以上的英語授課比例，才有資格稱作雙語教學。',opts:TF,a:1,ex:'沒有一個適用所有雙語教育情境的50%通用門檻。不同教育模式及特定方案可能另訂授課比例、師資或執行規範，應分別確認。',link:'南和設計雙語活動時，先看學習目標與學生程度；涉及核定計畫，再核對其授課比例規定。'},
+ {q:'以下哪一種做法最符合良好的雙語學科教學原則？',opts:['整堂課盡量不用中文，學生聽不懂也要堅持。','教師不斷翻譯每一個英文單字，以增加英語使用量。','以學科學習為核心，在合適情境提供學生能理解、能運用的英語。','原本的學科課程改成背誦英文單字與句型。'],a:2,ex:'語言應服務學習目標。適當的情境、視覺提示、活動與語言鷹架，比硬性增加英語用量更有助於學生理解和參與。',link:'讓學生用簡短英語描述觀察結果，並保有必要的中文討論，能同時照顧學科與語言學習。'},
+ {q:'只有能流利使用全英語授課的教師，才有資格參與校園雙語生活化活動。',opts:TF,a:1,ex:'雙語生活化活動可以由不同領域與不同英語程度的教師共同參與。但正式擔任特定雙語授課職務，仍可能有相關師資資格與計畫要求。',link:'日常招呼、課室指令、校園標示與節慶活動，可依教師專長和學生需要安排。'},
+ {q:'教師全程使用中文進行課程，只要學習設計確實涵蓋跨國比較、文化理解等內容，仍然可以是在實施國際教育。',opts:TF,a:0,ex:'國際教育的核心是學生學習到哪些國際與跨文化素養，並非授課語言是否為英語。中文也能進行有深度的國際議題探究。',link:'南和學生用中文完成蝴蝶保育的跨國比較研究，同樣可能達成國際教育的學習目標。'},
+ {q:'南和國小有客家舞蹈、客語歌曲及英語活動，怎樣整合最有助於國際教育？',opts:['每學期各辦一次活動，互不影響。','將客家舞蹈表演全程改成英語主持。','優先學習外國舞蹈，減少本土活動。','從客家歌舞文化出發，與其他國家的表演文化比較，再讓學生向不同背景的觀眾介紹自己的文化。'],a:3,ex:'理解家鄉文化，進行跨文化比較，再練習向不同對象表達，能讓在地文化與國際視野彼此支援。',link:'客家舞蹈、烏克麗麗與客語歌曲都能成為跨文化欣賞、導覽與展演的素材。'},
+ {q:'老師設計一款「認識世界文化」的選擇題遊戲，怎麼做更有助於培養國際素養？',opts:['問答後安排文化比較、討論不同觀點，並讓學生說明理由。','盡量增加題數，讓學生在最短時間完成更多題目。','只依答對率判斷學生是否已具備國際素養。','把動畫和音效當成設計的主要目標。'],a:0,ex:'選擇題遊戲適合知識入門、練習與形成性評量；若進一步加入文化比較、觀點交流與反思，就更有機會培養國際理解。',link:'校內數位遊戲可以先作為引發興趣的入口，再延伸成分組討論或小型探究任務。'},
+ {q:'如果南和要同時發展國際教育與雙語生活化，下列哪一種課程規劃最值得優先考慮？',opts:['另外增加每週兩節英文，其他校訂課程維持不變。','在原有五蝶課程中加入適齡跨國比較、國際議題及適當的英語互動，並依學習目標安排成果。','全校停止客語與藝術特色活動，集中資源加強英語能力。','所有教師都製作一套世界知識選擇題，讓學生定期練習。'],a:1,ex:'從原有校訂課程切入，比另起爐灶更容易形成完整學習脈絡，也比較能減少教師重複備課與活動負擔。',link:'以五蝶課程為骨架，蝴蝶、客庄、食農、藝術等素材可以長出不同年段的國際學習任務。'},
+ {q:'學校要評估國際教育課程是否有效，下列哪一項最具有代表性？',opts:['學生能說出多少個國家的英文名稱。','學校有多少張國際交流活動的照片。','學生能介紹自己的文化、根據資料比較不同觀點，並說明自己從探究或交流中學到什麼。','學生在世界知識測驗裡得到多高的分數。'],a:2,ex:'國際教育成果應關注知識、態度與能力。文化理解、觀點形成、溝通與反思，需要透過學生表現和作品等多元證據來判斷。',link:'將校訂課程的導覽、作品、探究報告與學生反思累積起來，比只統計活動場次更能展現學習成長。'}
+];
+let mode='self',index=0,answers=Array(questions.length).fill(null);
+const $=id=>document.getElementById(id);
+const stagesDom=[$('screen-start'),$('screen-quiz'),$('screen-result')];
+const letter=i=>'ABCD'[i];
+const stageIndex=i=>Math.floor(i/5);
+const h=text=>String(text??'');
+function show(screen){stagesDom.forEach((el,i)=>el.hidden=i!==screen);$('homeBtn').hidden=screen===0;window.scrollTo({top:0,behavior:'auto'});}
+function chooseMode(next){mode=next;document.querySelectorAll('.mode').forEach(el=>{const selected=el.dataset.mode===mode;el.classList.toggle('selected',selected);el.setAttribute('aria-pressed',String(selected));});}
+function restart(){index=0;answers=Array(questions.length).fill(null);show(0);}
+function start(){index=0;answers=Array(questions.length).fill(null);show(1);renderQuiz();}
+function score(){return answers.reduce((n,a,i)=>n+(a===questions[i].a?1:0),0);}
+function completedCount(){return answers.filter(a=>a!==null).length;}
+function optionLabel(q,i){return q.opts.length===2?q.opts[i]:letter(i)+'．'+q.opts[i];}
+function makeStepBar(){const wrap=$('steps');wrap.replaceChildren();stages.forEach((s,i)=>{const el=document.createElement('div');el.className='step'+(i===stageIndex(index)?' current':i<stageIndex(index)?' done':'');el.textContent=`${String(i+1).padStart(2,'0')} ${s.title}`;wrap.appendChild(el);});}
+function renderQuiz(){const q=questions[index];const done=answers[index]!==null;const trueFalse=q.opts.length===2;
+ $('phaseLabel').textContent=stages[stageIndex(index)].head;
+ $('currentNum').textContent=String(index+1).padStart(2,'0');
+ $('qLabel').textContent='QUESTION '+String(index+1).padStart(2,'0');
+ $('qType').textContent=trueFalse?'是非題 · TRUE / FALSE':'單選題 · MULTIPLE CHOICE';
+ $('questionText').textContent=q.q;
+ $('progressFill').style.width=(completedCount()/questions.length*100)+'%';
+ $('progressBar').setAttribute('aria-valuenow',completedCount());
+ makeStepBar();
+ const opts=$('options');opts.className='options'+(trueFalse?' two':'');opts.replaceChildren();
+ q.opts.forEach((value,i)=>{let b=document.createElement('button');b.className='option';b.type='button';b.disabled=done;b.setAttribute('aria-label',(trueFalse?value:letter(i)+'，'+value));let label=document.createElement('span');label.className='letter';label.textContent=trueFalse?(i===0?'✓':'×'):letter(i);let tx=document.createElement('span');tx.className='option-text';tx.textContent=value;b.append(label,tx);b.addEventListener('click',()=>selectAnswer(i));opts.appendChild(b);});
+ $('insightPanel').classList.toggle('revealed',done);
+ $('nextBtn').hidden=!done;
+ $('nextBtnMobile').hidden=!done;
+ $('nextBtn').textContent=index===questions.length-1?'查看學習成果　→':'下一題　→';
+ $('nextBtnMobile').textContent=$('nextBtn').textContent;
+ $('keyHint').textContent=done?'按 Enter 前往下一題':(trueFalse?'按 1 或 2 選答，選定後揭曉解析':'按 1–4 選答，選定後揭曉解析');
+ if(done)renderReveal();
+}
+function selectAnswer(i){if(answers[index]!==null)return;answers[index]=i;renderQuiz();if(window.innerWidth>=951){$('nextBtn').focus({preventScroll:true});}if(window.innerWidth<951){$('insightPanel').scrollIntoView({behavior:'smooth',block:'nearest'});}}
+function renderReveal(){const q=questions[index],chosen=answers[index],correct=chosen===q.a;
+ document.querySelectorAll('.option').forEach((btn,i)=>{if(i===q.a)btn.classList.add('correct');else if(i===chosen)btn.classList.add('incorrect');else btn.classList.add('faded');});
+ const s=$('revealStatus');s.className='reveal-status '+(mode==='group'?'group':correct?'':'wrong');s.textContent=mode==='group'?'一起核對答案':correct?'✓ 答對了！':'↗ 這題值得重新認識';
+ $('revealTitle').textContent=mode==='group'?'原來觀念是這樣！':correct?'觀念掌握得很好！':'這個迷思很常見！';
+ $('correctAnswer').textContent='正確答案：'+optionLabel(q,q.a);
+ $('explanation').textContent=q.ex;
+ $('connectionText').textContent=q.link;
+}
+function next(){if(answers[index]===null)return;if(index===questions.length-1){show(2);renderResult();}else{index++;renderQuiz();window.scrollTo({top:0,behavior:'auto'});}}
+function renderResult(){const points=score();const group=mode==='group';
+ $('resultTitle').textContent=group?'恭喜完成20題共學任務！':'恭喜完成觀念大挑戰！';
+ $('resultSub').textContent=group?'從在地文化走向世界，這20個問題都值得在課堂裡持續討論。':'完成測驗就是很棒的開始。一起看看哪些觀念已掌握、哪些值得帶回教師共備。';
+ $('scoreNum').innerHTML=group?'20 <small>/ 20 題完成</small>':`${points} <small>/ 20 題答對</small>`;
+ const wrap=$('sectionScores');wrap.replaceChildren();stages.forEach((s,k)=>{const correct=questions.slice(k*5,(k+1)*5).reduce((n,q,i)=>n+(answers[k*5+i]===q.a?1:0),0);const row=document.createElement('div');row.className='section-score';const label=document.createElement('div');label.className='score-label';let lt=document.createElement('span');lt.textContent=`${k+1}. ${s.title}`;let rt=document.createElement('span');rt.textContent=group?'5 / 5 題完成':`${correct} / 5 題`;label.append(lt,rt);const track=document.createElement('div');track.className='score-track';const fill=document.createElement('span');fill.style.width=(group?100:correct/5*100)+'%';track.appendChild(fill);row.append(label,track);wrap.appendChild(row);});
+ const list=$('reviewList');list.replaceChildren();questions.forEach((q,i)=>{const own=answers[i]===q.a;const det=document.createElement('details');det.className='review';const summ=document.createElement('summary');const mark=document.createElement('span');mark.className='review-icon '+(group?'neutral':own?'':'miss');mark.textContent=group?'✦':own?'✓':'↗';let text=document.createElement('span');text.textContent=String(i+1).padStart(2,'0')+'｜'+q.q;summ.append(mark,text);const body=document.createElement('div');body.className='review-body';const ownp=document.createElement('p');ownp.textContent='作答：'+optionLabel(q,answers[i]);const rightp=document.createElement('p');rightp.textContent='正確：'+optionLabel(q,q.a);const desc=document.createElement('p');desc.className='review-details';desc.textContent=q.ex;const conn=document.createElement('p');conn.textContent='南和連結：'+q.link;body.append(ownp,rightp,desc,conn);det.append(summ,body);list.appendChild(det);});}
+function downloadResults(){const now=new Date();const date=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');const lines=[`南和國小｜國際教育 × 雙語教育迷思大挑戰`,`完成日期：${date}`,`作答模式：${mode==='group'?'社群共學':'個人挑戰'}`,mode==='self'?`答對題數：${score()}/20`:'完成題數：20/20','','【逐題回顧】'];questions.forEach((q,i)=>{lines.push(`${i+1}. ${q.q}`,`選擇：${optionLabel(q,answers[i])}`,`答案：${optionLabel(q,q.a)}`,`解析：${q.ex}`,`南和教學連結：${q.link}`,'');});lines.push('※ 觀念練習僅供教師專業發展與課程討論參考；特定政策方案依最新主管機關規定辦理。');const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/plain;charset=utf-8'});const link=document.createElement('a');const url=URL.createObjectURL(blob);link.href=url;link.download=`南和國小_國際雙語教育迷思挑戰_成果_${date}.txt`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function toggleFullScreen(){try{if(document.fullscreenElement){document.exitFullscreen();}else if(document.documentElement.requestFullscreen){document.documentElement.requestFullscreen();}else{alert('這個瀏覽器不支援全螢幕，可使用 F11 或瀏覽器選單。');}}catch(e){alert('瀏覽器未允許全螢幕，可使用 F11 或瀏覽器選單。');}}
+$('startBtn').addEventListener('click',start);$('nextBtn').addEventListener('click',next);$('nextBtnMobile').addEventListener('click',next);$('retryBtn').addEventListener('click',restart);$('downloadBtn').addEventListener('click',downloadResults);$('printBtn').addEventListener('click',()=>window.print());$('fullscreenBtn').addEventListener('click',toggleFullScreen);$('homeBtn').addEventListener('click',()=>{if(confirm('要返回首頁嗎？目前這次作答進度會清除。'))restart();});document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>chooseMode(b.dataset.mode)));
+document.addEventListener('keydown',e=>{if($('screen-quiz').hidden||e.altKey||e.ctrlKey||e.metaKey||e.repeat)return;const tag=document.activeElement?.tagName;if(tag==='INPUT'||tag==='TEXTAREA')return;if(e.key==='Enter'&&answers[index]!==null){e.preventDefault();next();return;}const k=Number(e.key);if(k>=1&&k<=questions[index].opts.length&&answers[index]===null){e.preventDefault();selectAnswer(k-1);}});
+window.addEventListener('beforeprint',()=>{document.querySelectorAll('#reviewList details').forEach(el=>el.open=true);});
+show(0);
+</script>
+</body>
+</html>

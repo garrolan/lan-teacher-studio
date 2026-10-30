@@ -197,5 +197,13 @@ window.STUDIO_ITEMS = [
     href: "games/單元一單元二自然複習考題.html",
     tag: "三年級自然",
     icon: "leaf"
+  },
+  {
+    title: "國際教育 × 雙語教育迷思大挑戰",
+    description: "南和教師社群 20 題互動觀念測驗，透過個人挑戰或共學模式，破解國際教育與雙語教育常見迷思。",
+    category: "game",
+    href: "games/國際教育＆雙語教育迷思測驗nanhe_international_bilingual_quiz_offline.html",
+    tag: "教師共備",
+    icon: "globe-2"
   }
 ];

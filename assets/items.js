@@ -95,6 +95,14 @@ window.STUDIO_ITEMS = [
     icon: "globe"
   },
   {
+    title: "WORD小達人-單元一、單元二",
+    description: "南和國小四年級資訊課第一次定期評量，透過20題是非與選擇題，複習 Word 文字編輯、圖片、版面與文字方塊；答題立即解析，完成後可查看分數、回顧錯題並列印結果。",
+    category: "game",
+    href: "games/word-master-unit1-2.html",
+    tag: "四年級資訊",
+    icon: "file-text"
+  },
+  {
     title: "校園尋寶｜拍照探險",
     description: "教師自訂照片關卡，學生掃碼組隊、拍照闖關；集中收照片、核對並列印探索成果。",
     category: "game",

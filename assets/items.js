@@ -213,5 +213,13 @@ window.STUDIO_ITEMS = [
     href: "games/國際教育＆雙語教育迷思測驗nanhe_international_bilingual_quiz_offline.html",
     tag: "教師共備",
     icon: "globe-2"
+  },
+  {
+    title: "你真的了解世界嗎？｜全球數據互動測驗",
+    description: "20 題全球數據互動挑戰，從人口、健康、教育到能源議題，練習以資料年份、定義與統計限制理解世界。",
+    category: "game",
+    href: "games/《你真的了解世界嗎？——20道全球數據互動挑戰》factfulness_global_quiz_offline.html",
+    tag: "全球素養",
+    icon: "globe-2"
   }
 ];

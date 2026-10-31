@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>你真的了解世界嗎？｜全球數據互動測驗</title>
+<style>
+  :root{
+    --bg1:#0a1f44;
+    --bg2:#132b63;
+    --card:#ffffffee;
+    --text:#13233a;
+    --muted:#5d6a7d;
+    --accent:#2d7ef7;
+    --accent2:#1fb6a6;
+    --ok:#118a4f;
+    --bad:#c24141;
+    --warn:#c77f17;
+    --shadow:0 16px 48px rgba(7,20,48,.18);
+    --radius:24px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 20% 10%, rgba(120,175,255,.25), transparent 28%),
+      radial-gradient(circle at 80% 20%, rgba(31,182,166,.2), transparent 26%),
+      linear-gradient(160deg,var(--bg1),var(--bg2) 45%, #0b1733);
+    min-height:100vh;
+  }
+  .shell{
+    max-width:980px;
+    margin:0 auto;
+    padding:28px 18px 48px;
+  }
+  .card{
+    background:var(--card);
+    backdrop-filter: blur(14px);
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .hidden{display:none !important}
+  .cover{
+    min-height:calc(100vh - 76px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .cover .card{
+    width:min(100%, 960px);
+    padding:42px 34px 30px;
+    position:relative;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 14px;
+    border-radius:999px;
+    background:rgba(45,126,247,.12);
+    color:var(--accent);
+    font-size:.95rem;
+    font-weight:700;
+    letter-spacing:.02em;
+  }
+  .cover-grid{
+    display:grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap:28px;
+    align-items:center;
+  }
+  h1{
+    margin:16px 0 10px;
+    font-size:clamp(2rem,4.2vw,3.25rem);
+    line-height:1.15;
+  }
+  .lead{
+    color:#31425d;
+    font-size:1.06rem;
+    line-height:1.8;
+    margin:0 0 14px;
+  }
+  .meta-list{
+    display:flex; flex-wrap:wrap; gap:10px; margin:22px 0 26px;
+  }
+  .pill{
+    padding:9px 13px;
+    border-radius:999px;
+    background:#eef4ff;
+    color:#30508d;
+    font-size:.92rem;
+    border:1px solid #d9e7ff;
+  }
+  .primary, .secondary, .ghost{
+    appearance:none;border:none;cursor:pointer;
+    border-radius:16px;padding:14px 22px;font-size:1rem;font-weight:700;
+    transition:.18s ease;
+  }
+  .primary{background:linear-gradient(135deg,var(--accent),#4794ff);color:#fff; box-shadow:0 10px 24px rgba(45,126,247,.26)}
+  .primary:hover{transform:translateY(-1px)}
+  .secondary{background:#eef6ff;color:#2959aa}
+  .ghost{background:#fff;border:1px solid #d7e2f5;color:#49617f}
+  .cover-cta{display:flex; gap:12px; flex-wrap:wrap}
+  .globe-wrap{display:flex; justify-content:center; align-items:center; padding:12px}
+  .globe{
+    position:relative;
+    width:min(72vw, 320px); aspect-ratio:1;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 35% 28%, rgba(255,255,255,.95) 0 8%, transparent 9%),
+      radial-gradient(circle at 40% 32%, rgba(255,255,255,.28), transparent 28%),
+      radial-gradient(circle at 30% 25%, rgba(85, 192, 255, .45), transparent 22%),
+      radial-gradient(circle at 62% 52%, rgba(13, 71, 161, .18), transparent 34%),
+      linear-gradient(160deg, #6fd7ff 0%, #2490f8 40%, #124cbb 100%);
+    box-shadow:
+      inset -32px -24px 60px rgba(6,33,91,.28),
+      inset 20px 18px 42px rgba(255,255,255,.16),
+      0 24px 50px rgba(3,11,37,.35);
+    overflow:hidden;
+  }
+  .globe:before, .globe:after{
+    content:""; position:absolute; inset:0; border-radius:50%;
+  }
+  .globe:before{
+    background:
+      radial-gradient(circle at 24% 40%, #6cc06d 0 10%, transparent 11%),
+      radial-gradient(circle at 31% 44%, #5bad61 0 8%, transparent 9%),
+      radial-gradient(circle at 28% 52%, #77c86c 0 9%, transparent 10%),
+      radial-gradient(circle at 58% 37%, #6abd63 0 9%, transparent 10%),
+      radial-gradient(circle at 65% 45%, #58a85a 0 13%, transparent 14%),
+      radial-gradient(circle at 61% 57%, #72bf67 0 7%, transparent 8%),
+      radial-gradient(circle at 74% 63%, #80d57a 0 7%, transparent 8%),
+      radial-gradient(circle at 47% 69%, #65b95f 0 10%, transparent 11%);
+    opacity:.92;
+    filter: blur(1px);
+  }
+  .globe:after{
+    background:
+      linear-gradient(90deg, transparent 0 18%, rgba(255,255,255,.22) 18% 19%, transparent 19% 38%, rgba(255,255,255,.18) 38% 39%, transparent 39% 58%, rgba(255,255,255,.2) 58% 59%, transparent 59% 78%, rgba(255,255,255,.18) 78% 79%, transparent 79%),
+      linear-gradient(0deg, transparent 0 18%, rgba(255,255,255,.16) 18% 19%, transparent 19% 38%, rgba(255,255,255,.12) 38% 39%, transparent 39% 58%, rgba(255,255,255,.14) 58% 59%, transparent 59% 78%, rgba(255,255,255,.16) 78% 79%, transparent 79%);
+    mix-blend-mode:screen;
+    opacity:.55;
+  }
+  .orbit{position:absolute; inset:-10% -8%; border-radius:50%; border:2px dashed rgba(255,255,255,.35); transform:rotate(18deg)}
+  .orbit2{position:absolute; inset:-18% -2%; border-radius:50%; border:1px solid rgba(255,255,255,.16); transform:rotate(-24deg)}
+  .star{position:absolute; width:6px; height:6px; border-radius:50%; background:#fff; box-shadow:0 0 12px rgba(255,255,255,.65)}
+  .cover-note{margin-top:18px; font-size:.92rem; color:#5b6d87}
+
+  .quiz-card{padding:0}
+  .topbar{
+    padding:18px 22px 10px; background:linear-gradient(180deg,#f9fcff,#f3f8ff);
+    border-bottom:1px solid #e5edf8;
+  }
+  .topbar-row{display:flex; justify-content:space-between; gap:18px; align-items:center; flex-wrap:wrap}
+  .title-mini{font-weight:800; color:#27446f}
+  .progress-wrap{display:flex; align-items:center; gap:12px; width:min(100%, 360px)}
+  .progress{flex:1; height:10px; background:#dde8fa; border-radius:999px; overflow:hidden}
+  .progress > span{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--accent2),var(--accent)); border-radius:999px; transition:width .3s ease}
+  .screen{padding:28px 24px 28px}
+  .q-meta{display:flex; justify-content:space-between; gap:10px; align-items:center; color:#5d6a7d; font-weight:700; margin-bottom:12px; flex-wrap:wrap}
+  .q-type{display:inline-flex; align-items:center; gap:6px; background:#eef6ff; color:#3a66ae; padding:8px 12px; border-radius:999px; font-size:.92rem}
+  .q-title{font-size:1.45rem; line-height:1.55; font-weight:800; margin:10px 0 18px; color:#13233a}
+  .hint{background:#f7fbff; border:1px solid #e3eefb; border-radius:18px; padding:14px 16px; color:#4b607a; line-height:1.7; margin-bottom:16px}
+  .options{display:grid; gap:12px; margin:14px 0 18px}
+  .option{
+    padding:16px 18px; border-radius:18px; border:1px solid #d7e3f6; background:#fff;
+    cursor:pointer; text-align:left; display:flex; gap:14px; align-items:flex-start; transition:.16s ease;
+  }
+  .option:hover{transform:translateY(-1px); box-shadow:0 10px 24px rgba(9,30,66,.06)}
+  .option.disabled{cursor:default}
+  .letter{
+    flex:0 0 auto; width:34px; height:34px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
+    background:#edf3ff; color:#3d5d9c; font-weight:800;
+  }
+  .option.correct{border-color:#9dd2b4; background:#f2fcf6}
+  .option.correct .letter{background:#d6f3e0; color:var(--ok)}
+  .option.wrong{border-color:#f0b2b2; background:#fff4f4}
+  .option.wrong .letter{background:#ffdede; color:var(--bad)}
+  .option.neutral-fade{opacity:.62}
+  .answer-panel{
+    margin-top:10px; padding:20px; border-radius:22px; background:#fbfdff; border:1px solid #e4edf9;
+  }
+  .answer-head{display:flex; justify-content:space-between; gap:12px; align-items:flex-start; flex-wrap:wrap}
+  .result-badge{font-weight:800; padding:10px 14px; border-radius:999px; display:inline-flex; align-items:center; gap:8px}
+  .result-badge.ok{background:#e8f9ef; color:var(--ok)}
+  .result-badge.bad{background:#fff0f0; color:var(--bad)}
+  .answer-text{line-height:1.85; color:#233754; margin:14px 0 8px}
+  .answer-text p{margin:.35em 0}
+  .kvs{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin:16px 0}
+  .kv{background:#fff; border:1px solid #e2eaf7; border-radius:16px; padding:14px}
+  .kv .k{font-size:.85rem; color:#64758d; margin-bottom:6px}
+  .kv .v{font-size:1rem; font-weight:800; color:#18345b; line-height:1.45}
+  .source-box{margin-top:14px; background:#fff; border:1px dashed #cfdcf2; padding:14px 16px; border-radius:16px; color:#51647d; line-height:1.7}
+  .source-box strong{color:#29466e}
+  details.glossary, details.more{margin-top:12px; background:#fff; border:1px solid #e2eaf5; border-radius:16px; padding:12px 14px}
+  details.glossary summary, details.more summary{cursor:pointer; font-weight:800; color:#29466e}
+  .glossary-item{padding:10px 0; border-top:1px dashed #e4ebf5}
+  .glossary-item:first-of-type{border-top:none; padding-top:8px}
+  .glossary-term{font-weight:800; color:#17355d}
+  .chart-wrap{margin-top:16px; background:#fff; border:1px solid #e2eaf7; border-radius:18px; padding:14px}
+  .chart-title{font-weight:800; color:#29466e; margin-bottom:10px}
+  svg.chart{width:100%; height:auto; display:block}
+  .legend{display:flex; gap:12px; flex-wrap:wrap; color:#55697f; font-size:.9rem; margin-top:8px}
+  .legend span{display:inline-flex; align-items:center; gap:6px}
+  .legend i{display:inline-block; width:12px; height:12px; border-radius:4px}
+  .footer-actions{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:22px}
+  .score-big{font-size:clamp(2.2rem,6vw,3.6rem); font-weight:900; color:#173864; margin:0}
+  .summary-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin:20px 0}
+  .summary-card{background:#fff; border:1px solid #e2eaf6; border-radius:18px; padding:16px}
+  .summary-card h3{margin:0 0 8px; font-size:1rem; color:#29466e}
+  .summary-card p{margin:0; color:#50637b; line-height:1.8}
+  .small{font-size:.92rem; color:#61738a; line-height:1.8}
+  .overview{margin-top:18px; display:grid; gap:10px}
+  .overview-item{background:#fff; border:1px solid #e3ebf6; border-radius:16px; padding:14px}
+  .overview-item strong{color:#17355d}
+  .credits{margin-top:20px; padding-top:16px; border-top:1px solid #e8eef8; color:#60718a; line-height:1.8; font-size:.92rem}
+  @media (max-width: 820px){
+    .cover-grid{grid-template-columns:1fr;}
+    .globe-wrap{order:-1}
+    .cover .card{padding:26px 18px 24px}
+    .screen{padding:20px 16px 22px}
+    .topbar{padding:14px 16px 10px}
+    .q-title{font-size:1.25rem}
+  }
+</style>
+</head>
+<body>
+  <div class="shell">
+    <section id="cover" class="cover">
+      <div class="card">
+        <div class="cover-grid">
+          <div>
+            <div class="badge">🌍 全球視野 × 數據思辨</div>
+            <h1>你真的了解世界嗎？</h1>
+            <p class="lead">
+              這是一份受到 <em>Factfulness《真確》</em> 啟發的互動測驗。
+              我們常以為自己了解世界，但很多直覺其實會被舊印象、單一新聞或片段經驗帶著走。
+              試著先猜，再看數據，也一起學習如何解讀「資料年份」「定義」與「統計限制」。
+            </p>
+            <div class="meta-list">
+              <span class="pill">20 題</span>
+              <span class="pill">一頁一題</span>
+              <span class="pill">即答即解說</span>
+              <span class="pill">部分題目附圖表</span>
+              <span class="pill">可離線使用</span>
+            </div>
+            <div class="cover-cta">
+              <button class="primary" id="startBtn">開始挑戰</button>
+              <button class="secondary" id="jumpGlossaryBtn">先看名詞小辭典</button>
+            </div>
+            <p class="cover-note">資料整理時間：2026-10-31。圖表與數據以國際官方機構最新可得資料為主；個別題目的「資料年份」與「發布年份」可能不同。</p>
+          </div>
+          <div class="globe-wrap">
+            <div style="position:relative">
+              <div class="orbit"></div>
+              <div class="orbit2"></div>
+              <div class="globe"></div>
+              <div class="star" style="top:5%; left:8%"></div>
+              <div class="star" style="top:18%; right:2%"></div>
+              <div class="star" style="bottom:18%; left:-4%"></div>
+              <div class="star" style="bottom:8%; right:8%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="hidden">
+      <div class="card quiz-card">
+        <div class="topbar">
+          <div class="topbar-row">
+            <div>
+              <div class="title-mini">全球數據互動測驗</div>
+              <div class="small">先作答，再看答案、解說與名詞補充。</div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress"><span id="progressBar"></span></div>
+              <div id="progressText" class="small" style="font-weight:800; white-space:nowrap">1 / 20</div>
+            </div>
+          </div>
+        </div>
+        <div class="screen" id="screen"></div>
+      </div>
+    </section>
+  </div>
+
+<script>
+const glossary = {
+  "極端貧窮": "世界銀行以國際貧窮線來估算極端貧窮。自 2025 年更新後，現行國際極端貧窮線為『每日 3 美元（以 2021 年購買力平價 PPP 計算）』。",
+  "PPP（購買力平價）": "PPP 是 Purchasing Power Parity 的縮寫，中文常譯為『購買力平價』。它會把不同國家的物價差異納入考量，讓不同貨幣能用更可比的方式換算。",
+  "中等所得經濟體": "依世界銀行分類，國家會依人均國民所得分為低所得、下中所得、上中所得與高所得。『中等所得經濟體』通常包含下中所得與上中所得兩類。這是國家層級分類，不等於人民都屬於中產階級。",
+  "總生育率": "指在某一年的年齡別生育率維持不變的假設下，一名女性一生平均將生育幾個孩子。這是統計指標，不是逐一追蹤每位婦女的實際生育數。",
+  "按時完成率": "指一個年齡世代中，能在理論應完成的年齡前後完成某一教育階段的人口比例。",
+  "失學人口": "指達到某教育階段的官方學齡，但目前未在任何正式教育階段就學的人口。",
+  "DTP3": "白喉（Diphtheria）、破傷風（Tetanus）、百日咳（Pertussis）三合一疫苗的第 3 劑。全球常用作兒童常規免疫覆蓋率的重要指標。",
+  "安全管理飲用水": "WHO／UNICEF 聯合監測計畫（JMP）所用指標，指飲用水來自改良水源、位於家中或需要時可取得、且不受糞便與優先化學物質污染。",
+  "安全管理衛生設施": "JMP 指標之一，指使用改良衛生設施，且排泄物能被安全處理或運送並處理。它比『有廁所』的要求更高。",
+  "糧食不安全": "指人們在某段時間內無法穩定取得足夠、安全且營養充足的食物。『飢餓』通常是更嚴格的慢性營養不足概念。",
+  "被迫流離失所": "包括難民、尋求庇護者、其他需要國際保護者，以及境內流離失所者（IDPs）等，不等於全部都是跨國『難民』。",
+  "再生能源發電占比": "在某一期間內，全球總發電量當中，由水力、風能、太陽能、生質能、地熱等再生能源所發出的比例。這和『所有能源消費』的占比不是同一件事。",
+  "工業化前基準": "氣候統計常把 1850–1900 年平均氣溫當作『工業化前』參考基準，用來比較後來的升溫幅度。"
+};
+
+const questions = [
+  {
+    type:"人口與世界規模",
+    title:"截至 2026 年，全球人口大約是多少？",
+    hint:"先用直覺猜猜看，不用太怕答錯。這題重點在量級感。",
+    options:["63 億人","83 億人","103 億人"],
+    correct:1,
+    answerTitle:"約 83 億人",
+    explanation:[
+      "聯合國《World Population Prospects 2024》推估，2026 年全球人口大約落在 83 億左右。",
+      "很多人對世界人口的印象還停在『70 億上下』，但其實地球人口在近年已經超過 80 億。"
+    ],
+    facts:[
+      {k:"最新推估", v:"約 83 億人"},
+      {k:"資料性質", v:"聯合國人口推估"},
+      {k:"提醒", v:"不是逐一清點人口"}
+    ],
+    glossary:["總生育率"],
+    sources:["United Nations Population Division, World Population Prospects 2024（2026 年推估）"]
+  },
+  {
+    type:"人口與國家",
+    title:"截至 2026 年，世界人口最多的是哪一個國家？",
+    options:["中國","美國","印度"],
+    correct:2,
+    answerTitle:"印度",
+    explanation:[
+      "依聯合國人口資料，印度已超越中國，成為目前世界人口最多的國家。",
+      "這類題目很好提醒學生：我們腦中的『世界排序』，常會落後於現實變化。"
+    ],
+    facts:[
+      {k:"印度（2026）", v:"約 14.77 億"},
+      {k:"中國（2026）", v:"約 14.13 億"},
+      {k:"資料來源", v:"聯合國人口司 WPP 2024"}
+    ],
+    chart:{
+      kind:"bar",
+      title:"2026 年兩國人口比較（億人）",
+      yLabel:"億人",
+      data:[{label:"印度", value:14.77},{label:"中國", value:14.13}]
+    },
+    sources:["United Nations Population Division Data Portal（India 2026、China 2026）"]
+  },
+  {
+    type:"人口與家庭",
+    title:"2025 年，全球平均每名婦女的總生育率大約是多少？",
+    options:["2.2 個孩子","3.8 個孩子","5.1 個孩子"],
+    correct:0,
+    answerTitle:"約 2.2 個孩子",
+    explanation:[
+      "全球總生育率已明顯下降。人口仍持續增加，不代表每個家庭都有很多孩子，而是還牽涉到人口年齡結構與平均壽命。",
+      "這題很適合打破『世界到處都還是很多人生很多小孩』的想像。"
+    ],
+    facts:[
+      {k:"全球總生育率", v:"約 2.2"},
+      {k:"資料年份", v:"2025"},
+      {k:"注意", v:"是統計指標，不是實際逐人追蹤"}
+    ],
+    glossary:["總生育率"],
+    sources:["UNFPA, State of World Population 2025"]
+  },
+  {
+    type:"貧窮與生活條件",
+    title:"依世界銀行最新國際貧窮線估算，2024 年全球處於極端貧窮的人口大約占多少？",
+    options:["約 10%","約 30%","約 50%"],
+    correct:0,
+    answerTitle:"約 10%",
+    explanation:[
+      "依世界銀行資料，全球大約每 10 人中有 1 人處於極端貧窮。這個比例仍然令人憂心，但已和很多人想像中的『一半世界都極端貧窮』不同。",
+      "同時要注意：世界銀行 2025 年已更新國際貧窮線，現行極端貧窮線為每日 3 美元（2021 PPP）。不同年份若採用不同門檻，不能直接硬比。"
+    ],
+    facts:[
+      {k:"比例", v:"約 10%"},
+      {k:"人口估計", v:"約 8.24 億人"},
+      {k:"門檻", v:"每日 3 美元（2021 PPP）"}
+    ],
+    glossary:["極端貧窮","PPP（購買力平價）"],
+    sources:["World Bank, Measuring Poverty；World Bank, June 2025 Update to Global Poverty Lines"]
+  },
+  {
+    type:"經濟分類",
+    title:"目前世界上大約有多少人口居住在『中等所得經濟體』？",
+    options:["約 25%","約 50%","接近 75%"],
+    correct:2,
+    answerTitle:"接近 75%",
+    explanation:[
+      "世界銀行指出，將近四分之三的世界人口居住於中等所得經濟體。",
+      "這不表示四分之三的人都是『中產階級』，而是指這些人生活在被世界銀行歸類為中等所得的國家。這是一個很常見的概念混淆。"
+    ],
+    facts:[
+      {k:"比例", v:"近 75%"},
+      {k:"常見誤解", v:"不等於 75% 都是中產階級"},
+      {k:"分類單位", v:"國家／經濟體"}
+    ],
+    glossary:["中等所得經濟體"],
+    sources:["World Bank, Measuring Poverty；World Bank, Middle-Income Countries"]
+  },
+  {
+    type:"教育現況",
+    title:"2024 年，全球大約有多少比例的孩子能按時完成小學教育？",
+    options:["48%","68%","88%"],
+    correct:2,
+    answerTitle:"88%",
+    explanation:[
+      "UNESCO 2026 全球教育監測報告指出，全球小學按時完成率已由 2000 年的 77% 提升到 2024 年的 88%。",
+      "這題可以幫學生和老師看見：世界教育仍有巨大挑戰，但長期進步也是真實存在的。"
+    ],
+    facts:[
+      {k:"2000 年", v:"77%"},
+      {k:"2024 年", v:"88%"},
+      {k:"低所得國家", v:"約 60%"}
+    ],
+    glossary:["按時完成率"],
+    chart:{
+      kind:"bar",
+      title:"全球小學按時完成率變化",
+      yLabel:"%",
+      data:[{label:"2000", value:77},{label:"2024", value:88}]
+    },
+    sources:["UNESCO, Global Education Monitoring Report 2026"]
+  },
+  {
+    type:"教育現況",
+    title:"2024 年，全球仍有多少兒童、青少年與青年處於失學狀態？",
+    options:["約 2,700 萬人","約 2.73 億人","約 7 億人"],
+    correct:1,
+    answerTitle:"約 2.73 億人",
+    explanation:[
+      "UNESCO 統計，2024 年全球約有 2.73 億學齡兒童與青年沒有就學。",
+      "也就是說：教育進步是真的，但距離『人人都能接受教育』還有不小差距。"
+    ],
+    facts:[
+      {k:"總失學人口", v:"約 2.73 億"},
+      {k:"小學年齡", v:"7,900 萬"},
+      {k:"高中年齡", v:"1.30 億"}
+    ],
+    glossary:["失學人口"],
+    chart:{
+      kind:"bar",
+      title:"2024 年全球失學人口（依教育階段年齡）",
+      yLabel:"百萬人",
+      data:[{label:"小學", value:79},{label:"國中", value:64},{label:"高中", value:130}]
+    },
+    sources:["UNESCO, Out-of-school rate（2024）"]
+  },
+  {
+    type:"教育與性別",
+    title:"2024 年全球失學人口中，哪一性別略多？",
+    options:["男生略多","女生多出一倍","兩者完全相同"],
+    correct:0,
+    answerTitle:"男生略多",
+    explanation:[
+      "UNESCO 2026 報告指出，2024 年全球失學人口中，男生約 1.40 億、女生約 1.33 億，男生略多。",
+      "這不代表女孩教育問題已消失，而是提醒我們：不同國家、地區、年齡層的性別差距樣貌可能不同，不能只看單一全球平均值。"
+    ],
+    facts:[
+      {k:"男生", v:"約 1.40 億"},
+      {k:"女生", v:"約 1.33 億"},
+      {k:"重點", v:"全球平均不等於各國情況"}
+    ],
+    sources:["UNESCO, Monitoring education in the SDGs 2026"]
+  },
+  {
+    type:"兒童健康",
+    title:"2024 年，全球平均大約每 27 名出生的孩子中，有多少人在 5 歲前死亡？",
+    options:["1 人","5 人","10 人"],
+    correct:0,
+    answerTitle:"約 1 人",
+    explanation:[
+      "2024 年全球五歲以下兒童死亡率約為每 1,000 名活產 37.4 人，換算約為每 27 名孩子中有 1 人在 5 歲前死亡。",
+      "1990 年時則約為每 11 名中有 1 人。長期來看，兒童生存率大幅改善；但 2024 年仍約有 490 萬名 5 歲以下兒童死亡。"
+    ],
+    facts:[
+      {k:"1990 年", v:"每千名活產 93.5 人"},
+      {k:"2024 年", v:"每千名活產 37.4 人"},
+      {k:"2024 死亡人數", v:"約 490 萬"}
+    ],
+    chart:{
+      kind:"line",
+      title:"全球五歲以下兒童死亡率長期下降",
+      yLabel:"每千名活產",
+      data:[
+        {label:"1990", value:93.5},
+        {label:"2000", value:76.7},
+        {label:"2010", value:50.6},
+        {label:"2020", value:39.2},
+        {label:"2024", value:37.4}
+      ]
+    },
+    sources:["UNICEF / WHO, child mortality estimates 2026"]
+  },
+  {
+    type:"疫苗與公共衛生",
+    title:"2025 年，全球完成 DTP3（三合一疫苗第 3 劑）接種的嬰兒約占多少比例？",
+    options:["35%","60%","85%"],
+    correct:2,
+    answerTitle:"85%",
+    explanation:[
+      "WHO 指出，2025 年全球約 85% 的嬰兒完成 DTP3 接種，約 1.10 億名嬰兒。",
+      "這是兒童常規免疫的重要指標。不過同時仍有約 1,350 萬名兒童連任何疫苗都未接種，顯示公共衛生資源仍有不平等。"
+    ],
+    facts:[
+      {k:"DTP3 覆蓋率", v:"85%"},
+      {k:"完成接種人數", v:"約 1.10 億"},
+      {k:"零劑次兒童", v:"約 1,350 萬"}
+    ],
+    glossary:["DTP3"],
+    sources:["WHO, Immunization coverage（2026-07-15）"]
+  },
+  {
+    type:"糧食與營養",
+    title:"2025 年，全球長期營養不足、面臨飢餓的人口大約占多少？",
+    options:["約 8%","約 28%","約 48%"],
+    correct:0,
+    answerTitle:"約 7.8%",
+    explanation:[
+      "FAO 2026 報告估計，2025 年約有 6.45 億人面臨飢餓，約占全球人口 7.8%。",
+      "值得注意的是：『飢餓』與『中度或重度糧食不安全』不是同一個概念。後者在 2025 年約為 25.8%。"
+    ],
+    facts:[
+      {k:"飢餓人口", v:"約 6.45 億"},
+      {k:"比例", v:"約 7.8%"},
+      {k:"糧食不安全", v:"約 25.8%"}
+    ],
+    glossary:["糧食不安全"],
+    sources:["FAO, The State of Food Security and Nutrition in the World 2026"]
+  },
+  {
+    type:"飲水與衛生",
+    title:"2024 年，全球能使用『安全管理飲用水服務』的人口大約占多少？",
+    options:["34%","54%","74%"],
+    correct:2,
+    answerTitle:"74%",
+    explanation:[
+      "WHO／UNICEF 聯合監測計畫指出，2024 年全球約 74% 人口使用安全管理飲用水服務。2015 年則約為 68%。",
+      "但這不等於世界上每個人都能輕易喝到安全的水。2024 年仍有約 21 億人未享有這項服務。"
+    ],
+    facts:[
+      {k:"2015 年", v:"68%"},
+      {k:"2024 年", v:"74%"},
+      {k:"仍未享有者", v:"約 21 億人"}
+    ],
+    glossary:["安全管理飲用水"],
+    chart:{
+      kind:"bar",
+      title:"安全管理飲用水覆蓋率",
+      yLabel:"%",
+      data:[{label:"2015", value:68},{label:"2024", value:74}]
+    },
+    sources:["WHO / UNICEF JMP, Progress on household drinking-water, sanitation and hygiene 2000-2024"]
+  },
+  {
+    type:"飲水與衛生",
+    title:"2024 年，全球能使用『安全管理衛生設施』的人口大約占多少？",
+    options:["28%","58%","88%"],
+    correct:1,
+    answerTitle:"58%",
+    explanation:[
+      "2024 年全球約 58% 人口能使用安全管理衛生設施。雖然比 2015 年的 48% 增加，但仍有約 34 億人未享有這項服務。",
+      "這題也提醒我們：『有廁所』和『衛生處理達到安全管理標準』不是同一回事。"
+    ],
+    facts:[
+      {k:"2015 年", v:"48%"},
+      {k:"2024 年", v:"58%"},
+      {k:"仍未享有者", v:"約 34 億人"}
+    ],
+    glossary:["安全管理衛生設施"],
+    chart:{
+      kind:"bar",
+      title:"安全管理衛生設施覆蓋率",
+      yLabel:"%",
+      data:[{label:"2015", value:48},{label:"2024", value:58}]
+    },
+    sources:["WHO / UNICEF JMP, Progress on household drinking-water, sanitation and hygiene 2000-2024"]
+  },
+  {
+    type:"基礎建設",
+    title:"2024 年，全球大約有多少比例的人口能取得電力？",
+    options:["52%","72%","92%"],
+    correct:2,
+    answerTitle:"92%",
+    explanation:[
+      "《聯合國永續發展目標報告 2026》指出，2024 年全球約 92% 人口有電可用。",
+      "這並不等於供電完全穩定，也不代表能源取得完全沒有不平等；但從歷史角度看，電力普及確實已大幅進步。"
+    ],
+    facts:[
+      {k:"2024 可用電力", v:"92%"},
+      {k:"未取得電力人口", v:"約 6.55 億人"},
+      {k:"主要集中區域", v:"撒哈拉以南非洲"}
+    ],
+    sources:["UN DESA, The Sustainable Development Goals Report 2026"]
+  },
+  {
+    type:"數位落差",
+    title:"2025 年，全球大約有多少比例的人口使用網際網路？",
+    options:["約 34%","約 54%","約 74%"],
+    correct:2,
+    answerTitle:"約 74%",
+    explanation:[
+      "國際電信聯盟（ITU）估計，2025 年全球約 60 億人使用網路，約占總人口 74%。",
+      "不過全球仍有約 22 億人尚未上網，而且就算都『有上網』，連線品質、設備、費用與數位能力差異仍很大。"
+    ],
+    facts:[
+      {k:"使用網路人口", v:"約 60 億人"},
+      {k:"比例", v:"74%"},
+      {k:"未上網人口", v:"約 22 億人"}
+    ],
+    chart:{
+      kind:"bar",
+      title:"2025 年網際網路使用率（部分區域）",
+      yLabel:"%",
+      data:[{label:"全球", value:74},{label:"非洲", value:36},{label:"美洲", value:88},{label:"歐洲", value:92}]
+    },
+    sources:["ITU, Statistics / Facts and Figures 2025"]
+  },
+  {
+    type:"難民與全球責任",
+    title:"全球難民與其他需要國際保護者，主要由哪一類國家接納？",
+    options:["主要是高所得國家","高所得與其他國家大約各半","主要是低所得與中等所得國家"],
+    correct:2,
+    answerTitle:"主要是低所得與中等所得國家",
+    explanation:[
+      "UNHCR 指出，截至 2025 年底，約 68% 的難民與其他需要國際保護者由低所得與中等所得國家接納。",
+      "這和許多人以為『難民大多在富裕國家』的印象不同。全球責任分擔其實非常不均。"
+    ],
+    facts:[
+      {k:"低／中所得國家承擔", v:"68%"},
+      {k:"鄰近原籍國", v:"65%"},
+      {k:"高所得國家", v:"約 29%"}
+    ],
+    glossary:["被迫流離失所"],
+    sources:["UNHCR, Refugee Data Finder / Global Trends 2025"]
+  },
+  {
+    type:"難民與衝突",
+    title:"2025 年底，全球因衝突、暴力、迫害等因素而被迫離開家園的人口，約有多少？",
+    options:["約 1,180 萬人","約 1.178 億人","約 5 億人"],
+    correct:1,
+    answerTitle:"約 1.178 億人",
+    explanation:[
+      "UNHCR 統計，2025 年底全球被迫流離失所人口約 1 億 1,780 萬。這個數字包括難民、尋求庇護者、其他需要保護者與境內流離失所者等。",
+      "因此，『被迫流離失所』不等於全都是跨越國境的『難民』。"
+    ],
+    facts:[
+      {k:"2025 年底", v:"1.178 億人"},
+      {k:"2024 年底", v:"1.2325 億人"},
+      {k:"資料來源", v:"UNHCR Global Trends 2025"}
+    ],
+    glossary:["被迫流離失所"],
+    chart:{
+      kind:"line",
+      title:"全球被迫流離失所人口變化（百萬人）",
+      yLabel:"百萬人",
+      data:[
+        {label:"2006", value:39.47},
+        {label:"2010", value:41.06},
+        {label:"2015", value:65.03},
+        {label:"2020", value:81.49},
+        {label:"2024", value:123.25},
+        {label:"2025", value:117.83}
+      ]
+    },
+    sources:["UNHCR, Figures at a glance / Global Trends 2025"]
+  },
+  {
+    type:"性別與政治代表",
+    title:"截至 2026 年 1 月，全球各國國會議席大約有多少比例由女性擔任？",
+    options:["27.5%","47.5%","67.5%"],
+    correct:0,
+    answerTitle:"27.5%",
+    explanation:[
+      "各國議會聯盟（IPU）統計，截至 2026 年 1 月 1 日，全球女性國會議員占比約為 27.5%。",
+      "這說明性別平等確實比過去進步，但距離真正接近一半一半，還有明顯差距。"
+    ],
+    facts:[
+      {k:"女性國會議席", v:"27.5%"},
+      {k:"上一年", v:"27.2%"},
+      {k:"重點", v:"成長速度偏慢"}
+    ],
+    sources:["Inter-Parliamentary Union (IPU), Women in parliament 2025 / 2026 press release"]
+  },
+  {
+    type:"能源轉型",
+    title:"2025 年，全球發電量大約有多少比例來自再生能源？",
+    options:["約 14%","約 34%","約 74%"],
+    correct:1,
+    answerTitle:"約 33.8%",
+    explanation:[
+      "Ember 的《Global Electricity Review 2026》指出，2025 年全球發電量約 33.8% 來自再生能源。",
+      "請注意：這裡談的是『發電量』，不是所有能源消費。交通、工業用熱等部門的能源結構仍不同。"
+    ],
+    facts:[
+      {k:"再生能源發電占比", v:"33.8%"},
+      {k:"太陽能", v:"成長速度最快之一"},
+      {k:"注意", v:"不是整體能源消費占比"}
+    ],
+    glossary:["再生能源發電占比"],
+    chart:{
+      kind:"line",
+      title:"全球再生能源發電占比（示意節點）",
+      yLabel:"%",
+      data:[
+        {label:"2000", value:18},
+        {label:"2010", value:20.5},
+        {label:"2020", value:28.6},
+        {label:"2025", value:33.8}
+      ]
+    },
+    sources:["Ember, Global Electricity Review 2026"]
+  },
+  {
+    type:"氣候變遷",
+    title:"2025 年，全球年平均地表溫度比 1850–1900 年工業化前基準約高出多少？",
+    options:["0.43°C","1.43°C","3.43°C"],
+    correct:1,
+    answerTitle:"約 1.43°C",
+    explanation:[
+      "世界氣象組織（WMO）指出，2025 年全球年平均氣溫約比 1850–1900 年平均高出 1.43°C。",
+      "這不等於單憑某一年就能判定長期暖化門檻是否已正式突破；但它清楚反映全球暖化的趨勢依然非常明顯。"
+    ],
+    facts:[
+      {k:"2025 升溫", v:"1.43°C"},
+      {k:"長期訊息", v:"2015–2025 為最熱的 11 年"},
+      {k:"基準", v:"1850–1900 年平均"}
+    ],
+    glossary:["工業化前基準"],
+    sources:["WMO, State of the Global Climate 2025"]
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = Array(questions.length).fill(false);
+let selected = Array(questions.length).fill(null);
+
+const cover = document.getElementById('cover');
+const quiz = document.getElementById('quiz');
+const screen = document.getElementById('screen');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+
+document.getElementById('startBtn').addEventListener('click', startQuiz);
+document.getElementById('jumpGlossaryBtn').addEventListener('click', () => {
+  startQuiz();
+  renderQuestion();
+  setTimeout(() => {
+    const details = document.querySelector('details.glossary');
+    if(details) details.open = true;
+  }, 30);
+});
+
+function startQuiz(){
+  cover.classList.add('hidden');
+  quiz.classList.remove('hidden');
+  current = 0;
+  score = 0;
+  answered = Array(questions.length).fill(false);
+  selected = Array(questions.length).fill(null);
+  renderQuestion();
+}
+
+function escapeHtml(text=''){
+  return text.replace(/[&<>\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+
+function updateProgress(){
+  progressText.textContent = `${Math.min(current+1, questions.length)} / ${questions.length}`;
+  progressBar.style.width = `${(current/questions.length)*100}%`;
+}
+
+function renderQuestion(){
+  updateProgress();
+  const q = questions[current];
+  const optionsHtml = q.options.map((opt, idx) => `
+    <button class="option" data-idx="${idx}">
+      <span class="letter">${String.fromCharCode(65+idx)}</span>
+      <span>${escapeHtml(opt)}</span>
+    </button>
+  `).join('');
+
+  screen.innerHTML = `
+    <div class="q-meta">
+      <div class="q-type">📘 ${escapeHtml(q.type)}</div>
+      <div>第 ${current+1} 題 / 共 ${questions.length} 題</div>
+    </div>
+    <div class="q-title">${escapeHtml(q.title)}</div>
+    ${q.hint ? `<div class="hint">💡 ${escapeHtml(q.hint)}</div>` : ''}
+    <div class="options">${optionsHtml}</div>
+    <div id="answerArea"></div>
+    <div class="footer-actions">
+      <button class="ghost" ${current===0?'disabled style="opacity:.45;cursor:not-allowed"':''} id="prevBtn">上一題</button>
+      <div class="small">先作答後，才會顯示答案與下一題按鈕。</div>
+    </div>
+  `;
+
+  screen.querySelectorAll('.option').forEach(btn => btn.addEventListener('click', () => handleAnswer(+btn.dataset.idx)));
+  const prevBtn = document.getElementById('prevBtn');
+  if(prevBtn && current>0) prevBtn.addEventListener('click', () => { current--; renderQuestion(); });
+
+  if(answered[current]) revealSavedAnswer();
+}
+
+function handleAnswer(idx){
+  if(answered[current]) return;
+  answered[current] = true;
+  selected[current] = idx;
+  if(idx === questions[current].correct) score++;
+  revealSavedAnswer();
+}
+
+function revealSavedAnswer(){
+  const q = questions[current];
+  const picked = selected[current];
+  const correct = q.correct;
+  screen.querySelectorAll('.option').forEach((btn, idx) => {
+    btn.classList.add('disabled');
+    if(idx===correct) btn.classList.add('correct');
+    if(idx===picked && idx!==correct) btn.classList.add('wrong');
+    if(idx!==correct && idx!==picked) btn.classList.add('neutral-fade');
+  });
+
+  const answerArea = document.getElementById('answerArea');
+  const answerOk = picked === correct;
+
+  answerArea.innerHTML = `
+    <div class="answer-panel">
+      <div class="answer-head">
+        <div>
+          <div class="result-badge ${answerOk?'ok':'bad'}">${answerOk?'✅ 答對了':'🧭 這題容易誤判'} </div>
+          <div style="margin-top:12px;font-size:1.1rem;font-weight:900;color:#16365f">正確答案：${String.fromCharCode(65+correct)}．${escapeHtml(q.answerTitle)}</div>
+        </div>
+        <div class="small">目前得分：<strong style="color:#17355d;font-size:1.02rem">${score} / ${questions.length}</strong></div>
+      </div>
+      <div class="answer-text">
+        ${q.explanation.map(p => `<p>${escapeHtml(p)}</p>`).join('')}
+      </div>
+      ${q.facts ? `<div class="kvs">${q.facts.map(item => `<div class="kv"><div class="k">${escapeHtml(item.k)}</div><div class="v">${escapeHtml(item.v)}</div></div>`).join('')}</div>` : ''}
+      ${q.chart ? renderChartBox(q.chart) : ''}
+      ${q.glossary ? renderGlossary(q.glossary) : renderSuggestedGlossary(q)}
+      <div class="source-box"><strong>資料來源：</strong><br>${q.sources.map(s=>`• ${escapeHtml(s)}`).join('<br>')}</div>
+    </div>
+    <div class="footer-actions">
+      <button class="ghost" ${current===0?'disabled style="opacity:.45;cursor:not-allowed"':''} id="prevBtn2">上一題</button>
+      <button class="primary" id="nextBtn">${current === questions.length-1 ? '看結果總覽' : '下一題'}</button>
+    </div>
+  `;
+
+  const prevBtn2 = document.getElementById('prevBtn2');
+  if(prevBtn2 && current>0) prevBtn2.addEventListener('click', () => { current--; renderQuestion(); });
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if(current === questions.length-1) renderSummary();
+    else { current++; renderQuestion(); }
+  });
+}
+
+function renderGlossary(list){
+  return `
+    <details class="glossary">
+      <summary>名詞補充</summary>
+      ${list.map(key => `<div class="glossary-item"><div class="glossary-term">${escapeHtml(key)}</div><div class="small">${escapeHtml(glossary[key] || '—')}</div></div>`).join('')}
+    </details>
+  `;
+}
+
+function renderSuggestedGlossary(q){
+  // 若本題沒有指定 glossary，就展示通用小辭典入口
+  return `
+    <details class="glossary">
+      <summary>想補充更多名詞？點此查看通用小辭典</summary>
+      ${Object.entries(glossary).slice(0,5).map(([key,val])=>`<div class="glossary-item"><div class="glossary-term">${escapeHtml(key)}</div><div class="small">${escapeHtml(val)}</div></div>`).join('')}
+    </details>
+  `;
+}
+
+function renderChartBox(chart){
+  return `
+    <div class="chart-wrap">
+      <div class="chart-title">📊 ${escapeHtml(chart.title)}</div>
+      ${chart.kind === 'line' ? lineChart(chart.data, chart.yLabel) : barChart(chart.data, chart.yLabel)}
+    </div>
+  `;
+}
+
+function barChart(data, yLabel=''){
+  const w=700, h=320, m={t:16,r:20,b:54,l:52};
+  const max=Math.max(...data.map(d=>d.value))*1.15;
+  const plotW=w-m.l-m.r, plotH=h-m.t-m.b;
+  const bw = plotW / data.length * 0.56;
+  const gap = plotW / data.length;
+  let bars=''; let labels=''; let grid='';
+  const ticks=4;
+  for(let i=0;i<=ticks;i++){
+    const y = m.t + plotH - (plotH/ticks)*i;
+    const v = (max/ticks)*i;
+    grid += `<line x1="${m.l}" y1="${y}" x2="${w-m.r}" y2="${y}" stroke="#e6eef9"/>`;
+    grid += `<text x="${m.l-10}" y="${y+4}" text-anchor="end" font-size="12" fill="#6a7c92">${formatTick(v)}</text>`;
+  }
+  data.forEach((d,i)=>{
+    const x = m.l + gap*i + (gap-bw)/2;
+    const bh = (d.value/max)*plotH;
+    const y = m.t + plotH - bh;
+    bars += `<rect x="${x}" y="${y}" rx="10" ry="10" width="${bw}" height="${bh}" fill="url(#barGrad)"/>`;
+    bars += `<text x="${x+bw/2}" y="${y-8}" text-anchor="middle" font-size="12" fill="#27446f" font-weight="700">${d.value}</text>`;
+    labels += `<text x="${x+bw/2}" y="${h-24}" text-anchor="middle" font-size="12" fill="#5f7088">${escapeSvg(d.label)}</text>`;
+  });
+  return `<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="長條圖 ${escapeSvg(yLabel)}">
+      <defs><linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#47a7ff"/><stop offset="100%" stop-color="#1fb6a6"/></linearGradient></defs>
+      ${grid}
+      <line x1="${m.l}" y1="${m.t+plotH}" x2="${w-m.r}" y2="${m.t+plotH}" stroke="#aebed7"/>
+      ${bars}
+      ${labels}
+      <text x="18" y="18" font-size="12" fill="#6b7e95">${escapeSvg(yLabel)}</text>
+    </svg>`;
+}
+
+function lineChart(data, yLabel=''){
+  const w=700, h=320, m={t:16,r:20,b:54,l:52};
+  const max=Math.max(...data.map(d=>d.value))*1.12;
+  const min=Math.min(...data.map(d=>d.value))*0.92;
+  const plotW=w-m.l-m.r, plotH=h-m.t-m.b;
+  const step = plotW/Math.max(1,data.length-1);
+  const yOf = v => m.t + plotH - ((v-min)/(max-min))*plotH;
+  let pts=''; let dots=''; let labels=''; let grid='';
+  const ticks=4;
+  for(let i=0;i<=ticks;i++){
+    const y=m.t + plotH - (plotH/ticks)*i;
+    const v=min + ((max-min)/ticks)*i;
+    grid += `<line x1="${m.l}" y1="${y}" x2="${w-m.r}" y2="${y}" stroke="#e6eef9"/>`;
+    grid += `<text x="${m.l-10}" y="${y+4}" text-anchor="end" font-size="12" fill="#6a7c92">${formatTick(v)}</text>`;
+  }
+  data.forEach((d,i)=>{
+    const x = m.l + step*i; const y = yOf(d.value);
+    pts += `${x},${y} `;
+    dots += `<circle cx="${x}" cy="${y}" r="5.5" fill="#2d7ef7" stroke="#fff" stroke-width="2"/>`;
+    dots += `<text x="${x}" y="${y-10}" text-anchor="middle" font-size="12" fill="#27446f" font-weight="700">${d.value}</text>`;
+    labels += `<text x="${x}" y="${h-24}" text-anchor="middle" font-size="12" fill="#5f7088">${escapeSvg(d.label)}</text>`;
+  });
+  return `<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="折線圖 ${escapeSvg(yLabel)}">
+    ${grid}
+    <line x1="${m.l}" y1="${m.t+plotH}" x2="${w-m.r}" y2="${m.t+plotH}" stroke="#aebed7"/>
+    <polyline fill="none" stroke="#1fb6a6" stroke-width="4" points="${pts.trim()}" stroke-linecap="round" stroke-linejoin="round"/>
+    ${dots}
+    ${labels}
+    <text x="18" y="18" font-size="12" fill="#6b7e95">${escapeSvg(yLabel)}</text>
+  </svg>`;
+}
+
+function formatTick(v){
+  const n = Number(v);
+  if (n >= 100) return Math.round(n).toString();
+  if (n >= 10) return (Math.round(n*10)/10).toString();
+  return (Math.round(n*10)/10).toString();
+}
+function escapeSvg(text=''){
+  return text.toString().replace(/[&<>\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+
+function renderSummary(){
+  progressBar.style.width = `100%`;
+  progressText.textContent = `${questions.length} / ${questions.length}`;
+  const pct = Math.round((score/questions.length)*100);
+  const highlights = [
+    "世界確實仍有很多問題，但也存在被忽略的長期進步。",
+    "看到數據時，要分清楚：資料年份、發布年份、統計定義是否相同。",
+    "全球平均值很重要，但不能直接拿來代替每一個國家或地區的現況。"
+  ];
+  screen.innerHTML = `
+    <div class="q-meta">
+      <div class="q-type">🎉 完成測驗</div>
+      <div>你已完成全部 20 題</div>
+    </div>
+    <p class="score-big">${score} / ${questions.length}</p>
+    <div class="small">答對率約 ${pct}%</div>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <h3>這份測驗想帶出的核心</h3>
+        <p>直覺常常不可靠，尤其是談「全球現況」時。我們需要的不只是立場，更是能查證的資料與解釋能力。</p>
+      </div>
+      <div class="summary-card">
+        <h3>特別值得追問</h3>
+        <p>為什麼某些題目你會猜錯？是因為新聞印象、過時的資料，還是把局部經驗當成全球真相？</p>
+      </div>
+      <div class="summary-card">
+        <h3>延伸活動</h3>
+        <p>可把答錯最多的題目挑出來，分組查找原始資料，練習辨識資料定義、圖表與敘事之間的關係。</p>
+      </div>
+    </div>
+    <div class="overview">
+      ${highlights.map(t=>`<div class="overview-item">• ${escapeHtml(t)}</div>`).join('')}
+    </div>
+    <details class="glossary" open>
+      <summary>通用名詞小辭典</summary>
+      ${Object.entries(glossary).map(([k,v]) => `<div class="glossary-item"><div class="glossary-term">${escapeHtml(k)}</div><div class="small">${escapeHtml(v)}</div></div>`).join('')}
+    </details>
+    <div class="credits">
+      <strong>資料整理說明：</strong><br>
+      本網頁依 2026 年 10 月底前可取得之國際官方資料整理，主要參考 United Nations、UNESCO、UNICEF、WHO、World Bank、UNHCR、ITU、IPU、FAO、WMO、Ember 等來源。不同題目的「資料年份」與「公布年份」可能不同，使用時建議一併提醒學習者留意。<br><br>
+      <strong>網頁特性：</strong>本檔案為單一 HTML，可離線開啟使用，不需安裝外部套件。
+    </div>
+    <div class="footer-actions">
+      <button class="ghost" id="restartBtn">重新挑戰一次</button>
+      <button class="secondary" id="backCoverBtn">回到封面</button>
+    </div>
+  `;
+  document.getElementById('restartBtn').addEventListener('click', startQuiz);
+  document.getElementById('backCoverBtn').addEventListener('click', () => {
+    quiz.classList.add('hidden');
+    cover.classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+}
+</script>
+</body>
+</html>

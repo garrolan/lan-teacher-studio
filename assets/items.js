@@ -95,6 +95,14 @@ window.STUDIO_ITEMS = [
     icon: "globe"
   },
   {
+    title: "史前臺灣偵查局｜八仙洞考古任務",
+    description: "五年級社會互動教學，透過八仙洞現場探索、5 個考古推理任務與6 題知識挑戰，認識史前臺灣、長濱文化及考古證據。",
+    category: "game",
+    href: "games/baxian-caves-archaeology.html",
+    tag: "五年級社會",
+    icon: "compass"
+  },
+  {
     title: "WORD小達人-單元一、單元二",
     description: "南和國小四年級資訊課第一次定期評量，透過20題是非與選擇題，複習 Word 文字編輯、圖片、版面與文字方塊；答題立即解析，完成後可查看分數、回顧錯題並列印結果。",
     category: "game",

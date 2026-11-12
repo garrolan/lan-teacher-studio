@@ -1,5 +1,14 @@
 window.STUDIO_ITEMS = [
   {
+    title: "一張蛇蛻，打開一堂生命教育課｜南和國小",
+    description: "從校園發現蛇蛻出發，透過觀察與互動，探索蛇的生命及人與自然的相處。",
+    category: "website",
+    href: "websites/nanhe-snake-shed/",
+    tag: "生命教育",
+    icon: "leaf"
+  },
+
+  {
     "title": "南和國小 × 遇見大未來｜廣達游於藝成果展",
     "description": "從9月3日美術館培訓，到10月20日開幕、孩子導覽與海洋創作，透過六個主題頁與43張活動照片，看見藝術走進南和的學習旅程。",
     "category": "website",

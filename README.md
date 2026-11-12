@@ -30,6 +30,7 @@ https://garrolan.github.io/lan-teacher-studio/
 - `assets/items.js`：所有卡片資料都集中在這裡。
 - `assets/directory.css`：整個網站的顏色、版面和卡片樣式。
 - `assets/main.js`：把 `items.js` 裡的卡片顯示到頁面上。
+- `boards/`：文字、圖片看板與逐頁簡報；跨裝置使用需先完成 [Supabase 設定](boards/README.md)。
 
 ## 如何新增一張卡片
 

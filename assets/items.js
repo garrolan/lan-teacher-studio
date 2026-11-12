@@ -1,5 +1,14 @@
 window.STUDIO_ITEMS = [
   {
+    title: "藍老師看板｜文字與圖片簡報",
+    description: "建立看板、貼上文字和圖片，分享專屬連結，並將貼文逐頁全螢幕播放。",
+    category: "tool",
+    href: "boards/",
+    tag: "教學展示",
+    icon: "layout-dashboard",
+    featured: true
+  },
+  {
     title: "一張蛇蛻，打開一堂生命教育課｜南和國小",
     description: "從校園發現蛇蛻出發，透過觀察與互動，探索蛇的生命及人與自然的相處。",
     category: "website",

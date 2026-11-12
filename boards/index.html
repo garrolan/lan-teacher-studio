@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#163d52">
+    <meta name="description" content="藍老師工作室看板：整理文字與圖片，逐頁展示。">
+    <title>看板｜藍老師工作室</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要內容</a>
+    <header class="topbar">
+      <a class="brand" href="../index.html"><span class="brand-mark">藍</span><span>藍老師工作室 <small>／ 看板</small></span></a>
+      <div class="top-actions">
+        <span id="accountLabel" class="account-label" hidden></span>
+        <button id="signOutButton" class="button ghost small" type="button" hidden>登出</button>
+      </div>
+    </header>
+
+    <main id="main" class="shell">
+      <div id="notice" class="notice" role="status" hidden></div>
+
+      <section id="setupView" class="center-card" hidden>
+        <p class="eyebrow">尚待連線</p>
+        <h1>看板介面已就緒</h1>
+        <p>需要先設定 Supabase 專案，才能跨裝置儲存與分享。設定步驟請看專案中的 <code>boards/README.md</code>。</p>
+      </section>
+
+      <section id="loginView" class="center-card" hidden>
+        <p class="eyebrow">個人看板</p>
+        <h1>用電子郵件登入</h1>
+        <p>登入連結會寄到看板擁有者的信箱。只有已授權的帳號可以編輯。</p>
+        <form id="loginForm" class="stack-form">
+          <label for="emailInput">電子郵件</label>
+          <input id="emailInput" type="email" autocomplete="email" required placeholder="name@example.com">
+          <button class="button primary" type="submit">寄送登入連結</button>
+        </form>
+      </section>
+
+      <section id="dashboardView" hidden>
+        <div class="page-head">
+          <div><p class="eyebrow">你的收藏空間</p><h1>我的看板</h1><p>挑一塊看板繼續編輯，或建立新看板。</p></div>
+          <button id="newBoardButton" class="button primary" type="button">＋ 新增看板</button>
+        </div>
+        <div id="boardList" class="board-list"></div>
+      </section>
+
+      <section id="boardView" hidden>
+        <div class="board-toolbar"><button id="backButton" class="text-button" type="button">← 我的看板</button><span class="toolbar-spacer"></span><button id="copyLinkButton" class="button light small" type="button">複製分享連結</button><button id="presentButton" class="button primary small" type="button">▶ 簡報播放</button></div>
+        <div class="board-heading"><div><p class="eyebrow">BOARD</p><h1 id="boardTitle"></h1><p id="boardDescription"></p></div><div id="ownerActions" class="owner-actions" hidden><button id="editBoardButton" class="button light small" type="button">編輯看板</button><button id="rotateLinkButton" class="button light small" type="button">更新分享連結</button><button id="deleteBoardButton" class="button danger small" type="button">刪除看板</button></div></div>
+        <div class="posts-heading"><h2>貼文 <span id="postCount"></span></h2><button id="newPostButton" class="button primary small" type="button" hidden>＋ 新增貼文</button></div>
+        <div id="postList" class="post-list"></div>
+      </section>
+    </main>
+
+    <dialog id="boardDialog" class="dialog"><form id="boardForm" class="dialog-form"><div class="dialog-head"><h2 id="boardDialogTitle">新增看板</h2><button class="icon-button" type="button" data-close-dialog aria-label="關閉">×</button></div><label for="boardNameInput">看板名稱 <span aria-hidden="true">*</span></label><input id="boardNameInput" maxlength="100" required><label for="boardDescriptionInput">簡介（可留白）</label><textarea id="boardDescriptionInput" rows="3" maxlength="500"></textarea><div class="dialog-actions"><button class="button light" type="button" data-close-dialog>取消</button><button class="button primary" type="submit">儲存</button></div></form></dialog>
+
+    <dialog id="postDialog" class="dialog"><form id="postForm" class="dialog-form"><div class="dialog-head"><h2 id="postDialogTitle">新增貼文</h2><button class="icon-button" type="button" data-close-dialog aria-label="關閉">×</button></div><p class="help">標題、內容或圖片至少填一項。</p><label for="postTitleInput">標題（可留白）</label><input id="postTitleInput" maxlength="160"><label for="postBodyInput">文字內容（可留白）</label><textarea id="postBodyInput" rows="6" maxlength="10000"></textarea><label for="postImageInput">圖片（JPG、PNG、WebP；最多 5 MB）</label><input id="postImageInput" type="file" accept="image/jpeg,image/png,image/webp"><p id="imageStatus" class="help"></p><button id="removeImageButton" class="text-button" type="button" hidden>移除現有圖片</button><div class="dialog-actions"><button class="button light" type="button" data-close-dialog>取消</button><button id="savePostButton" class="button primary" type="submit">儲存貼文</button></div></form></dialog>
+
+    <div id="presentation" class="presentation" role="dialog" aria-modal="true" aria-label="看板簡報" hidden><div class="presentation-top"><span id="slideBoardTitle"></span><button id="closePresentationButton" class="presentation-close" type="button" aria-label="關閉簡報">×</button></div><div id="slideContent" class="slide-content"></div><div class="presentation-bottom"><button id="previousSlideButton" type="button" aria-label="上一頁">←</button><span id="slideCounter"></span><button id="nextSlideButton" type="button" aria-label="下一頁">→</button></div></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,5 +1,13 @@
 window.STUDIO_ITEMS = [
   {
+    title: "貓咪科學室｜三年級自然單元三、四",
+    description: "選擇奇妙的空氣或廚房裡的科學。13 組題庫各有 25 題，包含拖曳、連線與小實驗，答完可看解析和錯題。",
+    category: "game",
+    href: "games/grade3-science-quiz/",
+    tag: "三年級自然",
+    icon: "flask-conical"
+  },
+  {
     title: "一張蛇蛻，打開一堂生命教育課｜南和國小",
     description: "從校園發現蛇蛻出發，透過觀察與互動，探索蛇的生命及人與自然的相處。",
     category: "website",

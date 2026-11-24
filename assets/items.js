@@ -1,5 +1,13 @@
 window.STUDIO_ITEMS = [
   {
+    title: "廚房粉末偵探｜三年級自然",
+    description: "觀察八種廚房材料的特徵與用途，挑戰 24 題或選擇主題練習。每題都有解說，闖關後可以重做錯題。",
+    category: "game",
+    href: "games/kitchen-powder-detective/",
+    tag: "三年級自然",
+    icon: "search"
+  },
+  {
     title: "貓咪科學室｜三年級自然單元三、四",
     description: "選擇奇妙的空氣或廚房裡的科學。13 組題庫各有 25 題，包含拖曳、連線與小實驗，答完可看解析和錯題。",
     category: "game",
